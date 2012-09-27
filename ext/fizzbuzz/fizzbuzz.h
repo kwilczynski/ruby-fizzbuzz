@@ -35,7 +35,7 @@
   if (!FIXNUM_P(x)) \
     rb_raise(rb_eTypeError, m);
 
-#define CHECK_LOWER_BOUNDRY(x, m) \
+#define CHECK_LOWER_BOUNDARY(x, m) \
   if (FIX2INT(x) < 1) \
     rb_raise(rb_eArgError, m);
 

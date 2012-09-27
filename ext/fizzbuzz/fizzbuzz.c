@@ -153,7 +153,7 @@ static void
 validate_limit(VALUE value)
 {
   CHECK_TYPE(value, "invalid value for limit");
-  CHECK_LOWER_BOUNDRY(value, "incorrect value for limit");
+  CHECK_LOWER_BOUNDARY(value, "incorrect value for limit");
 }
   
 void
