@@ -49,13 +49,13 @@ static const char *words[] = {
   "FizzBuzz", NULL
 };
 
-RUBY_EXTERN ID id_at_size;
+RUBY_EXTERN ID id_at_limit;
 RUBY_EXTERN VALUE rb_cFizzBuzz;
 
 RUBY_EXTERN VALUE fizzbuzz_initialize(VALUE object, VALUE value);
 
-RUBY_EXTERN VALUE fizzbuzz_get_size(VALUE object);
-RUBY_EXTERN VALUE fizzbuzz_set_size(VALUE object, VALUE value);
+RUBY_EXTERN VALUE fizzbuzz_get_limit(VALUE object);
+RUBY_EXTERN VALUE fizzbuzz_set_limit(VALUE object, VALUE value);
 
 RUBY_EXTERN VALUE fizzbuzz_to_array(VALUE object);
 RUBY_EXTERN VALUE fizzbuzz_to_enumerator(VALUE object);

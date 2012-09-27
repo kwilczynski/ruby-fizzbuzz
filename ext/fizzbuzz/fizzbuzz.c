@@ -18,7 +18,7 @@
 
 #include <fizzbuzz.h>
 
-ID id_at_size;
+ID id_at_limit;
 VALUE rb_cFizzBuzz = Qnil;
 
 void Init_fizzbuzz(void);
@@ -30,22 +30,22 @@ fizzbuzz_initialize(VALUE object, VALUE value)
 {
   validate_limit(value);
 
-  rb_ivar_set(object, id_at_size, value);
+  rb_ivar_set(object, id_at_limit, value);
   return object;
 }
 
 VALUE
-fizzbuzz_get_size(VALUE object)
+fizzbuzz_get_limit(VALUE object)
 {
-  return rb_ivar_get(object, id_at_size);
+  return rb_ivar_get(object, id_at_limit);
 }
 
 VALUE
-fizzbuzz_set_size(VALUE object, VALUE value)
+fizzbuzz_set_limit(VALUE object, VALUE value)
 {
   validate_limit(value);
 
-  rb_ivar_set(object, id_at_size, value);
+  rb_ivar_set(object, id_at_limit, value);
   return Qnil;
 }
 
@@ -116,7 +116,7 @@ static VALUE
 calculate(VALUE object, return_t type)
 {
   int i;
-  int size = FIX2INT(rb_ivar_get(object, id_at_size));
+  int limit = FIX2INT(rb_ivar_get(object, id_at_limit));
 
   VALUE array;
 
@@ -127,7 +127,7 @@ calculate(VALUE object, return_t type)
     RETURN_ENUMERATOR(object, 0, 0);
   }
 
-  for (i = 1; i <= size; i++) {
+  for (i = 1; i <= limit; i++) {
     if (i % 15 == 0) {
       WANT_ARRAY(type) ? rb_ary_push(array, rb_str_new2(words[2]))
                        : rb_yield(rb_str_new2(words[2]));
@@ -159,7 +159,7 @@ validate_limit(VALUE value)
 void
 Init_fizzbuzz(void)
 {
-  id_at_size = rb_intern("@limit");
+  id_at_limit = rb_intern("@limit");
 
   rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
 
@@ -169,8 +169,8 @@ Init_fizzbuzz(void)
 
   rb_define_method(rb_cFizzBuzz, "initialize", fizzbuzz_initialize, 1);
 
-  rb_define_method(rb_cFizzBuzz, "size", fizzbuzz_get_size, 0);
-  rb_define_method(rb_cFizzBuzz, "size=", fizzbuzz_set_size, 1);
+  rb_define_method(rb_cFizzBuzz, "limit", fizzbuzz_get_limit, 0);
+  rb_define_method(rb_cFizzBuzz, "limit=", fizzbuzz_set_limit, 1);
 
   rb_define_method(rb_cFizzBuzz, "to_a", fizzbuzz_to_array, 0);
   rb_define_method(rb_cFizzBuzz, "each", fizzbuzz_to_enumerator, 0);

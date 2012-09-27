@@ -67,6 +67,16 @@ class BizzBuzz_Test < Test::Unit::TestCase
     assert_equal(fb.to_a[14], 'FizzBuzz')
   end
 
+  def test_limit
+    fb = FizzBuzz.new(1)
+
+    assert_block do
+      fb.limit == 1
+      fb.limit = 2
+      fb.limit == 2
+    end
+  end
+
   def test_type_error
     assert_raise TypeError do
       FizzBuzz.new('')
@@ -76,6 +86,20 @@ class BizzBuzz_Test < Test::Unit::TestCase
   def test_argument_error
     assert_raise ArgumentError do
       FizzBuzz.new(-1)
+    end
+  end
+
+  def test_limit_type_error
+    assert_raise TypeError do
+      fb = FizzBuzz.new(1)
+      fb.limit = ''
+    end
+  end
+
+  def test_limit_argument_error
+    assert_raise ArgumentError do
+      fb = FizzBuzz.new(1)
+      fb.limit = -1
     end
   end
 end
