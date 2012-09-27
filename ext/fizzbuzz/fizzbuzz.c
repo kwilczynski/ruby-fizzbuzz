@@ -50,15 +50,36 @@ fizzbuzz_set_size(VALUE object, VALUE value)
 }
 
 VALUE
+fizzbuzz_to_array(VALUE object)
+{
+  return calculate(object, ARRAY);
+}
+
+VALUE
 fizzbuzz_to_enumerator(VALUE object)
 {
   return calculate(object, ENUMERATOR);
 }
 
 VALUE
-fizzbuzz_to_array(VALUE object)
+fizzbuzz_is_fizz(VALUE object, VALUE value)
 {
-  return calculate(object, ARRAY);
+  CHECK_TYPE(value, "invalid value type")
+  return IS_FIZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+}
+
+VALUE
+fizzbuzz_is_buzz(VALUE object, VALUE value)
+{
+  CHECK_TYPE(value, "invalid value type")
+  return IS_BUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+}
+
+VALUE
+fizzbuzz_is_fizzbuzz(VALUE object, VALUE value)
+{
+  CHECK_TYPE(value, "invalid value type")
+  return IS_FIZZBUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
 }
 
 static VALUE
@@ -101,8 +122,7 @@ calculate(VALUE object, return_t type)
 static void
 validate_size(VALUE value)
 {
-  if (!FIXNUM_P(value))
-    rb_raise(rb_eTypeError, "invalid value for size");
+  CHECK_TYPE(value, "invalid value for size");
 
   if (FIX2INT(value) < 1)
     rb_raise(rb_eArgError, "incorrect value for size");
@@ -126,4 +146,8 @@ Init_fizzbuzz(void)
 
   rb_define_method(rb_cFizzBuzz, "to_a", fizzbuzz_to_array, 0);
   rb_define_method(rb_cFizzBuzz, "each", fizzbuzz_to_enumerator, 0);
+
+  rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", fizzbuzz_is_fizz, 1);
+  rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", fizzbuzz_is_buzz, 1);
+  rb_define_singleton_method(rb_cFizzBuzz, "is_fizzbuzz?", fizzbuzz_is_fizzbuzz, 1);
 }

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 #
-# fizzbuzz.rb
+# integer.rb
 #
 # Copyright 2012 Krzysztof Wilczynski
 #
@@ -18,20 +18,17 @@
 # limitations under the License.
 #
 
-require 'fizzbuzz/fizzbuzz'
-require 'fizzbuzz/integer'
+class Integer
+  def fizz?
+    FizzBuzz.is_fizz?(self)
+  end
 
-class FizzBuzz
-  class << self
-    def fizzbuzz(size, &block)
-      if block_given?
-        FizzBuzz.new(size).each {|i| block.call(i) }
-      else
-        FizzBuzz.new(size).to_a
-      end
-    end
+  def buzz?
+    FizzBuzz.is_buzz?(self)
+  end
 
-    alias :[] :fizzbuzz
+  def fizzbuzz?
+    FizzBuzz.is_fizzbuzz?(self)
   end
 end
 
