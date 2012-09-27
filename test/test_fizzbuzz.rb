@@ -3,6 +3,7 @@
 require 'test/unit'
 require 'fizzbuzz'
 
+DEFAULT_WORDS    = [ 'Fizz', 'Buzz', 'FizzBuzz' ]
 DEFAULT_EXPECTED = [ 1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz' ]
 
 class BizzBuzz_Test < Test::Unit::TestCase
@@ -12,8 +13,17 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_singleton_squre
-    obtained = FizzBuzz[DEFAULT_EXPECTED.size]
-    assert_equal(obtained, DEFAULT_EXPECTED)
+    assert_block do
+      FizzBuzz[1].is_a?(Integer)
+
+      obtained_fizz     = FizzBuzz[3]
+      obtained_buzz     = FizzBuzz[5]
+      obtained_fizzbuzz = FizzBuzz[15]
+
+      [obtained_fizz, obtained_buzz, obtained_fizzbuzz].all? do |i|
+        i.is_a?(String) and DEFAULT_WORDS.include?(i)
+      end
+    end
   end
 
   def test_singleton_is_fizz

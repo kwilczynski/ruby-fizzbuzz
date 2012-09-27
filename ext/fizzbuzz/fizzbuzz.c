@@ -22,13 +22,13 @@ ID id_at_size;
 VALUE rb_cFizzBuzz = Qnil;
 
 void Init_fizzbuzz(void);
-static void validate_size(VALUE value);
+static void validate_limit(VALUE value);
 static VALUE calculate(VALUE object, return_t type);
 
 VALUE
 fizzbuzz_initialize(VALUE object, VALUE value)
 {
-  validate_size(value);
+  validate_limit(value);
 
   rb_ivar_set(object, id_at_size, value);
   return object;
@@ -43,7 +43,7 @@ fizzbuzz_get_size(VALUE object)
 VALUE
 fizzbuzz_set_size(VALUE object, VALUE value)
 {
-  validate_size(value);
+  validate_limit(value);
 
   rb_ivar_set(object, id_at_size, value);
   return Qnil;
@@ -80,6 +80,36 @@ fizzbuzz_is_fizzbuzz(VALUE object, VALUE value)
 {
   CHECK_TYPE(value, "invalid value type")
   return IS_FIZZBUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+}
+
+VALUE
+fizzbuzz_square(VALUE object, VALUE value)
+{
+  VALUE result = Qnil;
+
+  int score = SCORE_VALUE(FIX2INT(value));
+
+  CHECK_TYPE(value, "invalid value type")
+
+  switch(score) {
+    case 0:
+      result = value;
+      break;
+
+    case 1:
+      result = rb_str_new2(words[score - 1]);
+      break;
+
+    case 2:
+      result = rb_str_new2(words[score - 1]);
+      break;
+
+    case 3:
+      result = rb_str_new2(words[score - 1]);
+    break;
+  }
+
+  return result;
 }
 
 static VALUE
@@ -120,18 +150,16 @@ calculate(VALUE object, return_t type)
 }
 
 static void
-validate_size(VALUE value)
+validate_limit(VALUE value)
 {
-  CHECK_TYPE(value, "invalid value for size");
-
-  if (FIX2INT(value) < 1)
-    rb_raise(rb_eArgError, "incorrect value for size");
+  CHECK_TYPE(value, "invalid value for limit");
+  CHECK_LOWER_BOUNDRY(value, "incorrect value for limit");
 }
   
 void
 Init_fizzbuzz(void)
 {
-  id_at_size = rb_intern("@size");
+  id_at_size = rb_intern("@limit");
 
   rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
 
@@ -150,4 +178,6 @@ Init_fizzbuzz(void)
   rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", fizzbuzz_is_fizz, 1);
   rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", fizzbuzz_is_buzz, 1);
   rb_define_singleton_method(rb_cFizzBuzz, "is_fizzbuzz?", fizzbuzz_is_fizzbuzz, 1);
+
+  rb_define_singleton_method(rb_cFizzBuzz, "[]", fizzbuzz_square, 1);
 }

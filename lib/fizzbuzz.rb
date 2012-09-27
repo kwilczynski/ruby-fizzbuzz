@@ -22,16 +22,12 @@ require 'fizzbuzz/fizzbuzz'
 require 'fizzbuzz/integer'
 
 class FizzBuzz
-  class << self
-    def fizzbuzz(size, &block)
-      if block_given?
-        FizzBuzz.new(size).each {|i| block.call(i) }
-      else
-        FizzBuzz.new(size).to_a
-      end
+  def self.fizzbuzz(size, &block)
+    if block_given?
+      FizzBuzz.new(size).each {|i| block.call(i) }
+    else
+      FizzBuzz.new(size).to_a
     end
-
-    alias :[] :fizzbuzz
   end
 end
 

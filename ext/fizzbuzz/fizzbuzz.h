@@ -23,17 +23,21 @@
 
 #define FIZZBUZZ_VERSION "0.0.1"
 
-#define SCORE(x) (!((x) % 3) + 2 * !((x) % 5))
+#define SCORE_VALUE(x) (!((x) % 3) + 2 * !((x) % 5))
 
-#define IS_FIZZ(x)     (SCORE(x) == 1)
-#define IS_BUZZ(x)     (SCORE(x) == 2)
-#define IS_FIZZBUZZ(x) (SCORE(x) == 3)
+#define IS_FIZZ(x)     (SCORE_VALUE(x) == 1)
+#define IS_BUZZ(x)     (SCORE_VALUE(x) == 2)
+#define IS_FIZZBUZZ(x) (SCORE_VALUE(x) == 3)
 
 #define WANT_ARRAY(x) ((x) == ARRAY)
 
 #define CHECK_TYPE(x, m) \
   if (!FIXNUM_P(x)) \
     rb_raise(rb_eTypeError, m);
+
+#define CHECK_LOWER_BOUNDRY(x, m) \
+  if (FIX2INT(x) < 1) \
+    rb_raise(rb_eArgError, m);
 
 typedef enum {
   ARRAY = 0,
@@ -59,5 +63,7 @@ RUBY_EXTERN VALUE fizzbuzz_to_enumerator(VALUE object);
 RUBY_EXTERN VALUE fizzbuzz_is_fizz(VALUE object, VALUE value);
 RUBY_EXTERN VALUE fizzbuzz_is_buzz(VALUE object, VALUE value);
 RUBY_EXTERN VALUE fizzbuzz_is_fizzbuzz(VALUE object, VALUE value);
+
+RUBY_EXTERN VALUE fizzbuzz_square(VALUE object, VALUE value);
 
 #endif /* __FIZZBUZZ_H__ */
