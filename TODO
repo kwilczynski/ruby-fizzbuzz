@@ -1,6 +1,10 @@
 fizzbuzz (0.0.2)
 
   * Add pure-Ruby implementation;
-  * Add RDoc and improve documentation i.e. source code commenting.
+  * Add RDoc and improve documentation i.e. source code commenting;
+  * Add is_fizz?, is_buzz? and is_fizzbuzz? singleton methods to FizzBuzz class;
+  * Change behaviour of FizzBuzz#[] to yield result for given numeric value;
+  * Fix -- do not always assume calculations from 1 to n, but instead allow
+    for calculations form a to b if such condition is given.
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Thu, 27 Sep 2012 12:54:45 +0200
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Thu, 27 Sep 2012 14:58:54 +0200
