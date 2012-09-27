@@ -22,8 +22,10 @@ ID id_at_limit;
 VALUE rb_cFizzBuzz = Qnil;
 
 void Init_fizzbuzz(void);
+
 static void validate_limit(VALUE value);
-static VALUE calculate(VALUE object, return_t type);
+static VALUE evaluate_value(int value);
+static VALUE return_values(VALUE object, return_t type);
 
 VALUE
 fizzbuzz_initialize(VALUE object, VALUE value)
@@ -52,13 +54,13 @@ fizzbuzz_set_limit(VALUE object, VALUE value)
 VALUE
 fizzbuzz_to_array(VALUE object)
 {
-  return calculate(object, ARRAY);
+  return return_values(object, ARRAY);
 }
 
 VALUE
 fizzbuzz_to_enumerator(VALUE object)
 {
-  return calculate(object, ENUMERATOR);
+  return return_values(object, ENUMERATOR);
 }
 
 VALUE
@@ -85,65 +87,54 @@ fizzbuzz_is_fizzbuzz(VALUE object, VALUE value)
 VALUE
 fizzbuzz_square(VALUE object, VALUE value)
 {
+  CHECK_TYPE(value, "invalid value type")
+  return evaluate_value(FIX2INT(value));
+}
+
+static VALUE
+evaluate_value(int value)
+{
   VALUE result = Qnil;
 
-  int score = SCORE_VALUE(FIX2INT(value));
-
-  CHECK_TYPE(value, "invalid value type")
+  int score = SCORE_VALUE(value);
 
   switch(score) {
     case 0:
-      result = value;
+      result = INT2FIX(value);
       break;
-
     case 1:
       result = rb_str_new2(words[score - 1]);
       break;
-
     case 2:
       result = rb_str_new2(words[score - 1]);
       break;
-
     case 3:
       result = rb_str_new2(words[score - 1]);
-    break;
+      break;
   }
 
   return result;
 }
 
 static VALUE
-calculate(VALUE object, return_t type)
+return_values(VALUE object, return_t type)
 {
   int i;
   int limit = FIX2INT(rb_ivar_get(object, id_at_limit));
 
   VALUE array;
+  VALUE value = Qnil;
 
   if (WANT_ARRAY(type)) {
     array = rb_ary_new();
   }
-  else { 
+  else {
     RETURN_ENUMERATOR(object, 0, 0);
   }
 
   for (i = 1; i <= limit; i++) {
-    if (i % 15 == 0) {
-      WANT_ARRAY(type) ? rb_ary_push(array, rb_str_new2(words[2]))
-                       : rb_yield(rb_str_new2(words[2]));
-    }
-    else if (i % 5 == 0) {
-      WANT_ARRAY(type) ? rb_ary_push(array, rb_str_new2(words[1]))
-                       : rb_yield(rb_str_new2(words[1]));
-    }
-    else if (i % 3 == 0) {
-      WANT_ARRAY(type) ? rb_ary_push(array, rb_str_new2(words[0]))
-                       : rb_yield(rb_str_new2(words[0]));
-    }
-    else {
-      WANT_ARRAY(type) ? rb_ary_push(array, INT2FIX(i))
-                       : rb_yield(INT2FIX(i));
-    }
+    value = evaluate_value(i);
+    WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
   }
 
   return WANT_ARRAY(type) ? array : object;
