@@ -1,0 +1,6 @@
+fizzbuzz (0.0.2)
+
+  * Add pure-Ruby implementation;
+  * Add RDoc and improve documentation i.e. source code commenting.
+
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Thu, 27 Sep 2012 12:54:45 +0200
