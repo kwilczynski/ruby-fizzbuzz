@@ -21,7 +21,7 @@
 
 #include <ruby.h>
 
-#define FIZZBUZZ_VERSION "0.0.1"
+#define FIZZBUZZ_VERSION "0.0.2"
 
 #define SCORE_VALUE(x) (!((x) % 3) + 2 * !((x) % 5))
 
