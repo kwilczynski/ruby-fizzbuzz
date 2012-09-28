@@ -32,12 +32,14 @@ DEFAULT_STOP  = 100
 
 if ARGV.include?('-h')
   puts <<-EOS
-Prints results starting from #{DEFAULT_START} to `n' (default: #{DEFAULT_STOP}).
-Using Ruby FizzBuzz, version #{FizzBuzz::VERSION}.
+Prints FizzBuzz starting from #{DEFAULT_START} to #{DEFAULT_STOP} or a given stop value.
   EOS
   exit 1
 end
 
 size = ARGV.shift || DEFAULT_STOP
+size = size.to_i.abs
 
-FizzBuzz.fizzbuzz(DEFAULT_START, size.to_i.abs) {|i| puts i }
+exit if size == 0
+
+FizzBuzz.fizzbuzz(DEFAULT_START, size) {|i| puts i }
