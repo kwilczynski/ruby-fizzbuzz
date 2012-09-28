@@ -27,7 +27,17 @@ rescue LoadError
   require 'fizzbuzz'
 end
 
-DEFAULT_FIZZBUZZ = 100
+DEFAULT_START = 1
+DEFAULT_STOP  = 100
 
-size = ARGV.shift || DEFAULT_FIZZBUZZ
-FizzBuzz.fizzbuzz(size.to_i) {|i| puts i }
+if ARGV.include?('-h')
+  puts <<-EOS
+Prints results starting from #{DEFAULT_START} to `n' (default: #{DEFAULT_STOP}).
+Using Ruby FizzBuzz, version #{FizzBuzz::VERSION}.
+  EOS
+  exit 1
+end
+
+size = ARGV.shift || DEFAULT_STOP
+
+FizzBuzz.fizzbuzz(DEFAULT_START, size.to_i.abs) {|i| puts i }

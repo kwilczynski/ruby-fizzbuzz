@@ -22,11 +22,11 @@ require 'fizzbuzz/fizzbuzz'
 require 'fizzbuzz/integer'
 
 class FizzBuzz
-  def self.fizzbuzz(size, &block)
+  def self.fizzbuzz(start, stop, &block)
     if block_given?
-      FizzBuzz.new(size).each {|i| block.call(i) }
+      FizzBuzz.new(start, stop).each {|i| block.call(i) }
     else
-      FizzBuzz.new(size).to_a
+      FizzBuzz.new(start, stop).to_a
     end
   end
 end

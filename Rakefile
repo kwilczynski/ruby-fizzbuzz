@@ -34,6 +34,7 @@ require 'rake/testtask'
 Rake::TestTask.new do |t|
   t.name    = :tests
   t.verbose = true
+  t.warning = true
   t.libs << 'lib'
 end
 

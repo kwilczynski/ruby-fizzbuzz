@@ -18,7 +18,7 @@
 
 #include <fizzbuzz.h>
 
-ID id_at_limit;
+ID id_at_start, id_at_stop;
 VALUE rb_cFizzBuzz = Qnil;
 
 void Init_fizzbuzz(void);
@@ -28,66 +28,99 @@ static VALUE evaluate_value(int value);
 static VALUE return_values(VALUE object, return_t type);
 
 VALUE
-fizzbuzz_initialize(VALUE object, VALUE value)
+fizzbuzz_initialize(int argc, VALUE *argv, VALUE object)
 {
-  validate_limit(value);
+  VALUE start, stop;
 
-  rb_ivar_set(object, id_at_limit, value);
+  rb_scan_args(argc, argv, "11", &start, &stop);
+
+  if (NIL_P(start) || NIL_P(stop))
+    rb_raise(rb_eArgError, errors[E_MISSING_ARGUMENTS]);
+
+  CHECK_TYPE(start, errors[E_INVALID_START_TYPE])
+  CHECK_TYPE(stop, errors[E_INVALID_STOP_TYPE])
+
+  CHECK_BOUNDARY(start, stop, errors[E_INCORRECT_START_STOP])
+
+  rb_ivar_set(object, id_at_start, start);
+  rb_ivar_set(object, id_at_stop, stop);
+
   return object;
 }
 
 VALUE
-fizzbuzz_get_limit(VALUE object)
+fizzbuzz_get_start(VALUE object)
 {
-  return rb_ivar_get(object, id_at_limit);
+  return rb_ivar_get(object, id_at_start);
 }
 
 VALUE
-fizzbuzz_set_limit(VALUE object, VALUE value)
+fizzbuzz_set_start(VALUE object, VALUE value)
 {
-  validate_limit(value);
+  int stop = rb_ivar_get(object, id_at_stop);
 
-  rb_ivar_set(object, id_at_limit, value);
+  CHECK_TYPE(value, errors[E_INVALID_START_TYPE])
+  CHECK_BOUNDARY(value, stop, errors[E_INCORRECT_START])
+
+  rb_ivar_set(object, id_at_start, value);
+  return Qnil;
+}
+
+VALUE
+fizzbuzz_get_stop(VALUE object)
+{
+  return rb_ivar_get(object, id_at_stop);
+}
+
+VALUE
+fizzbuzz_set_stop(VALUE object, VALUE value)
+{
+  int start = rb_ivar_get(object, id_at_start);
+
+  CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE])
+  CHECK_BOUNDARY(start, value, errors[E_INCORRECT_STOP])
+
+  rb_ivar_set(object, id_at_stop, value);
   return Qnil;
 }
 
 VALUE
 fizzbuzz_to_array(VALUE object)
 {
-  return return_values(object, ARRAY);
+  return return_values(object, R_TYPE_ARRAY);
 }
 
 VALUE
 fizzbuzz_to_enumerator(VALUE object)
 {
-  return return_values(object, ENUMERATOR);
+  return return_values(object, R_TYPE_ENUMERATOR);
 }
 
 VALUE
 fizzbuzz_is_fizz(VALUE object, VALUE value)
 {
-  CHECK_TYPE(value, "invalid value type")
+  CHECK_TYPE(value, errors[E_INVALID_TYPE])
   return IS_FIZZ(FIX2INT(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_buzz(VALUE object, VALUE value)
 {
-  CHECK_TYPE(value, "invalid value type")
+  CHECK_TYPE(value, errors[E_INVALID_TYPE])
   return IS_BUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_fizzbuzz(VALUE object, VALUE value)
 {
-  CHECK_TYPE(value, "invalid value type")
+  CHECK_TYPE(value, errors[E_INVALID_TYPE])
   return IS_FIZZBUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_square(VALUE object, VALUE value)
 {
-  CHECK_TYPE(value, "invalid value type")
+  CHECK_TYPE(value, errors[E_INVALID_TYPE])
   return evaluate_value(FIX2INT(value));
 }
 
@@ -95,6 +128,9 @@ static VALUE
 evaluate_value(int value)
 {
   VALUE result = Qnil;
+
+  if (value == 0)
+    return INT2FIX(value);
 
   int score = SCORE_VALUE(value);
 
@@ -120,7 +156,8 @@ static VALUE
 return_values(VALUE object, return_t type)
 {
   int i;
-  int limit = FIX2INT(rb_ivar_get(object, id_at_limit));
+  int start = FIX2INT(rb_ivar_get(object, id_at_start));
+  int stop  = FIX2INT(rb_ivar_get(object, id_at_stop));
 
   VALUE array;
   VALUE value = Qnil;
@@ -132,7 +169,7 @@ return_values(VALUE object, return_t type)
     RETURN_ENUMERATOR(object, 0, 0);
   }
 
-  for (i = 1; i <= limit; i++) {
+  for (i = start; i <= stop; i++) {
     value = evaluate_value(i);
     WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
   }
@@ -140,17 +177,11 @@ return_values(VALUE object, return_t type)
   return WANT_ARRAY(type) ? array : object;
 }
 
-static void
-validate_limit(VALUE value)
-{
-  CHECK_TYPE(value, "invalid value for limit");
-  CHECK_LOWER_BOUNDARY(value, "incorrect value for limit");
-}
-  
 void
 Init_fizzbuzz(void)
 {
-  id_at_limit = rb_intern("@limit");
+  id_at_start = rb_intern("@start");
+  id_at_stop  = rb_intern("@stop");
 
   rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
 
@@ -158,10 +189,12 @@ Init_fizzbuzz(void)
 
   rb_define_const(rb_cFizzBuzz, "VERSION", rb_str_new2(FIZZBUZZ_VERSION));
 
-  rb_define_method(rb_cFizzBuzz, "initialize", fizzbuzz_initialize, 1);
+  rb_define_method(rb_cFizzBuzz, "initialize", fizzbuzz_initialize, -1);
 
-  rb_define_method(rb_cFizzBuzz, "limit", fizzbuzz_get_limit, 0);
-  rb_define_method(rb_cFizzBuzz, "limit=", fizzbuzz_set_limit, 1);
+  rb_define_method(rb_cFizzBuzz, "start", fizzbuzz_get_start, 0);
+  rb_define_method(rb_cFizzBuzz, "start=", fizzbuzz_set_start, 1);
+  rb_define_method(rb_cFizzBuzz, "stop", fizzbuzz_get_stop, 0);
+  rb_define_method(rb_cFizzBuzz, "stop=", fizzbuzz_set_stop, 1);
 
   rb_define_method(rb_cFizzBuzz, "to_a", fizzbuzz_to_array, 0);
   rb_define_method(rb_cFizzBuzz, "each", fizzbuzz_to_enumerator, 0);
