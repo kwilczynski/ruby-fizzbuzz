@@ -32,21 +32,19 @@
 #define WANT_ARRAY(x) ((x) == R_TYPE_ARRAY)
 
 #define CHECK_TYPE(x, m) \
-  if (!FIXNUM_P(x)) \
+  if (!FIXNUM_P(x))      \
     rb_raise(rb_eTypeError, m);
 
 #define CHECK_BOUNDARY(a, b, m) \
-  if (FIX2INT(a) > FIX2INT(b)) \
+  if (FIX2INT(a) > FIX2INT(b))  \
     rb_raise(rb_eArgError, m);
 
 typedef enum {
   E_INVALID_TYPE = 0,
   E_INVALID_START_TYPE,
   E_INVALID_STOP_TYPE,
-  E_MISSING_ARGUMENTS,
-  E_INCORRECT_START,
-  E_INCORRECT_STOP,
-  E_INCORRECT_START_STOP
+  E_BAD_VALUE_START,
+  E_BAD_VALUE_STOP,
 } error_t;
 
 typedef enum {
@@ -55,13 +53,11 @@ typedef enum {
 } return_t;
 
 static const char *errors[] = {
-  "invalid value type",
-  "invalid value type for start",
-  "invalid value type for stop",
-  "must provide start and stop values",
-  "incorrect start value",
-  "incorrect stop value",
-  "incorrect start and stop values",
+  "must be an Integer value",
+  "must be an Integer value for start",
+  "must be an Integer value for stop",
+  "start value is higher than stop value",
+  "stop value is lower than start value",
   NULL
 };
 

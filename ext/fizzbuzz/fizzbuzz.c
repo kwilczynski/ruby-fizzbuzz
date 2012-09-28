@@ -34,13 +34,10 @@ fizzbuzz_initialize(int argc, VALUE *argv, VALUE object)
 
   rb_scan_args(argc, argv, "11", &start, &stop);
 
-  if (NIL_P(start) || NIL_P(stop))
-    rb_raise(rb_eArgError, errors[E_MISSING_ARGUMENTS]);
-
   CHECK_TYPE(start, errors[E_INVALID_START_TYPE])
   CHECK_TYPE(stop, errors[E_INVALID_STOP_TYPE])
 
-  CHECK_BOUNDARY(start, stop, errors[E_INCORRECT_START_STOP])
+  CHECK_BOUNDARY(start, stop, errors[E_BAD_VALUE_START])
 
   rb_ivar_set(object, id_at_start, start);
   rb_ivar_set(object, id_at_stop, stop);
@@ -60,7 +57,7 @@ fizzbuzz_set_start(VALUE object, VALUE value)
   int stop = rb_ivar_get(object, id_at_stop);
 
   CHECK_TYPE(value, errors[E_INVALID_START_TYPE])
-  CHECK_BOUNDARY(value, stop, errors[E_INCORRECT_START])
+  CHECK_BOUNDARY(value, stop, errors[E_BAD_VALUE_START])
 
   rb_ivar_set(object, id_at_start, value);
   return Qnil;
@@ -78,7 +75,7 @@ fizzbuzz_set_stop(VALUE object, VALUE value)
   int start = rb_ivar_get(object, id_at_start);
 
   CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE])
-  CHECK_BOUNDARY(start, value, errors[E_INCORRECT_STOP])
+  CHECK_BOUNDARY(start, value, errors[E_BAD_VALUE_STOP])
 
   rb_ivar_set(object, id_at_stop, value);
   return Qnil;
