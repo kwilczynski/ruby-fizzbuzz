@@ -1,8 +1,7 @@
-fizzbuzz (0.0.2)
+fizzbuzz (0.0.3)
 
   * Add pure-Ruby implementation;
   * Add RDoc and improve documentation i.e. source code commenting;
-  * Fix -- do not always assume calculations from 1 to n, but instead allow
-    for calculations form a to b if such condition is given.
+  * Add benchmarks.
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Thu, 27 Sep 2012 18:48:03 +0200
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Fri, 28 Sep 2012 14:52:46 +0200
