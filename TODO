@@ -1,3 +1,9 @@
+fizzbuzz (0.0.4)
+
+  * Add support for Bignum.
+
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sat, 29 Sep 2012 00:29:12 +0100
+
 fizzbuzz (0.0.3)
 
   * Add pure-Ruby implementation;
