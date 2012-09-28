@@ -61,7 +61,8 @@ static const char *errors[] = {
   "must provide start and stop values",
   "incorrect start value",
   "incorrect stop value",
-  "incorrect start and stop values"
+  "incorrect start and stop values",
+  NULL
 };
 
 static const char *words[] = {
