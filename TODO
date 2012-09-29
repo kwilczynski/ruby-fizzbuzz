@@ -1,8 +1,10 @@
 fizzbuzz (0.0.4)
 
-  * Add support for Bignum.
+  * Add support for Bignum;
+  * Improve github project page;
+  * Use GPG signed tags when tagging new release.
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sat, 29 Sep 2012 00:29:12 +0100
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sat, 29 Sep 2012 15:04:44 +0100
 
 fizzbuzz (0.0.3)
 

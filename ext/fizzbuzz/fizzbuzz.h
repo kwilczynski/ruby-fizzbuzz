@@ -1,20 +1,20 @@
 /*
- fizzbuzz.h
-
- Copyright 2012 Krzysztof Wilczynski
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+ * fizzbuzz.h
+ *
+ * Copyright 2012 Krzysztof Wilczynski
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #ifndef __FIZZBUZZ_H__
 #define __FIZZBUZZ_H__
@@ -31,20 +31,20 @@
 
 #define WANT_ARRAY(x) ((x) == R_TYPE_ARRAY)
 
-#define CHECK_TYPE(x, m) \
-  if (!FIXNUM_P(x))      \
-    rb_raise(rb_eTypeError, m);
+#define CHECK_TYPE(x, m)    \
+    if (!FIXNUM_P(x))       \
+        rb_raise(rb_eTypeError, m);
 
-#define CHECK_BOUNDARY(a, b, m) \
-  if (FIX2INT(a) > FIX2INT(b))  \
-    rb_raise(rb_eArgError, m);
+#define CHECK_BOUNDARY(a, b, m)     \
+    if (FIX2INT(a) > FIX2INT(b))    \
+        rb_raise(rb_eArgError, m);
 
 typedef enum {
-  E_INVALID_TYPE = 0,
-  E_INVALID_START_TYPE,
-  E_INVALID_STOP_TYPE,
-  E_BAD_VALUE_START,
-  E_BAD_VALUE_STOP,
+    E_INVALID_TYPE = 0,
+    E_INVALID_START_TYPE,
+    E_INVALID_STOP_TYPE,
+    E_BAD_VALUE_START,
+    E_BAD_VALUE_STOP,
 } error_t;
 
 typedef enum {
@@ -53,17 +53,17 @@ typedef enum {
 } return_t;
 
 static const char *errors[] = {
-  "must be an Integer value",
-  "must be an Integer value for start",
-  "must be an Integer value for stop",
-  "start value is higher than stop value",
-  "stop value is lower than start value",
-  NULL
+    "must be an Integer value",
+    "must be an Integer value for start",
+    "must be an Integer value for stop",
+    "start value is higher than stop value",
+    "stop value is lower than start value",
+    NULL
 };
 
 static const char *words[] = {
-  "Fizz", "Buzz",
-  "FizzBuzz", NULL
+    "Fizz", "Buzz",
+    "FizzBuzz", NULL
 };
 
 RUBY_EXTERN ID id_at_start, id_at_stop;

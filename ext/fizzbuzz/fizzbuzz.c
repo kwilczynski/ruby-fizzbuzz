@@ -1,20 +1,20 @@
 /*
- fizzbuzz.c
-
- Copyright 2012 Krzysztof Wilczynski
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+ * fizzbuzz.c
+ *
+ * Copyright 2012 Krzysztof Wilczynski
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include <fizzbuzz.h>
 
@@ -30,175 +30,175 @@ static VALUE return_values(VALUE object, return_t type);
 VALUE
 fizzbuzz_initialize(int argc, VALUE *argv, VALUE object)
 {
-  VALUE start, stop;
+    VALUE start, stop;
 
-  rb_scan_args(argc, argv, "11", &start, &stop);
+    rb_scan_args(argc, argv, "11", &start, &stop);
 
-  CHECK_TYPE(start, errors[E_INVALID_START_TYPE])
-  CHECK_TYPE(stop, errors[E_INVALID_STOP_TYPE])
+    CHECK_TYPE(start, errors[E_INVALID_START_TYPE])
+    CHECK_TYPE(stop, errors[E_INVALID_STOP_TYPE])
 
-  CHECK_BOUNDARY(start, stop, errors[E_BAD_VALUE_START])
+    CHECK_BOUNDARY(start, stop, errors[E_BAD_VALUE_START])
 
-  rb_ivar_set(object, id_at_start, start);
-  rb_ivar_set(object, id_at_stop, stop);
+    rb_ivar_set(object, id_at_start, start);
+    rb_ivar_set(object, id_at_stop, stop);
 
-  return object;
+    return object;
 }
 
 VALUE
 fizzbuzz_get_start(VALUE object)
 {
-  return rb_ivar_get(object, id_at_start);
+    return rb_ivar_get(object, id_at_start);
 }
 
 VALUE
 fizzbuzz_set_start(VALUE object, VALUE value)
 {
-  int stop = rb_ivar_get(object, id_at_stop);
+    int stop = rb_ivar_get(object, id_at_stop);
 
-  CHECK_TYPE(value, errors[E_INVALID_START_TYPE])
-  CHECK_BOUNDARY(value, stop, errors[E_BAD_VALUE_START])
+    CHECK_TYPE(value, errors[E_INVALID_START_TYPE])
+    CHECK_BOUNDARY(value, stop, errors[E_BAD_VALUE_START])
 
-  rb_ivar_set(object, id_at_start, value);
-  return Qnil;
+    rb_ivar_set(object, id_at_start, value);
+    return Qnil;
 }
 
 VALUE
 fizzbuzz_get_stop(VALUE object)
 {
-  return rb_ivar_get(object, id_at_stop);
+    return rb_ivar_get(object, id_at_stop);
 }
 
 VALUE
 fizzbuzz_set_stop(VALUE object, VALUE value)
 {
-  int start = rb_ivar_get(object, id_at_start);
+    int start = rb_ivar_get(object, id_at_start);
 
-  CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE])
-  CHECK_BOUNDARY(start, value, errors[E_BAD_VALUE_STOP])
+    CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE])
+    CHECK_BOUNDARY(start, value, errors[E_BAD_VALUE_STOP])
 
-  rb_ivar_set(object, id_at_stop, value);
-  return Qnil;
+    rb_ivar_set(object, id_at_stop, value);
+    return Qnil;
 }
 
 VALUE
 fizzbuzz_to_array(VALUE object)
 {
-  return return_values(object, R_TYPE_ARRAY);
+    return return_values(object, R_TYPE_ARRAY);
 }
 
 VALUE
 fizzbuzz_to_enumerator(VALUE object)
 {
-  return return_values(object, R_TYPE_ENUMERATOR);
+    return return_values(object, R_TYPE_ENUMERATOR);
 }
 
 VALUE
 fizzbuzz_is_fizz(VALUE object, VALUE value)
 {
-  CHECK_TYPE(value, errors[E_INVALID_TYPE])
-  return IS_FIZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+    CHECK_TYPE(value, errors[E_INVALID_TYPE])
+    return IS_FIZZ(FIX2INT(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_buzz(VALUE object, VALUE value)
 {
-  CHECK_TYPE(value, errors[E_INVALID_TYPE])
-  return IS_BUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+    CHECK_TYPE(value, errors[E_INVALID_TYPE])
+    return IS_BUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_fizzbuzz(VALUE object, VALUE value)
 {
-  CHECK_TYPE(value, errors[E_INVALID_TYPE])
-  return IS_FIZZBUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+    CHECK_TYPE(value, errors[E_INVALID_TYPE])
+    return IS_FIZZBUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_square(VALUE object, VALUE value)
 {
-  CHECK_TYPE(value, errors[E_INVALID_TYPE])
-  return evaluate_value(FIX2INT(value));
+    CHECK_TYPE(value, errors[E_INVALID_TYPE])
+    return evaluate_value(FIX2INT(value));
 }
 
 static VALUE
 evaluate_value(int value)
 {
-  VALUE result = Qnil;
+    VALUE result = Qnil;
 
-  if (value == 0)
-    return INT2FIX(value);
+    if (value == 0)
+        return INT2FIX(value);
 
-  int score = SCORE_VALUE(value);
+    int score = SCORE_VALUE(value);
 
-  switch(score) {
+    switch(score) {
     case 0:
-      result = INT2FIX(value);
-      break;
+        result = INT2FIX(value);
+        break;
     case 1:
-      result = rb_str_new2(words[score - 1]);
-      break;
+        result = rb_str_new2(words[score - 1]);
+        break;
     case 2:
-      result = rb_str_new2(words[score - 1]);
-      break;
+        result = rb_str_new2(words[score - 1]);
+        break;
     case 3:
-      result = rb_str_new2(words[score - 1]);
-      break;
-  }
+        result = rb_str_new2(words[score - 1]);
+        break;
+    }
 
-  return result;
+    return result;
 }
 
 static VALUE
 return_values(VALUE object, return_t type)
 {
-  int i;
-  int start = FIX2INT(rb_ivar_get(object, id_at_start));
-  int stop  = FIX2INT(rb_ivar_get(object, id_at_stop));
+    int i;
+    int start = FIX2INT(rb_ivar_get(object, id_at_start));
+    int stop  = FIX2INT(rb_ivar_get(object, id_at_stop));
 
-  VALUE array;
-  VALUE value = Qnil;
+    VALUE array;
+    VALUE value = Qnil;
 
-  if (WANT_ARRAY(type)) {
-    array = rb_ary_new();
-  }
-  else {
-    RETURN_ENUMERATOR(object, 0, 0);
-  }
+    if (WANT_ARRAY(type)) {
+        array = rb_ary_new();
+    }
+    else {
+        RETURN_ENUMERATOR(object, 0, 0);
+    }
 
-  for (i = start; i <= stop; i++) {
-    value = evaluate_value(i);
-    WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
-  }
+    for (i = start; i <= stop; i++) {
+        value = evaluate_value(i);
+        WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+    }
 
-  return WANT_ARRAY(type) ? array : object;
+    return WANT_ARRAY(type) ? array : object;
 }
 
 void
 Init_fizzbuzz(void)
 {
-  id_at_start = rb_intern("@start");
-  id_at_stop  = rb_intern("@stop");
+    id_at_start = rb_intern("@start");
+    id_at_stop  = rb_intern("@stop");
 
-  rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
+    rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
 
-  rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
+    rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
 
-  rb_define_const(rb_cFizzBuzz, "VERSION", rb_str_new2(FIZZBUZZ_VERSION));
+    rb_define_const(rb_cFizzBuzz, "VERSION", rb_str_new2(FIZZBUZZ_VERSION));
 
-  rb_define_method(rb_cFizzBuzz, "initialize", fizzbuzz_initialize, -1);
+    rb_define_method(rb_cFizzBuzz, "initialize", fizzbuzz_initialize, -1);
 
-  rb_define_method(rb_cFizzBuzz, "start", fizzbuzz_get_start, 0);
-  rb_define_method(rb_cFizzBuzz, "start=", fizzbuzz_set_start, 1);
-  rb_define_method(rb_cFizzBuzz, "stop", fizzbuzz_get_stop, 0);
-  rb_define_method(rb_cFizzBuzz, "stop=", fizzbuzz_set_stop, 1);
+    rb_define_method(rb_cFizzBuzz, "start", fizzbuzz_get_start, 0);
+    rb_define_method(rb_cFizzBuzz, "start=", fizzbuzz_set_start, 1);
+    rb_define_method(rb_cFizzBuzz, "stop", fizzbuzz_get_stop, 0);
+    rb_define_method(rb_cFizzBuzz, "stop=", fizzbuzz_set_stop, 1);
 
-  rb_define_method(rb_cFizzBuzz, "to_a", fizzbuzz_to_array, 0);
-  rb_define_method(rb_cFizzBuzz, "each", fizzbuzz_to_enumerator, 0);
+    rb_define_method(rb_cFizzBuzz, "to_a", fizzbuzz_to_array, 0);
+    rb_define_method(rb_cFizzBuzz, "each", fizzbuzz_to_enumerator, 0);
 
-  rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", fizzbuzz_is_fizz, 1);
-  rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", fizzbuzz_is_buzz, 1);
-  rb_define_singleton_method(rb_cFizzBuzz, "is_fizzbuzz?", fizzbuzz_is_fizzbuzz, 1);
+    rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", fizzbuzz_is_fizz, 1);
+    rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", fizzbuzz_is_buzz, 1);
+    rb_define_singleton_method(rb_cFizzBuzz, "is_fizzbuzz?", fizzbuzz_is_fizzbuzz, 1);
 
-  rb_define_singleton_method(rb_cFizzBuzz, "[]", fizzbuzz_square, 1);
+    rb_define_singleton_method(rb_cFizzBuzz, "[]", fizzbuzz_square, 1);
 }
