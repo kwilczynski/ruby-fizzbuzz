@@ -111,14 +111,14 @@ class BizzBuzz_Test < Test::Unit::TestCase
     end
   end
 
-  def test_type_error
+  def test_arguments_type_error_strings
     assert_raise TypeError do
       FizzBuzz.new('', '')
     end
   end
 
-  def test_argument_error
-    assert_raise ArgumentError do
+  def test_arguments_type_error_nils
+    assert_raise TypeError do
       FizzBuzz.new(nil, nil)
     end
   end
