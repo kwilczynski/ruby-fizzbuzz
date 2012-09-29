@@ -51,5 +51,5 @@ Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
   s.test_files  << 'test/test_fizzbuzz.rb'
 end
 
-# vim: set ts=2 sw=2 et :
+# vim: set ts=2 sw=2 sts=2 et :
 # encoding: utf-8

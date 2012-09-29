@@ -171,5 +171,5 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 end
 
-# vim: set ts=2 sw=2 et :
-# # encoding: utf-8
+# vim: set ts=2 sw=2 sts=2 et :
+# encoding: utf-8

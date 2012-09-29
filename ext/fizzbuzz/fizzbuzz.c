@@ -202,3 +202,5 @@ Init_fizzbuzz(void)
 
     rb_define_singleton_method(rb_cFizzBuzz, "[]", fizzbuzz_square, 1);
 }
+
+/* vim: set ts=8 sw=4 sts=2 et : */

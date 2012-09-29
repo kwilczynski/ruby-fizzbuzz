@@ -29,5 +29,5 @@ dir_config('fizzbuzz')
 create_header
 create_makefile('fizzbuzz/fizzbuzz')
 
-# vim: set ts=2 sw=2 et :
+# vim: set ts=2 sw=2 sts=2 et :
 # encoding: utf-8

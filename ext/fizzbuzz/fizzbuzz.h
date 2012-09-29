@@ -86,3 +86,5 @@ RUBY_EXTERN VALUE fizzbuzz_is_fizzbuzz(VALUE object, VALUE value);
 RUBY_EXTERN VALUE fizzbuzz_square(VALUE object, VALUE value);
 
 #endif /* __FIZZBUZZ_H__ */
+
+/* vim: set ts=8 sw=4 sts=2 et : */
