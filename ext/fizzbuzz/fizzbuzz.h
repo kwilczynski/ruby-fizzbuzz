@@ -48,7 +48,7 @@
     if (!(TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)) \
         rb_raise(rb_eTypeError, m);
 
-#define CHECK_BOUNDARY(a, b, m) \
+#define CHECK_BOUNDARY(a, b, m)     \
     if (NUM2TYPE(a) > NUM2TYPE(b))  \
         rb_raise(rb_eArgError, m);
 
