@@ -21,7 +21,7 @@
 Gem::Specification.new do |s|
   s.name     = 'fizzbuzz'
   s.version  = File.read('VERSION').strip
-  s.license  = 'Apache 2'
+  s.license  = 'Apache License, Version 2.0'
   s.author   = 'Krzysztof Wilczynski'
   s.email    = 'krzysztof.wilczynski@linux.com'
   s.homepage = 'http://about.me/kwilczynski'
