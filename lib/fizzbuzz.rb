@@ -22,11 +22,13 @@ require 'fizzbuzz/fizzbuzz'
 require 'fizzbuzz/integer'
 
 class FizzBuzz
-  def self.fizzbuzz(start, stop, &block)
+  def self.fizzbuzz(start, stop, reverse = false, &block)
+    fb = FizzBuzz.new(start, stop)
+
     if block_given?
-      FizzBuzz.new(start, stop).each {|i| block.call(i) }
+      fb.send(reverse ? 'reverse_each' : 'each') {|i| block.call(i) }
     else
-      FizzBuzz.new(start, stop).to_a
+      reverse ? fb.to_a.reverse : fb.to_a
     end
   end
 end

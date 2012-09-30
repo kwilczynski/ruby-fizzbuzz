@@ -25,7 +25,10 @@ void Init_fizzbuzz(void);
 
 static void validate_limit(VALUE value);
 static VALUE evaluate_value(VALUE_TYPE value);
-static VALUE return_values(VALUE object, return_t type);
+
+static VALUE return_values(VALUE object, return_t type, direction_t direction);
+static VALUE return_values_forward(VALUE object, return_t type);
+static VALUE return_values_reverse(VALUE object, return_t type);
 
 VALUE
 fizzbuzz_initialize(int argc, VALUE *argv, VALUE object)
@@ -84,13 +87,19 @@ fizzbuzz_set_stop(VALUE object, VALUE value)
 VALUE
 fizzbuzz_to_array(VALUE object)
 {
-    return return_values(object, R_TYPE_ARRAY);
+    return return_values_forward(object, R_TYPE_ARRAY);
 }
 
 VALUE
 fizzbuzz_to_enumerator(VALUE object)
 {
-    return return_values(object, R_TYPE_ENUMERATOR);
+    return return_values_forward(object, R_TYPE_ENUMERATOR);
+}
+
+VALUE
+fizzbuzz_to_reverse_enumerator(VALUE object)
+{
+    return return_values_reverse(object, R_TYPE_ENUMERATOR);
 }
 
 VALUE
@@ -150,7 +159,7 @@ evaluate_value(VALUE_TYPE value)
 }
 
 static VALUE
-return_values(VALUE object, return_t type)
+return_values(VALUE object, return_t type, direction_t direction)
 {
     VALUE_TYPE i;
     VALUE_TYPE start = NUM2TYPE(rb_ivar_get(object, id_at_start));
@@ -166,12 +175,32 @@ return_values(VALUE object, return_t type)
         RETURN_ENUMERATOR(object, 0, 0);
     }
 
-    for (i = start; i <= stop; i++) {
-        value = evaluate_value(i);
-        WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+    if (LOOP_FORWARD(direction)) {
+        for (i = start; i <= stop; i++) {
+            value = evaluate_value(i);
+            WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+        }
+    }
+    else {
+        for (i = stop; i >= start; i--) {
+            value = evaluate_value(i);
+            WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+        }
     }
 
     return WANT_ARRAY(type) ? array : object;
+}
+
+static VALUE
+return_values_forward(VALUE object, return_t type)
+{
+    return return_values(object, type, D_LOOP_FORWARD);
+}
+
+static VALUE
+return_values_reverse(VALUE object, return_t type)
+{
+    return return_values(object, type, D_LOOP_REVERSE);
 }
 
 void
@@ -195,6 +224,7 @@ Init_fizzbuzz(void)
 
     rb_define_method(rb_cFizzBuzz, "to_a", fizzbuzz_to_array, 0);
     rb_define_method(rb_cFizzBuzz, "each", fizzbuzz_to_enumerator, 0);
+    rb_define_method(rb_cFizzBuzz, "reverse_each", fizzbuzz_to_reverse_enumerator, 0);
 
     rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", fizzbuzz_is_fizz, 1);
     rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", fizzbuzz_is_buzz, 1);
