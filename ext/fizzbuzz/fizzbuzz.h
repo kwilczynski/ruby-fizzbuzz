@@ -41,6 +41,9 @@
 
 #define WANT_ARRAY(x) ((x) == R_TYPE_ARRAY)
 
+#define LOOP_FORWARD(x) ((x) == D_LOOP_FORWARD)
+#define LOOP_REVERSE(x) ((x) == D_LOOP_REVERSE)
+
 #define CHECK_TYPE(x, m)                               \
     if (!(TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)) \
         rb_raise(rb_eTypeError, m);
@@ -61,6 +64,11 @@ typedef enum {
   R_TYPE_ARRAY = 0,
   R_TYPE_ENUMERATOR
 } return_t;
+
+typedef enum {
+    D_LOOP_FORWARD = 0,
+    D_LOOP_REVERSE
+} direction_t;
 
 static const char *errors[] = {
     "must be an numeric value",
@@ -88,6 +96,7 @@ RUBY_EXTERN VALUE fizzbuzz_set_stop(VALUE object, VALUE value);
 
 RUBY_EXTERN VALUE fizzbuzz_to_array(VALUE object);
 RUBY_EXTERN VALUE fizzbuzz_to_enumerator(VALUE object);
+RUBY_EXTERN VALUE fizzbuzz_to_reverse_enumerator(VALUE object);
 
 RUBY_EXTERN VALUE fizzbuzz_is_fizz(VALUE object, VALUE value);
 RUBY_EXTERN VALUE fizzbuzz_is_buzz(VALUE object, VALUE value);

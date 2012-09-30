@@ -4,32 +4,95 @@ require 'test/unit'
 require 'fizzbuzz'
 
 DEFAULT_START    = 1
-DEFAULT_STOP     = 10
-DEFAULT_WORDS    = [ 'Fizz', 'Buzz', 'FizzBuzz' ]
-DEFAULT_EXPECTED = [ 1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz' ]
+DEFAULT_STOP     = 15
+DEFAULT_WORDS    = ['Fizz', 'Buzz', 'FizzBuzz']
+DEFAULT_EXPECTED = [1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz', 11, 'Fizz', 13, 14, 'FizzBuzz']
 
-DEFAULT_BIGNUM = 1_000_000_000_000
+DEFAULT_SINGLETON_METHODS = [:fizzbuzz, :is_fizz?, :is_buzz?, :is_fizzbuzz?]
+DEFAULT_INSTANCE_METHODS  = [:to_a, :each, :reverse_each]
+
+DEFAULT_INSTANCE_METHODS_ADDED = [:fizz?, :buzz?, :fizzbuzz?]
+
+DEFAULT_INTEGER = 1
+DEFAULT_BIGNUM  = 1_000_000_000_000
 
 class BizzBuzz_Test < Test::Unit::TestCase
   def test_fizzbuzz_alias
     assert_equal(FB, FizzBuzz)
   end
 
-  def test_singleton_fizzbuzz
+  def test_fizzbuzz_singleton_methods
+    fb = FizzBuzz
+
+    assert_block do
+      DEFAULT_SINGLETON_METHODS.all? {|i| fb.respond_to?(i) }
+    end
+  end
+
+  def test_fizzbuzz_instance_methods
+    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
+
+    assert_block do
+      DEFAULT_INSTANCE_METHODS.all? {|i| fb.respond_to?(i) }
+    end
+  end
+
+  def test_integer_integration
+    assert_block do
+      DEFAULT_INSTANCE_METHODS_ADDED.all? {|i| DEFAULT_INTEGER.respond_to?(i) }
+    end
+  end
+
+  def test_bignum_integration
+    assert_block do
+      DEFAULT_INSTANCE_METHODS_ADDED.all? {|i| DEFAULT_BIGNUM.respond_to?(i) }
+    end
+  end
+
+  def test_singleton_fizzbuzz_incorrect_argument_error
+    assert_raise ArgumentError do
+      FizzBuzz.fizzbuzz(2, 1)
+    end
+  end
+
+  def test_singleton_fizzbuzz_incorrect_type_error
+    assert_raise TypeError do
+      FizzBuzz.fizzbuzz('', '')
+    end
+  end
+
+  def test_singleton_fizzbuzz_integer
+    integer = DEFAULT_INTEGER + 14
+    obtainted = FizzBuzz.fizzbuzz(integer, integer)
+    assert_equal(obtainted, ['FizzBuzz'])
+  end
+
+  def test_singleton_fizzbuzz_bignum
+    bignum = DEFAULT_BIGNUM + 5
+    obtainted = FizzBuzz.fizzbuzz(bignum, bignum)
+    assert_equal(obtainted, ['FizzBuzz'])
+  end
+
+  def test_singleton_fizzbuzz_array
     obtained = FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP)
     assert_equal(obtained, DEFAULT_EXPECTED)
   end
 
-  def test_singleton_fizzbuzz_array
-    assert_block do
-      FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP).is_a?(Array)
-    end
+  def test_singleton_fizzbuzz_array_reverse
+    obtained = FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP, true)
+    assert_equal(obtained, DEFAULT_EXPECTED.reverse)
   end
 
   def test_singleton_fizzbuzz_block
     obtainted = []
-    FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP).each {|i| obtainted << i }
+    FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP) {|i| obtainted << i }
     assert_equal(obtainted, DEFAULT_EXPECTED)
+  end
+
+  def test_singleton_fizzbuzz_block_reverse
+    obtainted = []
+    FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP, true) {|i| obtainted << i }
+    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
   end
 
   def test_singleton_squre
@@ -96,7 +159,16 @@ class BizzBuzz_Test < Test::Unit::TestCase
     assert_equal(obtainted, DEFAULT_EXPECTED)
   end
 
-  def test_for_fizzbuzz
+  def test_reverse_each
+    obtainted = []
+
+    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
+    fb.reverse_each {|i| obtainted << i }
+
+    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+  end
+
+  def test_for_fizzbuzz_integer
     fb = FizzBuzz.new(DEFAULT_START, 15)
     assert_equal(fb.to_a[14], 'FizzBuzz')
   end
@@ -106,7 +178,7 @@ class BizzBuzz_Test < Test::Unit::TestCase
     assert_equal(fb.to_a[0], 'FizzBuzz')
   end
 
-  def test_correct_start
+  def test_correct_start_integer
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
 
     assert_block do
@@ -126,7 +198,7 @@ class BizzBuzz_Test < Test::Unit::TestCase
     end
   end
 
-  def test_correct_stop
+  def test_correct_stop_integer
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
 
     assert_block do
@@ -186,6 +258,7 @@ class BizzBuzz_Test < Test::Unit::TestCase
 
   def test_correct_start_stop
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
+
     assert_block do
       fb.start = 2
       fb.stop  = 3
@@ -199,7 +272,7 @@ class BizzBuzz_Test < Test::Unit::TestCase
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
 
     assert_raise ArgumentError do
-      fb.start = 11
+      fb.start = 16
     end
   end
 
