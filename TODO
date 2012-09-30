@@ -9,6 +9,7 @@ fizzbuzz (0.0.3)
 
   * Add pure-Ruby implementation;
   * Add RDoc and improve documentation i.e. source code commenting;
-  * Add benchmarks.
+  * Add benchmarks;
+  * Add ability to traverse results in reverse order i.e. FizzBuzz#reverse_each.
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Fri, 28 Sep 2012 14:52:46 +0200
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sun, 30 Sep 2012 21:22:44 +0100
