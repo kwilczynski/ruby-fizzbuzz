@@ -23,6 +23,16 @@
 
 #define FIZZBUZZ_VERSION "0.0.2"
 
+#if HAVE_LONG_LONG
+# define VALUE_TYPE LONG_LONG
+# define TYPE2NUM   LL2NUM
+# define NUM2TYPE   NUM2LL
+#else
+# define VALUE_TYPE long
+# define TYPE2NUM   LONG2NUM
+# define NUM2TYPE   NUM2LONG
+#endif
+
 #define SCORE_VALUE(x) (!((x) % 3) + 2 * !((x) % 5))
 
 #define IS_FIZZ(x)     (SCORE_VALUE(x) == 1)
@@ -31,12 +41,12 @@
 
 #define WANT_ARRAY(x) ((x) == R_TYPE_ARRAY)
 
-#define CHECK_TYPE(x, m)    \
-    if (!FIXNUM_P(x))       \
+#define CHECK_TYPE(x, m)                               \
+    if (!(TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)) \
         rb_raise(rb_eTypeError, m);
 
-#define CHECK_BOUNDARY(a, b, m)     \
-    if (FIX2INT(a) > FIX2INT(b))    \
+#define CHECK_BOUNDARY(a, b, m) \
+    if (NUM2TYPE(a) > NUM2TYPE(b))  \
         rb_raise(rb_eArgError, m);
 
 typedef enum {
@@ -53,9 +63,9 @@ typedef enum {
 } return_t;
 
 static const char *errors[] = {
-    "must be an Integer value",
-    "must be an Integer value for start",
-    "must be an Integer value for stop",
+    "must be an numeric value",
+    "must be an numeric value for start",
+    "must be an numeric value for stop",
     "start value is higher than stop value",
     "stop value is lower than start value",
     NULL

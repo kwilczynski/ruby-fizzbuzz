@@ -24,7 +24,7 @@ VALUE rb_cFizzBuzz = Qnil;
 void Init_fizzbuzz(void);
 
 static void validate_limit(VALUE value);
-static VALUE evaluate_value(int value);
+static VALUE evaluate_value(VALUE_TYPE value);
 static VALUE return_values(VALUE object, return_t type);
 
 VALUE
@@ -54,7 +54,7 @@ fizzbuzz_get_start(VALUE object)
 VALUE
 fizzbuzz_set_start(VALUE object, VALUE value)
 {
-    int stop = rb_ivar_get(object, id_at_stop);
+    VALUE_TYPE stop = rb_ivar_get(object, id_at_stop);
 
     CHECK_TYPE(value, errors[E_INVALID_START_TYPE])
     CHECK_BOUNDARY(value, stop, errors[E_BAD_VALUE_START])
@@ -72,7 +72,7 @@ fizzbuzz_get_stop(VALUE object)
 VALUE
 fizzbuzz_set_stop(VALUE object, VALUE value)
 {
-    int start = rb_ivar_get(object, id_at_start);
+    VALUE_TYPE start = rb_ivar_get(object, id_at_start);
 
     CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE])
     CHECK_BOUNDARY(start, value, errors[E_BAD_VALUE_STOP])
@@ -97,43 +97,43 @@ VALUE
 fizzbuzz_is_fizz(VALUE object, VALUE value)
 {
     CHECK_TYPE(value, errors[E_INVALID_TYPE])
-    return IS_FIZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+    return IS_FIZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_buzz(VALUE object, VALUE value)
 {
     CHECK_TYPE(value, errors[E_INVALID_TYPE])
-    return IS_BUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+    return IS_BUZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_fizzbuzz(VALUE object, VALUE value)
 {
     CHECK_TYPE(value, errors[E_INVALID_TYPE])
-    return IS_FIZZBUZZ(FIX2INT(value)) ? Qtrue : Qfalse;
+    return IS_FIZZBUZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_square(VALUE object, VALUE value)
 {
     CHECK_TYPE(value, errors[E_INVALID_TYPE])
-    return evaluate_value(FIX2INT(value));
+    return evaluate_value(NUM2TYPE(value));
 }
 
 static VALUE
-evaluate_value(int value)
+evaluate_value(VALUE_TYPE value)
 {
     VALUE result = Qnil;
 
     if (value == 0)
-        return INT2FIX(value);
+        return TYPE2NUM(value);
 
     int score = SCORE_VALUE(value);
 
     switch(score) {
     case 0:
-        result = INT2FIX(value);
+        result = TYPE2NUM(value);
         break;
     case 1:
         result = rb_str_new2(words[score - 1]);
@@ -152,9 +152,9 @@ evaluate_value(int value)
 static VALUE
 return_values(VALUE object, return_t type)
 {
-    int i;
-    int start = FIX2INT(rb_ivar_get(object, id_at_start));
-    int stop  = FIX2INT(rb_ivar_get(object, id_at_stop));
+    VALUE_TYPE i;
+    VALUE_TYPE start = NUM2TYPE(rb_ivar_get(object, id_at_start));
+    VALUE_TYPE stop  = NUM2TYPE(rb_ivar_get(object, id_at_stop));
 
     VALUE array;
     VALUE value = Qnil;

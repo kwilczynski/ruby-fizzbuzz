@@ -8,6 +8,8 @@ DEFAULT_STOP     = 10
 DEFAULT_WORDS    = [ 'Fizz', 'Buzz', 'FizzBuzz' ]
 DEFAULT_EXPECTED = [ 1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz' ]
 
+DEFAULT_BIGNUM = 1_000_000_000_000
+
 class BizzBuzz_Test < Test::Unit::TestCase
   def test_fizzbuzz_alias
     assert_equal(FB, FizzBuzz)
@@ -37,6 +39,20 @@ class BizzBuzz_Test < Test::Unit::TestCase
       obtained_fizz     = FizzBuzz[3]
       obtained_buzz     = FizzBuzz[5]
       obtained_fizzbuzz = FizzBuzz[15]
+
+      [obtained_fizz, obtained_buzz, obtained_fizzbuzz].all? do |i|
+        i.is_a?(String) and DEFAULT_WORDS.include?(i)
+      end
+    end
+  end
+
+  def test_singleton_squre_bignum
+    assert_block do
+      FizzBuzz[DEFAULT_BIGNUM].is_a?(Bignum)
+
+      obtained_fizz     = FizzBuzz[DEFAULT_BIGNUM + 2]
+      obtained_buzz     = FizzBuzz[DEFAULT_BIGNUM + 5]
+      obtained_fizzbuzz = FizzBuzz[DEFAULT_BIGNUM + 15]
 
       [obtained_fizz, obtained_buzz, obtained_fizzbuzz].all? do |i|
         i.is_a?(String) and DEFAULT_WORDS.include?(i)
@@ -85,13 +101,28 @@ class BizzBuzz_Test < Test::Unit::TestCase
     assert_equal(fb.to_a[14], 'FizzBuzz')
   end
 
+  def test_for_fizzbuzz_bignum
+    fb = FizzBuzz.new(DEFAULT_BIGNUM + 5, DEFAULT_BIGNUM + 5)
+    assert_equal(fb.to_a[0], 'FizzBuzz')
+  end
+
   def test_correct_start
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
 
     assert_block do
-      fb.start.is_a?(Integer) and fb.start.equal?(1)
+      fb.start.is_a?(Integer) and fb.start == 1
       fb.start = 2
-      fb.start.is_a?(Integer) and fb.start.equal?(2)
+      fb.start.is_a?(Integer) and fb.start == 2
+    end
+  end
+
+  def test_correct_start_bignum
+    fb = FizzBuzz.new(DEFAULT_BIGNUM, DEFAULT_BIGNUM)
+
+    assert_block do
+      fb.start.is_a?(Bignum) and fb.start == DEFAULT_BIGNUM
+      fb.start = DEFAULT_BIGNUM - 5
+      fb.start.is_a?(Bignum) and fb.start == (DEFAULT_BIGNUM - 5)
     end
   end
 
@@ -99,9 +130,19 @@ class BizzBuzz_Test < Test::Unit::TestCase
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
 
     assert_block do
-      fb.stop.is_a?(Integer) and fb.stop.equal?(10)
+      fb.stop.is_a?(Integer) and fb.stop == 10
       fb.stop = 5
-      fb.stop.is_a?(Integer) and fb.stop.equal?(5)
+      fb.stop.is_a?(Integer) and fb.stop == 5
+    end
+  end
+
+  def test_correct_stop_bignum
+    fb = FizzBuzz.new(DEFAULT_BIGNUM, DEFAULT_BIGNUM)
+
+    assert_block do
+      fb.stop.is_a?(Bignum) and fb.stop == DEFAULT_BIGNUM
+      fb.stop = DEFAULT_BIGNUM + 5
+      fb.stop.is_a?(Bignum) and fb.stop == (DEFAULT_BIGNUM + 5)
     end
   end
 
@@ -149,8 +190,8 @@ class BizzBuzz_Test < Test::Unit::TestCase
       fb.start = 2
       fb.stop  = 3
 
-      fb.start.is_a?(Integer) and fb.start.equal?(2)
-      fb.stop.is_a?(Integer) and fb.stop.equal?(3)
+      fb.start.is_a?(Integer) and fb.start == 2
+      fb.stop.is_a?(Integer) and fb.stop == 3
     end
   end
 
@@ -167,6 +208,12 @@ class BizzBuzz_Test < Test::Unit::TestCase
 
     assert_raise ArgumentError do
       fb.stop = -1
+    end
+  end
+
+  def test_for_range_error
+    assert_raise RangeError do
+      FizzBuzz.new(DEFAULT_START, DEFAULT_BIGNUM ** 2)
     end
   end
 end
