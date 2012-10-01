@@ -26,7 +26,7 @@ class FizzBuzz
     fb = FizzBuzz.new(start, stop)
 
     if block_given?
-      fb.send(reverse ? 'reverse_each' : 'each') {|i| block.call(i) }
+      fb.send(reverse ? :reverse_each : :each) {|i| block.call(i) }
     else
       reverse ? fb.to_a.reverse : fb.to_a
     end
