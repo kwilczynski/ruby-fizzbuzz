@@ -35,9 +35,11 @@
 
 #define SCORE_VALUE(x) (!((x) % 3) + 2 * !((x) % 5))
 
-#define IS_FIZZ(x)     (SCORE_VALUE(x) == 1)
-#define IS_BUZZ(x)     (SCORE_VALUE(x) == 2)
-#define IS_FIZZBUZZ(x) (SCORE_VALUE(x) == 3)
+#define IS_NON_ZERO(x) (!(x) == 0)
+
+#define IS_FIZZ(x)     (IS_NON_ZERO(x) && SCORE_VALUE(x) == 1)
+#define IS_BUZZ(x)     (IS_NON_ZERO(x) && SCORE_VALUE(x) == 2)
+#define IS_FIZZBUZZ(x) (IS_NON_ZERO(x) && SCORE_VALUE(x) == 3)
 
 #define WANT_ARRAY(x) ((x) == R_TYPE_ARRAY)
 

@@ -145,6 +145,16 @@ class BizzBuzz_Test < Test::Unit::TestCase
     end
   end
 
+  def test_fizzbuzz_for_0
+    obtained_square      = FizzBuzz[0]
+    obtained_is_fizzbuzz = FizzBuzz.is_fizzbuzz?(0)
+
+    assert_block do
+      obtained_square.is_a?(Integer)         and obtained_square == 0
+      obtained_is_fizzbuzz.is_a?(FalseClass) and obtained_is_fizzbuzz == false
+    end
+  end
+
   def test_to_a
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
     assert_equal(fb.to_a, DEFAULT_EXPECTED)
