@@ -1,14 +1,24 @@
+fizzbuzz (1.0.0)
+
+  * Add simple web interface with RESTful backend API.
+
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Mon, 01 Oct 2012 17:57:18 +0100
+
 fizzbuzz (0.0.4)
 
   * Improve github project page;
-  * Use GPG signed tags when tagging new release.
+  * Use GPG signed tags when tagging new release;
+  * Re-factor unit tests to make them more idiotmatic (maybe move to Rspec and BDD?).
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sun, 30 Sep 2012 00:13:13 +0100
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Mon, 01 Oct 2012 17:57:18 +0100
 
 fizzbuzz (0.0.3)
 
   * Add pure-Ruby implementation;
-  * Add RDoc and improve documentation i.e. source code commenting;
+  * Add RDoc and improve documentation i.e. source code commenting, README file, etc;
   * Add benchmarks;
+  * Add some examples;
+  * Add Travis CI integration;
+  * Improve fizzbuzz binary (add more options e.g. --reverse, etc).
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sun, 30 Sep 2012 21:49:42 +0100
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Mon, 01 Oct 2012 17:57:18 +0100
