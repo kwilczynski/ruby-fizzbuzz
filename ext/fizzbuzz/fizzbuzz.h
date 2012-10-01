@@ -25,12 +25,12 @@
 
 #if HAVE_LONG_LONG
 # define VALUE_TYPE LONG_LONG
-# define TYPE2NUM   LL2NUM
-# define NUM2TYPE   NUM2LL
+# define TYPE2NUM LL2NUM
+# define NUM2TYPE NUM2LL
 #else
 # define VALUE_TYPE long
-# define TYPE2NUM   LONG2NUM
-# define NUM2TYPE   NUM2LONG
+# define TYPE2NUM LONG2NUM
+# define NUM2TYPE NUM2LONG
 #endif
 
 #define SCORE_VALUE(x) (!((x) % 3) + 2 * !((x) % 5))
@@ -46,13 +46,17 @@
 #define LOOP_FORWARD(x) ((x) == D_LOOP_FORWARD)
 #define LOOP_REVERSE(x) ((x) == D_LOOP_REVERSE)
 
-#define CHECK_TYPE(x, m)                               \
-    if (!(TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)) \
-        rb_raise(rb_eTypeError, m);
+#define CHECK_TYPE(x, m)                                   \
+    do {                                                   \
+        if (!(TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)) \
+            rb_raise(rb_eTypeError, m);                    \
+    } while (0)
 
-#define CHECK_BOUNDARY(a, b, m)     \
-    if (NUM2TYPE(a) > NUM2TYPE(b))  \
-        rb_raise(rb_eArgError, m);
+#define CHECK_BOUNDARY(a, b, m)         \
+    do {                                \
+        if (NUM2TYPE(a) > NUM2TYPE(b))  \
+            rb_raise(rb_eArgError, m);  \
+    } while (0)
 
 typedef enum {
     E_INVALID_TYPE = 0,

@@ -37,10 +37,10 @@ fizzbuzz_initialize(int argc, VALUE *argv, VALUE object)
 
     rb_scan_args(argc, argv, "11", &start, &stop);
 
-    CHECK_TYPE(start, errors[E_INVALID_START_TYPE])
-    CHECK_TYPE(stop, errors[E_INVALID_STOP_TYPE])
+    CHECK_TYPE(start, errors[E_INVALID_START_TYPE]);
+    CHECK_TYPE(stop, errors[E_INVALID_STOP_TYPE]);
 
-    CHECK_BOUNDARY(start, stop, errors[E_BAD_VALUE_START])
+    CHECK_BOUNDARY(start, stop, errors[E_BAD_VALUE_START]);
 
     rb_ivar_set(object, id_at_start, start);
     rb_ivar_set(object, id_at_stop, stop);
@@ -59,8 +59,8 @@ fizzbuzz_set_start(VALUE object, VALUE value)
 {
     VALUE_TYPE stop = rb_ivar_get(object, id_at_stop);
 
-    CHECK_TYPE(value, errors[E_INVALID_START_TYPE])
-    CHECK_BOUNDARY(value, stop, errors[E_BAD_VALUE_START])
+    CHECK_TYPE(value, errors[E_INVALID_START_TYPE]);
+    CHECK_BOUNDARY(value, stop, errors[E_BAD_VALUE_START]);
 
     rb_ivar_set(object, id_at_start, value);
     return Qnil;
@@ -77,8 +77,8 @@ fizzbuzz_set_stop(VALUE object, VALUE value)
 {
     VALUE_TYPE start = rb_ivar_get(object, id_at_start);
 
-    CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE])
-    CHECK_BOUNDARY(start, value, errors[E_BAD_VALUE_STOP])
+    CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE]);
+    CHECK_BOUNDARY(start, value, errors[E_BAD_VALUE_STOP]);
 
     rb_ivar_set(object, id_at_stop, value);
     return Qnil;
@@ -105,28 +105,28 @@ fizzbuzz_to_reverse_enumerator(VALUE object)
 VALUE
 fizzbuzz_is_fizz(VALUE object, VALUE value)
 {
-    CHECK_TYPE(value, errors[E_INVALID_TYPE])
+    CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return IS_FIZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_buzz(VALUE object, VALUE value)
 {
-    CHECK_TYPE(value, errors[E_INVALID_TYPE])
+    CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return IS_BUZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_fizzbuzz(VALUE object, VALUE value)
 {
-    CHECK_TYPE(value, errors[E_INVALID_TYPE])
+    CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return IS_FIZZBUZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_square(VALUE object, VALUE value)
 {
-    CHECK_TYPE(value, errors[E_INVALID_TYPE])
+    CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return evaluate_value(NUM2TYPE(value));
 }
 
