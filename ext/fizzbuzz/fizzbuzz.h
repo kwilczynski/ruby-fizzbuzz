@@ -19,8 +19,6 @@
 #ifndef __FIZZBUZZ_H__
 #define __FIZZBUZZ_H__
 
-#include <ruby.h>
-
 #define FIZZBUZZ_VERSION "0.0.2"
 
 #if HAVE_LONG_LONG

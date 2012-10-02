@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+#include <ruby.h>
 #include <fizzbuzz.h>
 
 ID id_at_start, id_at_stop;
