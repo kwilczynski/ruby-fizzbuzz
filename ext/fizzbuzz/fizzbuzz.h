@@ -62,7 +62,7 @@
     } while (0)
 
 typedef enum error       error_t;
-typedef enum return_type return_t;
+typedef enum return_type return_type_t;
 typedef enum direction   direction_t;
 
 enum error {

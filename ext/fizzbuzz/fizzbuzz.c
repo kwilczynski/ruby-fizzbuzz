@@ -27,9 +27,9 @@ void Init_fizzbuzz(void);
 static void validate_limit(VALUE value);
 static VALUE evaluate_value(VALUE_TYPE value);
 
-static VALUE return_values(VALUE object, return_t type, direction_t direction);
-inline static VALUE return_values_forward(VALUE object, return_t type);
-inline static VALUE return_values_reverse(VALUE object, return_t type);
+static VALUE return_values(VALUE object, return_type_t type, direction_t direction);
+inline static VALUE return_values_forward(VALUE object, return_type_t type);
+inline static VALUE return_values_reverse(VALUE object, return_type_t type);
 
 VALUE
 fizzbuzz_initialize(int argc, VALUE *argv, VALUE object)
@@ -160,7 +160,7 @@ evaluate_value(VALUE_TYPE value)
 }
 
 static VALUE
-return_values(VALUE object, return_t type, direction_t direction)
+return_values(VALUE object, return_type_t type, direction_t direction)
 {
     VALUE_TYPE i;
     VALUE_TYPE start = NUM2TYPE(rb_ivar_get(object, id_at_start));
@@ -193,13 +193,13 @@ return_values(VALUE object, return_t type, direction_t direction)
 }
 
 inline static VALUE
-return_values_forward(VALUE object, return_t type)
+return_values_forward(VALUE object, return_type_t type)
 {
     return return_values(object, type, D_LOOP_FORWARD);
 }
 
 inline static VALUE
-return_values_reverse(VALUE object, return_t type)
+return_values_reverse(VALUE object, return_type_t type)
 {
     return return_values(object, type, D_LOOP_REVERSE);
 }
