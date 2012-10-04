@@ -82,9 +82,9 @@ enum direction {
 };
 
 static const char *errors[] = {
-    "must be an Integer value",
-    "must be an Integer value for start",
-    "must be an Integer value for stop",
+    "must be an integer value",
+    "must be an integer value for start",
+    "must be an integer value for stop",
     "start value is higher than stop value",
     "stop value is lower than start value",
     NULL
