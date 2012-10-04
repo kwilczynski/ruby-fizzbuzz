@@ -139,7 +139,7 @@ evaluate_value(VALUE_TYPE value)
     if (value == 0)
         return TYPE2NUM(value);
 
-    int score = SCORE_VALUE(value);
+    uint16_t score = SCORE_VALUE(value);
 
     switch(score) {
     case 0:

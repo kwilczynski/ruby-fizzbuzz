@@ -19,14 +19,16 @@
 #ifndef _FIZZBUZZ_H
 #define _FIZZBUZZ_H
 
+#include <stdint.h>
+
 #define FIZZBUZZ_VERSION "0.0.2"
 
 #if HAVE_LONG_LONG
-# define VALUE_TYPE LONG_LONG
+# define VALUE_TYPE int64_t
 # define TYPE2NUM LL2NUM
 # define NUM2TYPE NUM2LL
 #else
-# define VALUE_TYPE long
+# define VALUE_TYPE int32_t
 # define TYPE2NUM LONG2NUM
 # define NUM2TYPE NUM2LONG
 #endif
