@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __FIZZBUZZ_H__
-#define __FIZZBUZZ_H__
+#ifndef _FIZZBUZZ_H
+#define _FIZZBUZZ_H
 
 #define FIZZBUZZ_VERSION "0.0.2"
 
@@ -31,9 +31,12 @@
 # define NUM2TYPE NUM2LONG
 #endif
 
+#define SUCCESS 1
+#define FAILURE 0
+
 #define SCORE_VALUE(x) (!((x) % 3) + 2 * !((x) % 5))
 
-#define IS_NON_ZERO(x) (!(x) == 0)
+#define IS_NON_ZERO(x) (!!(x) == SUCCESS)
 
 #define IS_FIZZ(x)     (IS_NON_ZERO(x) && SCORE_VALUE(x) == 1)
 #define IS_BUZZ(x)     (IS_NON_ZERO(x) && SCORE_VALUE(x) == 2)
@@ -56,28 +59,32 @@
             rb_raise(rb_eArgError, m);  \
     } while (0)
 
-typedef enum {
+typedef enum error       error_t;
+typedef enum return_type return_t;
+typedef enum direction   direction_t;
+
+enum error {
     E_INVALID_TYPE = 0,
     E_INVALID_START_TYPE,
     E_INVALID_STOP_TYPE,
     E_BAD_VALUE_START,
     E_BAD_VALUE_STOP,
-} error_t;
+};
 
-typedef enum {
+enum return_type {
   R_TYPE_ARRAY = 0,
   R_TYPE_ENUMERATOR
-} return_t;
+};
 
-typedef enum {
+enum direction {
     D_LOOP_FORWARD = 0,
     D_LOOP_REVERSE
-} direction_t;
+};
 
 static const char *errors[] = {
-    "must be an numeric value",
-    "must be an numeric value for start",
-    "must be an numeric value for stop",
+    "must be an Integer value",
+    "must be an Integer value for start",
+    "must be an Integer value for stop",
     "start value is higher than stop value",
     "stop value is lower than start value",
     NULL
@@ -108,6 +115,6 @@ RUBY_EXTERN VALUE fizzbuzz_is_fizzbuzz(VALUE object, VALUE value);
 
 RUBY_EXTERN VALUE fizzbuzz_square(VALUE object, VALUE value);
 
-#endif /* __FIZZBUZZ_H__ */
+#endif /* _FIZZBUZZ_H */
 
 /* vim: set ts=8 sw=4 sts=2 et : */
