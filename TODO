@@ -19,7 +19,6 @@ fizzbuzz (0.0.3)
   * Add benchmarks;
   * Add some examples;
   * Add Travis CI integration;
-  * Improve fizzbuzz binary (add more options e.g. --reverse, etc);
-  * Add support for arbitrary large Bignum going beyond "long long" in C.
+  * Improve fizzbuzz binary (add more options e.g. --reverse, etc).
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sun, 07 Oct 2012 23:35:47 +0100
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sun, 07 Oct 2012 23:38:13 +0100
