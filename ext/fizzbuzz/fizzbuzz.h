@@ -36,23 +36,18 @@
 #define THREE INT2FIX(3)
 #define FIVE  INT2FIX(5)
 
-#define TRUE(x)  ((x) == Qtrue)
-#define FALSE(x) ((x) == Qfalse)
+#define PLUS(a, b)  fizzbuzz_rb_plus(a, b)
+#define MINUS(a, b) fizzbuzz_rb_minus(a, b)
+#define MOD(a, b)   fizzbuzz_rb_mod(a, b)
 
-#define VALUE_CAST(x) (FIXNUM_P(x) ? rb_int2big(NUM2TYPE(x)) : x)
-
-#define PLUS(a, b)  fizzbuzz_rb_plus(VALUE_CAST(a), VALUE_CAST(b))
-#define MINUS(a, b) fizzbuzz_rb_minus(VALUE_CAST(a), VALUE_CAST(b))
-#define MOD(a, b)   fizzbuzz_rb_mod(VALUE_CAST(a), VALUE_CAST(b))
-
-#define GREATER(a, b)       fizzbuzz_rb_gt(VALUE_CAST(a), VALUE_CAST(b))
-#define GREATER_EQUAL(a, b) fizzbuzz_rb_ge(VALUE_CAST(a), VALUE_CAST(b))
-#define LESS_EQUAL(a, b)    fizzbuzz_rb_le(VALUE_CAST(a), VALUE_CAST(b))
+#define GREATER(a, b)       fizzbuzz_rb_gt(a, b)
+#define GREATER_EQUAL(a, b) fizzbuzz_rb_ge(a, b)
+#define LESS_EQUAL(a, b)    fizzbuzz_rb_le(a, b)
 
 #define INTEGER_P(x) (TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)
 
 #define ZERO_P(x) \
-    (FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_rb_eq(VALUE_CAST(x), ZERO))
+    (FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_rb_eq(x, ZERO))
 
 #define INCREASE(x) PLUS(x,  ONE)
 #define DECREASE(x) MINUS(x, ONE)
@@ -60,7 +55,11 @@
 #define COMPUTE_MOD_3(x) (ZERO_P(MOD(x, THREE)) ? 1 : 0)
 #define COMPUTE_MOD_5(x) (ZERO_P(MOD(x, FIVE))  ? 1 : 0)
 
-#define SCORE_VALUE(x) (COMPUTE_MOD_3(x) + 2 * COMPUTE_MOD_5(x))
+#define SCORE_FIXNUM(x) (!((x) % 3) + 2 * !((x) % 5))
+#define SCORE_BIGNUM(x) (COMPUTE_MOD_3(x) + 2 * COMPUTE_MOD_5(x))
+
+#define SCORE_VALUE(x) \
+    (FIXNUM_P(x) ? SCORE_FIXNUM(NUM2TYPE(x)) : SCORE_BIGNUM(x))
 
 #define IS_FIZZ(x)     (!ZERO_P(x) && SCORE_VALUE(x) == 1)
 #define IS_BUZZ(x)     (!ZERO_P(x) && SCORE_VALUE(x) == 2)
@@ -149,37 +148,53 @@ fizzbuzz_rb_mod(VALUE a, VALUE b)
 inline static VALUE
 fizzbuzz_rb_eq(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b))
-        return TRUE(NUM2TYPE(a) == NUM2TYPE(b));
+    VALUE result;
 
-    return TRUE(rb_funcall(a, rb_intern("=="), 1, b));
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        result = (NUM2TYPE(a) == NUM2TYPE(b));
+    else
+        result = rb_funcall(a, rb_intern("=="), 1, b);
+
+    return result ? 1 : 0;
 }
 
 inline static VALUE
 fizzbuzz_rb_gt(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b))
-        return TRUE(NUM2TYPE(a) > NUM2TYPE(b));
+    VALUE result;
 
-    return TRUE(rb_funcall(a, rb_intern(">"), 1, b));
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        result = (NUM2TYPE(a) > NUM2TYPE(b));
+    else
+        result = rb_funcall(a, rb_intern(">"), 1, b);
+
+    return result ? 1 : 0;
 }
 
 inline static VALUE
 fizzbuzz_rb_ge(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b))
-        return TRUE(NUM2TYPE(a) >= NUM2TYPE(b));
+    VALUE result;
 
-    return TRUE(rb_funcall(a, rb_intern(">="), 1, b));
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        result = (NUM2TYPE(a) >= NUM2TYPE(b));
+    else
+        result = rb_funcall(a, rb_intern(">="), 1, b);
+
+    return result ? 1 : 0;
 }
 
 inline static VALUE
 fizzbuzz_rb_le(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b))
-        return TRUE(NUM2TYPE(a) <= NUM2TYPE(b));
+    VALUE result;
 
-    return TRUE(rb_funcall(a, rb_intern("<="), 1, b));
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        result = (NUM2TYPE(a) <= NUM2TYPE(b));
+    else
+        result = rb_funcall(a, rb_intern("<="), 1, b);
+
+    return result ? 1 : 0;
 }
 
 RUBY_EXTERN ID id_at_start, id_at_stop;
