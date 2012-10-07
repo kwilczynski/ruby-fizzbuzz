@@ -96,29 +96,33 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_singleton_squre
+    obtained_fizz     = FizzBuzz[3]
+    obtained_buzz     = FizzBuzz[5]
+    obtained_fizzbuzz = FizzBuzz[15]
+
+    obtained = [obtained_fizz, obtained_buzz, obtained_fizzbuzz]
+
     assert_block do
       FizzBuzz[1].is_a?(Integer)
 
-      obtained_fizz     = FizzBuzz[3]
-      obtained_buzz     = FizzBuzz[5]
-      obtained_fizzbuzz = FizzBuzz[15]
-
-      [obtained_fizz, obtained_buzz, obtained_fizzbuzz].all? do |i|
-        i.is_a?(String) and DEFAULT_WORDS.include?(i)
+      obtained.each_with_index do |v,i|
+          v.is_a?(String) and obtained[i] == DEFAULT_WORDS[i]
       end
     end
   end
 
   def test_singleton_squre_bignum
+    obtained_fizz     = FizzBuzz[DEFAULT_BIGNUM + 2]
+    obtained_buzz     = FizzBuzz[DEFAULT_BIGNUM + 15]
+    obtained_fizzbuzz = FizzBuzz[DEFAULT_BIGNUM + 5]
+
+    obtained = [obtained_fizz, obtained_buzz, obtained_fizzbuzz]
+
     assert_block do
       FizzBuzz[DEFAULT_BIGNUM].is_a?(Bignum)
 
-      obtained_fizz     = FizzBuzz[DEFAULT_BIGNUM + 2]
-      obtained_buzz     = FizzBuzz[DEFAULT_BIGNUM + 5]
-      obtained_fizzbuzz = FizzBuzz[DEFAULT_BIGNUM + 15]
-
-      [obtained_fizz, obtained_buzz, obtained_fizzbuzz].all? do |i|
-        i.is_a?(String) and DEFAULT_WORDS.include?(i)
+      obtained.each_with_index do |v,i|
+          v.is_a?(String) and obtained[i] == DEFAULT_WORDS[i]
       end
     end
   end
