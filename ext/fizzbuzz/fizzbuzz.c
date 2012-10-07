@@ -16,7 +16,12 @@
  * limitations under the License.
  */
 
-#include <ruby.h>
+#include <stdint.h>
+
+#if !(defined(INT8_MIN) || defined(INT8_MAX))
+typedef signed char int8_t;
+#endif
+
 #include <fizzbuzz.h>
 
 ID id_at_start, id_at_stop;
@@ -25,7 +30,7 @@ VALUE rb_cFizzBuzz = Qnil;
 void Init_fizzbuzz(void);
 
 static void validate_limit(VALUE value);
-static VALUE evaluate_value(VALUE_TYPE value);
+static VALUE evaluate_value(VALUE value);
 
 static VALUE return_values(VALUE object, return_type_t type, direction_t direction);
 inline static VALUE return_values_forward(VALUE object, return_type_t type);
@@ -58,7 +63,7 @@ fizzbuzz_get_start(VALUE object)
 VALUE
 fizzbuzz_set_start(VALUE object, VALUE value)
 {
-    VALUE_TYPE stop = rb_ivar_get(object, id_at_stop);
+    VALUE stop = rb_ivar_get(object, id_at_stop);
 
     CHECK_TYPE(value, errors[E_INVALID_START_TYPE]);
     CHECK_BOUNDARY(value, stop, errors[E_BAD_VALUE_START]);
@@ -76,7 +81,7 @@ fizzbuzz_get_stop(VALUE object)
 VALUE
 fizzbuzz_set_stop(VALUE object, VALUE value)
 {
-    VALUE_TYPE start = rb_ivar_get(object, id_at_start);
+    VALUE start = rb_ivar_get(object, id_at_start);
 
     CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE]);
     CHECK_BOUNDARY(start, value, errors[E_BAD_VALUE_STOP]);
@@ -107,43 +112,43 @@ VALUE
 fizzbuzz_is_fizz(VALUE object, VALUE value)
 {
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
-    return IS_FIZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
+    return IS_FIZZ(value) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_buzz(VALUE object, VALUE value)
 {
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
-    return IS_BUZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
+    return IS_BUZZ(value) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_is_fizzbuzz(VALUE object, VALUE value)
 {
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
-    return IS_FIZZBUZZ(NUM2TYPE(value)) ? Qtrue : Qfalse;
+    return IS_FIZZBUZZ(value) ? Qtrue : Qfalse;
 }
 
 VALUE
 fizzbuzz_square(VALUE object, VALUE value)
 {
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
-    return evaluate_value(NUM2TYPE(value));
+    return evaluate_value(value);
 }
 
 static VALUE
-evaluate_value(VALUE_TYPE value)
+evaluate_value(VALUE value)
 {
     VALUE result = Qnil;
 
-    if (value == 0)
-        return TYPE2NUM(value);
+    if (ZERO_P(value))
+        return value;
 
-    uint16_t score = SCORE_VALUE(value);
+    int8_t score = SCORE_VALUE(value);
 
     switch(score) {
     case 0:
-        result = TYPE2NUM(value);
+        result = value;
         break;
     case 1:
         result = rb_str_new2(words[score - 1]);
@@ -162,12 +167,13 @@ evaluate_value(VALUE_TYPE value)
 static VALUE
 return_values(VALUE object, return_type_t type, direction_t direction)
 {
-    VALUE_TYPE i;
-    VALUE_TYPE start = NUM2TYPE(rb_ivar_get(object, id_at_start));
-    VALUE_TYPE stop  = NUM2TYPE(rb_ivar_get(object, id_at_stop));
-
     VALUE array;
+
+    VALUE i     = Qnil;
     VALUE value = Qnil;
+
+    VALUE start = rb_ivar_get(object, id_at_start);
+    VALUE stop  = rb_ivar_get(object, id_at_stop);
 
     if (WANT_ARRAY(type)) {
         array = rb_ary_new();
@@ -177,13 +183,13 @@ return_values(VALUE object, return_type_t type, direction_t direction)
     }
 
     if (LOOP_FORWARD(direction)) {
-        for (i = start; i <= stop; i++) {
+        for (i = start; LESS_EQUAL(i, stop); i = INCREASE(i)) {
             value = evaluate_value(i);
             WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
         }
     }
     else {
-        for (i = stop; i >= start; i--) {
+        for (i = stop; GREATER_EQUAL(i, start); i = DECREASE(i)) {
             value = evaluate_value(i);
             WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
         }
