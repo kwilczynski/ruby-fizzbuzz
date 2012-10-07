@@ -7,10 +7,9 @@ fizzbuzz (1.0.0)
 fizzbuzz (0.0.4)
 
   * Improve github project page;
-  * Use GPG signed tags when tagging new release;
   * Re-factor unit tests to make them more idiotmatic (maybe move to Rspec and BDD?).
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Mon, 01 Oct 2012 17:57:18 +0100
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Mon, 08 Oct 2012 00:14:08 +0100
 
 fizzbuzz (0.0.3)
 
