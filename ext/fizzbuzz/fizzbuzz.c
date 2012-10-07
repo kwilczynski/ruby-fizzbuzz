@@ -147,18 +147,18 @@ evaluate_value(VALUE value)
     int8_t score = SCORE_VALUE(value);
 
     switch(score) {
-    case 0:
-        result = value;
-        break;
-    case 1:
-        result = rb_str_new2(words[score - 1]);
-        break;
-    case 2:
-        result = rb_str_new2(words[score - 1]);
-        break;
-    case 3:
-        result = rb_str_new2(words[score - 1]);
-        break;
+        case 0:
+            result = value;
+            break;
+        case 1:
+            result = rb_str_new2(words[score - 1]);
+            break;
+        case 2:
+            result = rb_str_new2(words[score - 1]);
+            break;
+        case 3:
+            result = rb_str_new2(words[score - 1]);
+            break;
     }
 
     return result;

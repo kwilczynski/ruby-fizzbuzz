@@ -24,9 +24,11 @@
 #define FIZZBUZZ_VERSION "0.0.2"
 
 #if HAVE_LONG_LONG
-# define TYPE_CAST NUM2LL
+# define TYPE2NUM LL2NUM
+# define NUM2TYPE NUM2LL
 #else
-# define TYPE_CAST NUM2LONG
+# define TYPE2NUM LONG2NUM
+# define NUM2TYPE NUM2LONG
 #endif
 
 #define ZERO  INT2FIX(0)
@@ -34,7 +36,10 @@
 #define THREE INT2FIX(3)
 #define FIVE  INT2FIX(5)
 
-#define VALUE_CAST(x) (FIXNUM_P(x) ? rb_int2big(TYPE_CAST(x)) : x)
+#define TRUE(x)  ((x) == Qtrue)
+#define FALSE(x) ((x) == Qfalse)
+
+#define VALUE_CAST(x) (FIXNUM_P(x) ? rb_int2big(NUM2TYPE(x)) : x)
 
 #define PLUS(a, b)  fizzbuzz_rb_plus(VALUE_CAST(a), VALUE_CAST(b))
 #define MINUS(a, b) fizzbuzz_rb_minus(VALUE_CAST(a), VALUE_CAST(b))
@@ -47,7 +52,7 @@
 #define INTEGER_P(x) (TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)
 
 #define ZERO_P(x) \
-    (FIXNUM_P(x) ? TYPE_CAST(x) == 0 : fizzbuzz_rb_eq(VALUE_CAST(x), ZERO))
+    (FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_rb_eq(VALUE_CAST(x), ZERO))
 
 #define INCREASE(x) PLUS(x,  ONE)
 #define DECREASE(x) MINUS(x, ONE)
@@ -117,43 +122,64 @@ static const char *words[] = {
 inline static VALUE
 fizzbuzz_rb_plus(VALUE a, VALUE b)
 {
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TYPE2NUM(NUM2TYPE(a) + NUM2TYPE(b));
+
     return rb_funcall(a, rb_intern("+"), 1, b);
 }
 
 inline static VALUE
 fizzbuzz_rb_minus(VALUE a, VALUE b)
 {
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TYPE2NUM(NUM2TYPE(a) - NUM2TYPE(b));
+
     return rb_funcall(a, rb_intern("-"), 1, b);
 }
 
 inline static VALUE
 fizzbuzz_rb_mod(VALUE a, VALUE b)
 {
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TYPE2NUM(NUM2TYPE(a) % NUM2TYPE(b));
+
     return rb_funcall(a, rb_intern("%"), 1, b);
 }
 
 inline static VALUE
 fizzbuzz_rb_eq(VALUE a, VALUE b)
 {
-    return rb_funcall(a, rb_intern("=="), 1, b) == Qtrue;
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TRUE(NUM2TYPE(a) == NUM2TYPE(b));
+
+    return TRUE(rb_funcall(a, rb_intern("=="), 1, b));
 }
 
 inline static VALUE
 fizzbuzz_rb_gt(VALUE a, VALUE b)
 {
-    return rb_funcall(a, rb_intern(">"), 1, b) == Qtrue;
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TRUE(NUM2TYPE(a) > NUM2TYPE(b));
+
+    return TRUE(rb_funcall(a, rb_intern(">"), 1, b));
 }
 
 inline static VALUE
 fizzbuzz_rb_ge(VALUE a, VALUE b)
 {
-    return rb_funcall(a, rb_intern(">="), 1, b) == Qtrue;
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TRUE(NUM2TYPE(a) >= NUM2TYPE(b));
+
+    return TRUE(rb_funcall(a, rb_intern(">="), 1, b));
 }
 
 inline static VALUE
 fizzbuzz_rb_le(VALUE a, VALUE b)
 {
-    return rb_funcall(a, rb_intern("<="), 1, b) == Qtrue;
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TRUE(NUM2TYPE(a) <= NUM2TYPE(b));
+
+    return TRUE(rb_funcall(a, rb_intern("<="), 1, b));
 }
 
 RUBY_EXTERN ID id_at_start, id_at_stop;
