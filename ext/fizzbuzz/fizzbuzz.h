@@ -19,45 +19,66 @@
 #ifndef _FIZZBUZZ_H
 #define _FIZZBUZZ_H
 
-#include <stdint.h>
+#include <ruby.h>
 
 #define FIZZBUZZ_VERSION "0.0.2"
 
 #if HAVE_LONG_LONG
-# define VALUE_TYPE int64_t
 # define TYPE2NUM LL2NUM
 # define NUM2TYPE NUM2LL
 #else
-# define VALUE_TYPE int32_t
 # define TYPE2NUM LONG2NUM
 # define NUM2TYPE NUM2LONG
 #endif
 
-#define SUCCESS 1
-#define FAILURE 0
+#define ZERO  INT2FIX(0)
+#define ONE   INT2FIX(1)
+#define THREE INT2FIX(3)
+#define FIVE  INT2FIX(5)
 
-#define SCORE_VALUE(x) (!((x) % 3) + 2 * !((x) % 5))
+#define PLUS(a, b)  fizzbuzz_rb_plus(a, b)
+#define MINUS(a, b) fizzbuzz_rb_minus(a, b)
+#define MOD(a, b)   fizzbuzz_rb_mod(a, b)
 
-#define IS_NON_ZERO(x) (!!(x) == SUCCESS)
+#define GREATER(a, b)       fizzbuzz_rb_gt(a, b)
+#define GREATER_EQUAL(a, b) fizzbuzz_rb_ge(a, b)
+#define LESS_EQUAL(a, b)    fizzbuzz_rb_le(a, b)
 
-#define IS_FIZZ(x)     (IS_NON_ZERO(x) && SCORE_VALUE(x) == 1)
-#define IS_BUZZ(x)     (IS_NON_ZERO(x) && SCORE_VALUE(x) == 2)
-#define IS_FIZZBUZZ(x) (IS_NON_ZERO(x) && SCORE_VALUE(x) == 3)
+#define INTEGER_P(x) (TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)
+
+#define ZERO_P(x) \
+    (FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_rb_eq(x, ZERO))
+
+#define INCREASE(x) PLUS(x,  ONE)
+#define DECREASE(x) MINUS(x, ONE)
+
+#define COMPUTE_MOD_3(x) (ZERO_P(MOD(x, THREE)) ? 1 : 0)
+#define COMPUTE_MOD_5(x) (ZERO_P(MOD(x, FIVE))  ? 1 : 0)
+
+#define SCORE_FIXNUM(x) (!((x) % 3) + 2 * !((x) % 5))
+#define SCORE_BIGNUM(x) (COMPUTE_MOD_3(x) + 2 * COMPUTE_MOD_5(x))
+
+#define SCORE_VALUE(x) \
+    (FIXNUM_P(x) ? SCORE_FIXNUM(NUM2TYPE(x)) : SCORE_BIGNUM(x))
+
+#define IS_FIZZ(x)     (!ZERO_P(x) && SCORE_VALUE(x) == 1)
+#define IS_BUZZ(x)     (!ZERO_P(x) && SCORE_VALUE(x) == 2)
+#define IS_FIZZBUZZ(x) (!ZERO_P(x) && SCORE_VALUE(x) == 3)
 
 #define WANT_ARRAY(x) ((x) == R_TYPE_ARRAY)
 
 #define LOOP_FORWARD(x) ((x) == D_LOOP_FORWARD)
 #define LOOP_REVERSE(x) ((x) == D_LOOP_REVERSE)
 
-#define CHECK_TYPE(x, m)                                   \
-    do {                                                   \
-        if (!(TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)) \
-            rb_raise(rb_eTypeError, m);                    \
+#define CHECK_TYPE(x, m)                \
+    do {                                \
+        if (!INTEGER_P(x))              \
+            rb_raise(rb_eTypeError, m); \
     } while (0)
 
 #define CHECK_BOUNDARY(a, b, m)         \
     do {                                \
-        if (NUM2TYPE(a) > NUM2TYPE(b))  \
+        if (GREATER(a, b))              \
             rb_raise(rb_eArgError, m);  \
     } while (0)
 
@@ -96,6 +117,85 @@ static const char *words[] = {
     "Fizz", "Buzz",
     "FizzBuzz", NULL
 };
+
+inline static VALUE
+fizzbuzz_rb_plus(VALUE a, VALUE b)
+{
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TYPE2NUM(NUM2TYPE(a) + NUM2TYPE(b));
+
+    return rb_funcall(a, rb_intern("+"), 1, b);
+}
+
+inline static VALUE
+fizzbuzz_rb_minus(VALUE a, VALUE b)
+{
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TYPE2NUM(NUM2TYPE(a) - NUM2TYPE(b));
+
+    return rb_funcall(a, rb_intern("-"), 1, b);
+}
+
+inline static VALUE
+fizzbuzz_rb_mod(VALUE a, VALUE b)
+{
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        return TYPE2NUM(NUM2TYPE(a) % NUM2TYPE(b));
+
+    return rb_funcall(a, rb_intern("%"), 1, b);
+}
+
+inline static VALUE
+fizzbuzz_rb_eq(VALUE a, VALUE b)
+{
+    VALUE result;
+
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        result = (NUM2TYPE(a) == NUM2TYPE(b));
+    else
+        result = rb_funcall(a, rb_intern("=="), 1, b);
+
+    return result ? 1 : 0;
+}
+
+inline static VALUE
+fizzbuzz_rb_gt(VALUE a, VALUE b)
+{
+    VALUE result;
+
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        result = (NUM2TYPE(a) > NUM2TYPE(b));
+    else
+        result = rb_funcall(a, rb_intern(">"), 1, b);
+
+    return result ? 1 : 0;
+}
+
+inline static VALUE
+fizzbuzz_rb_ge(VALUE a, VALUE b)
+{
+    VALUE result;
+
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        result = (NUM2TYPE(a) >= NUM2TYPE(b));
+    else
+        result = rb_funcall(a, rb_intern(">="), 1, b);
+
+    return result ? 1 : 0;
+}
+
+inline static VALUE
+fizzbuzz_rb_le(VALUE a, VALUE b)
+{
+    VALUE result;
+
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+        result = (NUM2TYPE(a) <= NUM2TYPE(b));
+    else
+        result = rb_funcall(a, rb_intern("<="), 1, b);
+
+    return result ? 1 : 0;
+}
 
 RUBY_EXTERN ID id_at_start, id_at_stop;
 RUBY_EXTERN VALUE rb_cFizzBuzz;
