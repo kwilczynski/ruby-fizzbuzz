@@ -20,6 +20,8 @@
 
 require 'mkmf'
 
+RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+
 $CFLAGS << ' -g -Wall'
 
 have_header('ruby.h') or missing('ruby.h')
