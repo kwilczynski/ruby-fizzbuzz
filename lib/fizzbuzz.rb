@@ -20,6 +20,7 @@
 
 require 'fizzbuzz/fizzbuzz'
 require 'fizzbuzz/integer'
+require 'fizzbuzz/bignum'
 
 class FizzBuzz
   def self.fizzbuzz(start, stop, reverse = false, &block)
