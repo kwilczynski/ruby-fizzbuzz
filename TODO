@@ -16,7 +16,6 @@ fizzbuzz (0.0.3)
   * Add pure-Ruby implementation;
   * Add RDoc and improve documentation i.e. source code commenting, README file, etc;
   * Add benchmarks;
-  * Add some examples;
-  * Add Travis CI integration.
+  * Add some examples.
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Tue, 09 Oct 2012 12:04:01 +0200
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Tue, 09 Oct 2012 22:26:19 +0100 

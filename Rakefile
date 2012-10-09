@@ -18,33 +18,69 @@
 # limitations under the License.
 #
 
-$LOAD_PATH << './lib'
-
 begin
   require 'rake'
+  require 'rake/testtask'
+  require 'rake/extensiontask'
 rescue LoadError
   require 'rubygems'
   require 'rake'
+  require 'rake/testtask'
+  require 'rake/extensiontask'
 end
 
-FIZZBUZZ_GEMSPEC = 'fizzbuzz.gemspec'
+CLEAN.include('*{.h,.o,.log,.so}', 'ext/**/*{.o,.log,.so}', 'Makefile', 'ext/**/Makefile')
+CLOBBER.include('lib/**/*.so')
 
-require 'rake/testtask'
+gem = Gem::Specification.new do |s|
+  s.name        = 'fizzbuzz'
+  s.description = 'Yet another FizzBuzz in Ruby'
+  s.platform    = Gem::Platform::RUBY
+  s.version     = File.read('VERSION').strip
+  s.license     = 'Apache License, Version 2.0'
+  s.author      = 'Krzysztof Wilczynski'
+  s.email       = 'krzysztof.wilczynski@linux.com'
+  s.homepage    = 'http://about.me/kwilczynski'
+
+  s.rubyforge_project = 'fizzbuzz'
+  s.rubygems_version  = '~> 1.3.7'
+  s.has_rdoc          = false
+
+  s.summary = <<-EOS
+Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
+  EOS
+
+  s.files = Dir['ext/**/*.{c,h,rb}'] +
+            Dir['lib/**/*.rb'] +
+            %w(Rakefile AUTHORS CHANGES CHANGES.markdown COPYRIGHT
+               LICENSE README README.markdown TODO VERSION)
+
+  s.executables   << 'fizzbuzz'
+  s.require_paths << 'lib'
+  s.extensions    << 'ext/fizzbuzz/extconf.rb'
+  s.test_files    << 'test/test_fizzbuzz.rb'
+
+  s.add_development_dependency 'rake-compiler', '~> 0.7.1'
+end
 
 Rake::TestTask.new do |t|
-  t.name    = :tests
   t.verbose = true
   t.warning = true
-  t.libs << 'lib'
 end
 
-desc 'Build FizzBuzz gem file'
-task :build do
-  system "gem build #{FIZZBUZZ_GEMSPEC}"
+Gem::PackageTask.new(gem) do |p|
+  p.need_zip = true
+  p.need_tar = true
 end
 
-task :test    => :tests
-task :default => :build
+Rake::ExtensionTask.new('fizzbuzz', gem) do |e|
+  e.ext_dir = 'ext/fizzbuzz'
+  e.lib_dir = 'lib/fizzbuzz'
+end
+
+Rake::Task[:test].prerequisites << :compile
+
+task :default => :package
 
 # vim: set ts=2 sw=2 sts=2 et :
 # encoding: utf-8

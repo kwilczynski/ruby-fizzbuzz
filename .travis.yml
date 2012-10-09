@@ -4,5 +4,7 @@ rvm:
   - 1.9.2
   - 1.9.3
   - ree
-before_script: rake
+  - ruby-head
+before_script:
+  - gem install --no-rdoc --no-ri --version '~> 0.7.1' rake-compiler
 script: rake test
