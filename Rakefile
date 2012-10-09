@@ -58,14 +58,15 @@ Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
   s.executables   << 'fizzbuzz'
   s.require_paths << 'lib'
   s.extensions    << 'ext/fizzbuzz/extconf.rb'
-  s.test_files    << 'test/test_fizzbuzz.rb'
 
+  s.add_development_dependency 'test-unit', '~> 2.5.2'
   s.add_development_dependency 'rake-compiler', '~> 0.7.1'
 end
 
 Rake::TestTask.new do |t|
-  t.verbose = true
-  t.warning = true
+  t.verbose    = true
+  t.warning    = true
+  t.test_files = Dir['test/**/test_*']
 end
 
 Gem::PackageTask.new(gem) do |p|
