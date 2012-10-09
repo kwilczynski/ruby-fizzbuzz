@@ -29,7 +29,6 @@ VALUE rb_cFizzBuzz = Qnil;
 
 void Init_fizzbuzz(void);
 
-static void validate_limit(VALUE value);
 static VALUE evaluate_value(VALUE value);
 
 static VALUE return_values(VALUE object, return_type_t type, direction_t direction);
@@ -167,9 +166,9 @@ evaluate_value(VALUE value)
 static VALUE
 return_values(VALUE object, return_type_t type, direction_t direction)
 {
-    VALUE array;
+    VALUE i = Qnil;
 
-    VALUE i     = Qnil;
+    VALUE array = Qnil;
     VALUE value = Qnil;
 
     VALUE start = rb_ivar_get(object, id_at_start);
