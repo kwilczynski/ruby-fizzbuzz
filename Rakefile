@@ -20,13 +20,11 @@
 
 begin
   require 'rake'
-  require 'rdoc/task'
   require 'rake/testtask'
   require 'rake/extensiontask'
 rescue LoadError
   require 'rubygems'
   require 'rake'
-  require 'rdoc/task'
   require 'rake/testtask'
   require 'rake/extensiontask'
 end
@@ -46,7 +44,7 @@ gem = Gem::Specification.new do |s|
 
   s.rubyforge_project = 'fizzbuzz'
   s.rubygems_version  = '~> 1.3.7'
-  s.has_rdoc          = true
+  s.has_rdoc          = false
 
   s.summary = <<-EOS
 Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
@@ -62,8 +60,6 @@ Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
   s.extensions    << 'ext/fizzbuzz/extconf.rb'
 
   s.add_development_dependency 'test-unit', '~> 2.5.2'
-  s.add_development_dependency 'rdoc', '~> 3.12'
-  s.add_development_dependency 'rdoc-data', '~> 3.12'
   s.add_development_dependency 'rake-compiler', '~> 0.7.1'
 end
 
@@ -71,21 +67,6 @@ Rake::TestTask.new do |t|
   t.verbose    = true
   t.warning    = true
   t.test_files = Dir['test/**/test_*']
-end
-
-Rake::RDocTask.new do |d|
-  d.title = 'Yet another FizzBuzz in Ruby'
-  d.main  = 'README.rdoc'
-
-  d.rdoc_dir = 'doc/html'
-
-  d.rdoc_files.include 'lib/**/*.rb', 'README.rdoc', 'CHANGES.rdoc'
-
-  d.options << '--inline-source'
-  d.options << '--line-numbers'
-  d.options << '--all'
-  d.options << '--fileboxes'
-  d.options << '--diagram'
 end
 
 Gem::PackageTask.new(gem) do |p|
