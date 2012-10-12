@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+# :stopdoc:
+
 #
 # fizzbuzz.rb
 #
@@ -18,12 +20,24 @@
 # limitations under the License.
 #
 
+# :startdoc:
+
 require 'fizzbuzz/fizzbuzz'
 require 'fizzbuzz/version'
 require 'fizzbuzz/integer'
 require 'fizzbuzz/bignum'
 
 class FizzBuzz
+  #
+  # call-seq:
+  #   FizzBuzz.fizzbuzz( start, stop, reverse )                   -> array
+  #   FizzBuzz.fizzbuzz( start, stop, reverse ) {|value| block }  -> self
+  #
+  # Returns
+  #
+  # Example:
+  #
+  #
   def self.fizzbuzz(start, stop, reverse = false, &block)
     fb = FizzBuzz.new(start, stop)
 
@@ -35,6 +49,9 @@ class FizzBuzz
   end
 end
 
+#
+# Provides an alias <em>FB</em> to <em>FizzBuzz</em> for convenience.
+#
 FB = FizzBuzz
 
 # vim: set ts=2 sw=2 sts=2 et :

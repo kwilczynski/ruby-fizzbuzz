@@ -1,3 +1,5 @@
+/* :stopdoc: */
+
 /*
  * fizzbuzz.c
  *
@@ -15,6 +17,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/* :startdoc: */
 
 #include <stdint.h>
 #include <fizzbuzz.h>
@@ -79,7 +83,7 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
  *
  * Returns the current value for <em>start</em>.
  *
- * Examples:
+ * Example:
  *
  *    fb = FizzBuzz.new(1, 100) #=> #<FizzBuzz:0xf726b48c @stop=100, @start=1>
  *    fb.start                  #=> 1
@@ -125,7 +129,7 @@ rb_fb_set_start(VALUE object, VALUE value)
  *
  * Returns the current value for <em>stop</em>.
  *
- * Examples:
+ * Example:
  *
  *    fb = FizzBuzz.new(1, 100) #=> #<FizzBuzz:0xf7272bec @stop=100, @start=1>
  *    fb.stop                   #=> 100
@@ -144,7 +148,7 @@ rb_fb_get_stop(VALUE object)
  * is greater or equal to the current value of <em>start</em>,
  * or raises an <em>ArgumentError</em> exception otherwise.
  *
- * Examples:
+ * Example:
  *
  *    fb = FizzBuzz.new(1, 100) #=> #<FizzBuzz:0xf727679c @stop=100, @start=1>
  *    fb.stop                   #=> 100
@@ -173,7 +177,7 @@ rb_fb_set_stop(VALUE object, VALUE value)
  * appropriate values for a given range from <em>start</em>
  * to <em>stop</em>.
  *
- * Examples:
+ * Example:
  *
  *    fb = FizzBuzz.new(1, 15) #=> #<FizzBuzz:0xf727fd60 @stop=15, @start=1>
  *    fb.to_a                  #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
@@ -199,7 +203,7 @@ rb_fb_array(VALUE object)
  *
  * If no block is given, an Enumerator is returned instead.
  *
- * Examples:
+ * Example:
  *
  *    fb = FizzBuzz.new(1, 15) #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
  *    fb.each {|value| puts "Got #{value}" }
@@ -241,7 +245,7 @@ rb_fb_enumerator(VALUE object)
  * range from <em>start</em> to <em>stop</em> in an <em>reverse</em>
  * <em>order</em>, passing the value as a parameter to the block.
  *
- * Examples:
+ * Example:
  *
  * If no block is given, an Enumerator is returned instead.
  *
@@ -284,7 +288,7 @@ rb_fb_reverse_enumerator(VALUE object)
  * by <b>three</b> (given value is a <em>Fizz</em>), or <em>false</em>
  * otherwise.
  *
- * Examples:
+ * Example:
  *
  *    FizzBuzz.is_fizz?(3)    #=> true
  *    FizzBuzz.is_fizz?(5)    #=> false
@@ -313,7 +317,7 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  * by <b>five</b> (given value is a <em>Buzz</em>), or <em>false</em>
  * otherwise.
  *
- * Examples:
+ * Example:
  *
  *    FizzBuzz.is_buzz?(3)    #=> false
  *    FizzBuzz.is_buzz?(5)    #=> true
@@ -342,7 +346,7 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  * by both <b>three</b> and <b>five</b> (given value is a
  * <em>FizzBuzz</em>), or <em>false</em> otherwise.
  *
- * Examples:
+ * Example:
  *
  *    FizzBuzz.is_fizzbuzz?(3)    #=> false
  *    FizzBuzz.is_fizzbuzz?(5)    #=> false
@@ -373,7 +377,7 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  * given value is divisible by both <em>three</em> and
  * <em>five</em>, or the given integer value otherwise.
  *
- * Examples:
+ * Example:
  *
  *    FizzBuzz[1]    #=> 1
  *    FizzBuzz[3]    #=> "Fizz"

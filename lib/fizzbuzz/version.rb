@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+# :stopdoc:
+
 #
 # version.rb
 #
@@ -18,7 +20,12 @@
 # limitations under the License.
 #
 
+# :startdoc:
+
 class FizzBuzz
+  #
+  # Current version of FizzBuzz.
+  #
   VERSION = "0.0.2"
 end
 

@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+# :stopdoc:
+
 #
 # bignum.rb
 #
@@ -18,15 +20,26 @@
 # limitations under the License.
 #
 
+# :startdoc:
+
 class Bignum
+  #
+  #
+  #
   def fizz?
     FizzBuzz.is_fizz?(self)
   end
 
+  #
+  #
+  #
   def buzz?
     FizzBuzz.is_buzz?(self)
   end
 
+  #
+  #
+  #
   def fizzbuzz?
     FizzBuzz.is_fizzbuzz?(self)
   end
