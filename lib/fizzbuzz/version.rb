@@ -24,10 +24,12 @@
 
 class FizzBuzz
   #
-  # Current version of FizzBuzz.
+  # Current version of _FizzBuzz_.
   #
   VERSION = "0.0.2"
 end
+
+# :enddoc:
 
 # vim: set ts=2 sw=2 sts=2 et :
 # encoding: utf-8

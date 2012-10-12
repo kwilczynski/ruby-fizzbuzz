@@ -22,17 +22,19 @@
 
 begin
   require 'rake'
+  require 'rdoc/task'
   require 'rake/testtask'
   require 'rake/extensiontask'
 rescue LoadError
   require 'rubygems'
   require 'rake'
+  require 'rdoc/task'
   require 'rake/testtask'
   require 'rake/extensiontask'
 end
 
-CLEAN.include('*{.h,.o,.log,.so}', 'ext/**/*{.o,.log,.so}', 'Makefile', 'ext/**/Makefile')
-CLOBBER.include('lib/**/*.so')
+CLEAN.include   '*{.h,.o,.log,.so}', 'ext/**/*{.o,.log,.so}', 'Makefile', 'ext/**/Makefile'
+CLOBBER.include 'lib/**/*.so', 'doc/**/*'
 
 gem = Gem::Specification.new do |s|
   s.name        = 'fizzbuzz'
@@ -46,7 +48,7 @@ gem = Gem::Specification.new do |s|
 
   s.rubyforge_project = 'fizzbuzz'
   s.rubygems_version  = '~> 1.3.7'
-  s.has_rdoc          = false
+  s.has_rdoc          = true
 
   s.summary = <<-EOS
 Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
@@ -61,8 +63,23 @@ Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
   s.require_paths << 'lib'
   s.extensions    << 'ext/fizzbuzz/extconf.rb'
 
+  s.add_development_dependency 'rdoc', '~> 3.12'
   s.add_development_dependency 'test-unit', '~> 2.5.2'
   s.add_development_dependency 'rake-compiler', '~> 0.7.1'
+end
+
+Rake::RDocTask.new do |d|
+  files = %w(AUTHORS CHANGES.rdoc COPYRIGHT LICENSE README.rdoc TODO)
+
+  d.title = 'Yet another FizzBuzz in Ruby'
+  d.main  = 'README.rdoc'
+
+  d.rdoc_dir = 'doc/rdoc'
+
+  d.rdoc_files.include 'ext/**/*.{c,h}', 'lib/**/*.rb'
+  d.rdoc_files.include.add(files)
+
+  d.options << '--line-numbers'
 end
 
 Rake::TestTask.new do |t|

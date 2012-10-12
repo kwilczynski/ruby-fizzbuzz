@@ -36,24 +36,23 @@ static VALUE fizzbuzz_values(VALUE object, return_type_t type,
  * call-seq:
  *    FizzBuzz.new( start, stop ) -> self
  *
- * Returns a new FizzBuzz.
+ * Returns a new _FizzBuzz_.
  *
- * The given <em>start</em> and <em>stop</em> values must be of
- * an integer type and will define a <em>range</em> within which
- * calculation of any relevant FizzBuzz results will occur.
+ * The given +start+ and +stop+ values must be of an integer type and
+ * will establish a +range+ within which calculation of any relevant
+ * _FizzBuzz_ results will have place.
  *
- * Examples:
+ * Example:
  *
  *    fb = FizzBuzz.new(1, 100)     #=> #<FizzBuzz:0xb6fd3b38 @stop=100, @start=1>
  *    fb = FizzBuzz.new(-100,-1)    #=> #<FizzBuzz:0xb72d5700 @stop=-1, @start=-100>
  *    fb = FizzBuzz.new(-15, 15)    #=> #<FizzBuzz:0xb6fd0460 @stop=15, @start=-15>
  *
- * The given value of <em>stop</em> must always be greater than
- * or equal to the given value of <em>start</em>, otherwise
- * raises an <em>ArgumentError</em> exception.
+ * The given value of +stop+ must always be greater than or equal to the
+ * given value of +start+, otherwise raises an +ArgumentError+ exception.
  *
- * Will raise a <em>TypeError</em> exception if given value of
- * either <em>start</em> or <em>stop</em> is not an integer type.
+ * Will raise a +TypeError+ exception if given value of either +start+
+ * or +stop+ is not an integer type.
  *
  * See also:
  *
@@ -81,7 +80,7 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
  * call-seq:
  *    fizzfuzz.start -> integer
  *
- * Returns the current value for <em>start</em>.
+ * Returns the current value for +start+.
  *
  * Example:
  *
@@ -98,9 +97,9 @@ rb_fb_get_start(VALUE object)
  * call-seq:
  *    fizzfuzz.start= (integer) -> integer
  *
- * Sets the current value of <em>start</em> if given new value
- * is lower or equal to the current value of <em>stop</em>,
- * or raises an <em>ArgumentError</em> exception otherwise.
+ * Sets the current value of +start+ if given new value is lower or equal
+ * to the current value of +stop+, or raises an +ArgumentError+ exception
+ * otherwise.
  *
  * Examples:
  *
@@ -109,8 +108,7 @@ rb_fb_get_start(VALUE object)
  *    fb.start = 15             #=> 15
  *    fb.start                  #=> 15
  *
- * Will raise a <em>TypeError</em> exception if given value
- * is not an integer type.
+ * Will raise a +TypeError+ exception if given value is not an integer type.
  */
 VALUE
 rb_fb_set_start(VALUE object, VALUE value)
@@ -127,7 +125,7 @@ rb_fb_set_start(VALUE object, VALUE value)
  * call-seq:
  *    fizzfuzz.stop -> integer
  *
- * Returns the current value for <em>stop</em>.
+ * Returns the current value for +stop+.
  *
  * Example:
  *
@@ -144,9 +142,9 @@ rb_fb_get_stop(VALUE object)
  * call-seq:
  *    fizzfuzz.start= (integer) -> integer
  *
- * Sets the current value of <em>stop</em> if given new value
- * is greater or equal to the current value of <em>start</em>,
- * or raises an <em>ArgumentError</em> exception otherwise.
+ * Sets the current value of +stop+ if given new value is greater or equal
+ * to the current value of +start+, or raises an +ArgumentError+ exception
+ * otherwise.
  *
  * Example:
  *
@@ -155,8 +153,7 @@ rb_fb_get_stop(VALUE object)
  *    fb.stop = 15              #=> 15
  *    fb.stop                   #=> 15
  *
- * Will raise a <em>TypeError</em> exception if given value
- * is not an integer type.
+ * Will raise a +TypeError+ exception if given value is not an integer type.
  */
 VALUE
 rb_fb_set_stop(VALUE object, VALUE value)
@@ -173,18 +170,15 @@ rb_fb_set_stop(VALUE object, VALUE value)
  * call-seq:
  *    fizzbuzz.to_a -> array
  *
- * Returns an array containing results upon calculating an
- * appropriate values for a given range from <em>start</em>
- * to <em>stop</em>.
+ * Returns an array containing results upon calculating an appropriate
+ * values for a given range from +start+ to +stop+.
  *
  * Example:
  *
  *    fb = FizzBuzz.new(1, 15) #=> #<FizzBuzz:0xf727fd60 @stop=15, @start=1>
  *    fb.to_a                  #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
  *
- * See also:
- *
- *    FizzBuzz::fizzbuzz
+ * See also: FizzBuzz::fizzbuzz
  */
 VALUE
 rb_fb_array(VALUE object)
@@ -197,11 +191,10 @@ rb_fb_array(VALUE object)
  *    fizzbuzz.each {|value| block } -> self
  *    fizzbuzz.each                  -> an Enumerator
  *
- * Calls the block once for each subsequent value for a given
- * range from <em>start</em> to <em>stop</em>, passing the
- * value as a parameter to the block.
+ * Calls the block once for each subsequent value for a given range
+ * from +start+ to +stop+, passing the value as a parameter to the block.
  *
- * If no block is given, an Enumerator is returned instead.
+ * If no block is given, an +Enumerator+ is returned instead.
  *
  * Example:
  *
@@ -226,9 +219,7 @@ rb_fb_array(VALUE object)
  *    Got 14
  *    Got FizzBuzz
  *
- * See also:
- *
- *    FizzBuzz#reverse_each
+ * See also: FizzBuzz#reverse_each
  */
 VALUE
 rb_fb_enumerator(VALUE object)
@@ -241,13 +232,13 @@ rb_fb_enumerator(VALUE object)
  *    fizzbuzz.reverse_each {|value| block } -> self
  *    fizzbuzz.reverse_each                  -> an Enumerator
  *
- * Calls the block once for each subsequent value for a given
- * range from <em>start</em> to <em>stop</em> in an <em>reverse</em>
- * <em>order</em>, passing the value as a parameter to the block.
+ * Calls the block once for each subsequent value for a given range
+ * from +start+ to +stop+ in an <i>reverse order</i>, passing the value
+ * as a parameter to the block.
  *
  * Example:
  *
- * If no block is given, an Enumerator is returned instead.
+ * If no block is given, an +Enumerator+ is returned instead.
  *
  *    fb = FizzBuzz.new(1, 15) #=> #<FizzBuzz:0xb7308664 @stop=15, @start=1>
  *    fb.reverse_each {|value| puts "Got #{value}" }
@@ -270,9 +261,7 @@ rb_fb_enumerator(VALUE object)
  *    Got 2
  *    Got 1
  *
- * See also:
- *
- *    FizzBuzz#each
+ * See also: FizzBuzz#each
  */
 VALUE
 rb_fb_reverse_enumerator(VALUE object)
@@ -284,9 +273,8 @@ rb_fb_reverse_enumerator(VALUE object)
  * call-seq:
  *    FizzBuzz.is_fizz?( integer ) -> true or false
  *
- * Returns <em>true</em> if a given integer value is divisible
- * by <b>three</b> (given value is a <em>Fizz</em>), or <em>false</em>
- * otherwise.
+ * Returns +true+ if a given integer value is divisible by *three* (given
+ * value is a _Fizz_), or +false+ otherwise.
  *
  * Example:
  *
@@ -294,12 +282,9 @@ rb_fb_reverse_enumerator(VALUE object)
  *    FizzBuzz.is_fizz?(5)    #=> false
  *    FizzBuzz.is_fizz?(15)   #=> false
  *
- * Will raise a <em>TypeError</em> exception if given value
- * is not an integer type.
+ * Will raise a +TypeError+ exception if given value is not an integer type.
  *
- * See alos:
- *
- *    FizzBuzz::[]
+ * See also: FizzBuzz::[]
  */
 VALUE
 rb_fb_is_fizz(VALUE object, VALUE value)
@@ -313,9 +298,8 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  * call-seq:
  *    FizzBuzz.is_buzz?( integer ) -> true or false
  *
- * Returns <em>true</em> if a given integer value is divisible
- * by <b>five</b> (given value is a <em>Buzz</em>), or <em>false</em>
- * otherwise.
+ * Returns +true+ if a given integer value is divisible by *five* (given
+ * value is a _Buzz_), or +false+ otherwise.
  *
  * Example:
  *
@@ -323,12 +307,9 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  *    FizzBuzz.is_buzz?(5)    #=> true
  *    FizzBuzz.is_buzz?(15)   #=> false
  *
- * Will raise a <em>TypeError</em> exception if given value
- * is not an integer type.
+ * Will raise a +TypeError+ exception if given value is not an integer type.
  *
- * See alos:
- *
- *    FizzBuzz::[]
+ * See also: FizzBuzz::[]
  */
 VALUE
 rb_fb_is_buzz(VALUE object, VALUE value)
@@ -342,9 +323,8 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  * call-seq:
  *    FizzBuzz.is_fizzbuzz?( integer ) -> true or false
  *
- * Returns <em>true</em> if a given integer value is divisible
- * by both <b>three</b> and <b>five</b> (given value is a
- * <em>FizzBuzz</em>), or <em>false</em> otherwise.
+ * Returns +true+ if a given integer value is divisible by both *three*
+ * and *five* (given value is a _FizzBuzz_), or +false+ otherwise.
  *
  * Example:
  *
@@ -352,12 +332,9 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  *    FizzBuzz.is_fizzbuzz?(5)    #=> false
  *    FizzBuzz.is_fizzbuzz?(15)   #=> true
  *
- * Will raise a <em>TypeError</em> exception if given value
- * is not an integer type.
+ * Will raise a +TypeError+ exception if given value is not an integer type.
  *
- * See alos:
- *
- *    FizzBuzz::[]
+ * See also: FizzBuzz::[]
  */
 VALUE
 rb_fb_is_fizzbuzz(VALUE object, VALUE value)
@@ -371,11 +348,10 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  * call-seq:
  *    FizzBuzz[ integer ] -> integer or string
  *
- * Returns <em>Fizz</em> if the given value is divisible
- * by <b>three</b>, <em>Buzz</em> if the given value is
- * divisible by <b>five</b> and <em>FizzBuzz</em> if the
- * given value is divisible by both <em>three</em> and
- * <em>five</em>, or the given integer value otherwise.
+ * Returns _Fizz_ if the given value is divisible by *three*, _Buzz_
+ * if the given value is divisible by *five* and _FizzBuzz_ if the
+ * given value is divisible by both *three* and *five*, or the given
+ * integer value otherwise.
  *
  * Example:
  *
@@ -384,14 +360,9 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  *    FizzBuzz[5]    #=> "Buzz"
  *    FizzBuzz[15]   #=> "FizzBuzz"
  *
- * Will raise a <em>TypeError</em> exception if given value
- * is not an integer type.
+ * Will raise a +TypeError+ exception if given value is not an integer type.
  *
- * See also:
- *
- *    FizzBuzz::is_fizz?
- *    FizzBuzz::is_buzz?
- *    FizzBuzz::is_fizzbuzz?
+ * See also: FizzBuzz::is_fizz?, FizzBuzz::is_buzz? and FizzBuzz::is_fizzbuzz?
  */
 VALUE
 rb_fb_square(VALUE object, VALUE value)
@@ -400,6 +371,8 @@ rb_fb_square(VALUE object, VALUE value)
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return fizzbuzz_evaluate(value);
 }
+
+/* :enddoc: */
 
 static VALUE
 fizzbuzz_evaluate(VALUE value)
