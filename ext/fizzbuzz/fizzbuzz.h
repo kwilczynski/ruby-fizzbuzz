@@ -21,14 +21,36 @@
 
 #include <ruby.h>
 
-#define FIZZBUZZ_VERSION "0.0.2"
+#if !(defined(INT8_MIN) || defined(INT8_MAX))
+typedef signed char int8_t;
+#endif
 
-#if HAVE_LONG_LONG
-# define TYPE2NUM LL2NUM
-# define NUM2TYPE NUM2LL
-#else
+#if !(defined(UINT8_MIN) || defined(UINT8_MAX))
+typedef unsigned char uint8_t;
+#endif
+
+#if !defined(RVAL2CSTR)
+# define RVAL2CSTR(x) (NIL_P(x) ? NULL : STR2CSTR(x))
+#endif
+
+#if !defined(CSTR2RVAL)
+# define CSTR2RVAL(x) ((x) == NULL ? Qnil : rb_str_new2(x))
+#endif
+
+#if !defined(RVAL2CBOOL)
+# define RVAL2CBOOL(x) (RTEST(x))
+#endif
+
+#if !defined(CBOOL2RVAL)
+# define CBOOL2RVAL(x) ((x) ? Qtrue : Qfalse)
+#endif
+
+#if !defined(HAVE_LONG_LONG)
 # define TYPE2NUM LONG2NUM
 # define NUM2TYPE NUM2LONG
+#else
+# define TYPE2NUM LL2NUM
+# define NUM2TYPE NUM2LL
 #endif
 
 #define ZERO  INT2FIX(0)
@@ -36,62 +58,58 @@
 #define THREE INT2FIX(3)
 #define FIVE  INT2FIX(5)
 
-#define PLUS(a, b)  fizzbuzz_rb_plus(a, b)
-#define MINUS(a, b) fizzbuzz_rb_minus(a, b)
-#define MOD(a, b)   fizzbuzz_rb_mod(a, b)
+#define PLUS(a, b)  fizzbuzz_plus((a), (b))
+#define MINUS(a, b) fizzbuzz_minus((a), (b))
+#define MOD(a, b)   fizzbuzz_modulo((a), (b))
 
-#define GREATER(a, b)       fizzbuzz_rb_gt(a, b)
-#define GREATER_EQUAL(a, b) fizzbuzz_rb_ge(a, b)
-#define LESS_EQUAL(a, b)    fizzbuzz_rb_le(a, b)
+#define GREATER(a, b)       fizzbuzz_greater((a), (b))
+#define GREATER_EQUAL(a, b) fizzbuzz_greater_equal((a), (b))
+#define LESS_EQUAL(a, b)    fizzbuzz_less_equal((a), (b))
 
 #define INTEGER_P(x) (TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)
 
 #define ZERO_P(x) \
-    (FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_rb_eq(x, ZERO))
+    (FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_equal((x), ZERO))
 
-#define INCREASE(x) PLUS(x,  ONE)
-#define DECREASE(x) MINUS(x, ONE)
+#define INCREASE(x) PLUS((x),  ONE)
+#define DECREASE(x) MINUS((x), ONE)
 
-#define COMPUTE_MOD_3(x) (ZERO_P(MOD(x, THREE)) ? 1 : 0)
-#define COMPUTE_MOD_5(x) (ZERO_P(MOD(x, FIVE))  ? 1 : 0)
+#define COMPUTE_MOD_3(x) ZERO_P(MOD((x), THREE))
+#define COMPUTE_MOD_5(x) ZERO_P(MOD((x), FIVE))
 
-#define SCORE_FIXNUM(x) (!((x) % 3) + 2 * !((x) % 5))
-#define SCORE_BIGNUM(x) (COMPUTE_MOD_3(x) + 2 * COMPUTE_MOD_5(x))
+#define SCORE_FIXNUM(x) (uint8_t)(!((x) % 3) + 2 * !((x) % 5))
+#define SCORE_BIGNUM(x) (uint8_t)(COMPUTE_MOD_3(x) + 2 * COMPUTE_MOD_5(x))
 
 #define SCORE_VALUE(x) \
     (FIXNUM_P(x) ? SCORE_FIXNUM(NUM2TYPE(x)) : SCORE_BIGNUM(x))
 
-#define IS_FIZZ(x)     (!ZERO_P(x) && SCORE_VALUE(x) == 1)
-#define IS_BUZZ(x)     (!ZERO_P(x) && SCORE_VALUE(x) == 2)
-#define IS_FIZZBUZZ(x) (!ZERO_P(x) && SCORE_VALUE(x) == 3)
+#define IS_FIZZ(x)     (!ZERO_P(x) && (SCORE_VALUE(x) == 1))
+#define IS_BUZZ(x)     (!ZERO_P(x) && (SCORE_VALUE(x) == 2))
+#define IS_FIZZBUZZ(x) (!ZERO_P(x) && (SCORE_VALUE(x) == 3))
 
 #define WANT_ARRAY(x) ((x) == R_TYPE_ARRAY)
 
 #define LOOP_FORWARD(x) ((x) == D_LOOP_FORWARD)
 #define LOOP_REVERSE(x) ((x) == D_LOOP_REVERSE)
 
-#define CHECK_TYPE(x, m)                \
-    do {                                \
-        if (!INTEGER_P(x))              \
-            rb_raise(rb_eTypeError, m); \
+#define CHECK_TYPE(x, m)                  \
+    do {                                  \
+        if (!INTEGER_P(x))                \
+            rb_raise(rb_eTypeError, (m)); \
     } while (0)
 
-#define CHECK_BOUNDARY(a, b, m)         \
-    do {                                \
-        if (GREATER(a, b))              \
-            rb_raise(rb_eArgError, m);  \
+#define CHECK_BOUNDARY(a, b, m)           \
+    do {                                  \
+        if (GREATER((a), (b)))            \
+            rb_raise(rb_eArgError, (m));  \
     } while (0)
-
-typedef enum error       error_t;
-typedef enum return_type return_type_t;
-typedef enum direction   direction_t;
 
 enum error {
     E_INVALID_TYPE = 0,
     E_INVALID_START_TYPE,
     E_INVALID_STOP_TYPE,
     E_BAD_VALUE_START,
-    E_BAD_VALUE_STOP,
+    E_BAD_VALUE_STOP
 };
 
 enum return_type {
@@ -103,6 +121,10 @@ enum direction {
     D_LOOP_FORWARD = 0,
     D_LOOP_REVERSE
 };
+
+typedef enum error       error_t;
+typedef enum return_type return_type_t;
+typedef enum direction   direction_t;
 
 static const char *errors[] = {
     "must be an integer value",
@@ -119,7 +141,7 @@ static const char *words[] = {
 };
 
 inline static VALUE
-fizzbuzz_rb_plus(VALUE a, VALUE b)
+fizzbuzz_plus(VALUE a, VALUE b)
 {
     if (FIXNUM_P(a) && FIXNUM_P(b))
         return TYPE2NUM(NUM2TYPE(a) + NUM2TYPE(b));
@@ -128,7 +150,7 @@ fizzbuzz_rb_plus(VALUE a, VALUE b)
 }
 
 inline static VALUE
-fizzbuzz_rb_minus(VALUE a, VALUE b)
+fizzbuzz_minus(VALUE a, VALUE b)
 {
     if (FIXNUM_P(a) && FIXNUM_P(b))
         return TYPE2NUM(NUM2TYPE(a) - NUM2TYPE(b));
@@ -137,7 +159,7 @@ fizzbuzz_rb_minus(VALUE a, VALUE b)
 }
 
 inline static VALUE
-fizzbuzz_rb_mod(VALUE a, VALUE b)
+fizzbuzz_modulo(VALUE a, VALUE b)
 {
     if (FIXNUM_P(a) && FIXNUM_P(b))
         return TYPE2NUM(NUM2TYPE(a) % NUM2TYPE(b));
@@ -146,7 +168,7 @@ fizzbuzz_rb_mod(VALUE a, VALUE b)
 }
 
 inline static VALUE
-fizzbuzz_rb_eq(VALUE a, VALUE b)
+fizzbuzz_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
@@ -155,11 +177,11 @@ fizzbuzz_rb_eq(VALUE a, VALUE b)
     else
         result = rb_funcall(a, rb_intern("=="), 1, b);
 
-    return result ? 1 : 0;
+    return RVAL2CBOOL(result);
 }
 
 inline static VALUE
-fizzbuzz_rb_gt(VALUE a, VALUE b)
+fizzbuzz_greater(VALUE a, VALUE b)
 {
     VALUE result;
 
@@ -168,11 +190,11 @@ fizzbuzz_rb_gt(VALUE a, VALUE b)
     else
         result = rb_funcall(a, rb_intern(">"), 1, b);
 
-    return result ? 1 : 0;
+    return RVAL2CBOOL(result);
 }
 
 inline static VALUE
-fizzbuzz_rb_ge(VALUE a, VALUE b)
+fizzbuzz_greater_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
@@ -181,11 +203,11 @@ fizzbuzz_rb_ge(VALUE a, VALUE b)
     else
         result = rb_funcall(a, rb_intern(">="), 1, b);
 
-    return result ? 1 : 0;
+    return RVAL2CBOOL(result);
 }
 
 inline static VALUE
-fizzbuzz_rb_le(VALUE a, VALUE b)
+fizzbuzz_less_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
@@ -194,28 +216,28 @@ fizzbuzz_rb_le(VALUE a, VALUE b)
     else
         result = rb_funcall(a, rb_intern("<="), 1, b);
 
-    return result ? 1 : 0;
+    return RVAL2CBOOL(result);
 }
 
 RUBY_EXTERN ID id_at_start, id_at_stop;
 RUBY_EXTERN VALUE rb_cFizzBuzz;
 
-RUBY_EXTERN VALUE fizzbuzz_initialize(int argc, VALUE *argv, VALUE object);
+RUBY_EXTERN VALUE rb_fb_initialize(int argc, VALUE *argv, VALUE object);
 
-RUBY_EXTERN VALUE fizzbuzz_get_start(VALUE object);
-RUBY_EXTERN VALUE fizzbuzz_set_start(VALUE object, VALUE value);
-RUBY_EXTERN VALUE fizzbuzz_get_stop(VALUE object);
-RUBY_EXTERN VALUE fizzbuzz_set_stop(VALUE object, VALUE value);
+RUBY_EXTERN VALUE rb_fb_get_start(VALUE object);
+RUBY_EXTERN VALUE rb_fb_set_start(VALUE object, VALUE value);
+RUBY_EXTERN VALUE rb_fb_get_stop(VALUE object);
+RUBY_EXTERN VALUE rb_fb_set_stop(VALUE object, VALUE value);
 
-RUBY_EXTERN VALUE fizzbuzz_to_array(VALUE object);
-RUBY_EXTERN VALUE fizzbuzz_to_enumerator(VALUE object);
-RUBY_EXTERN VALUE fizzbuzz_to_reverse_enumerator(VALUE object);
+RUBY_EXTERN VALUE rb_fb_array(VALUE object);
+RUBY_EXTERN VALUE rb_fb_enumerator(VALUE object);
+RUBY_EXTERN VALUE rb_fb_reverse_enumerator(VALUE object);
 
-RUBY_EXTERN VALUE fizzbuzz_is_fizz(VALUE object, VALUE value);
-RUBY_EXTERN VALUE fizzbuzz_is_buzz(VALUE object, VALUE value);
-RUBY_EXTERN VALUE fizzbuzz_is_fizzbuzz(VALUE object, VALUE value);
+RUBY_EXTERN VALUE rb_fb_is_fizz(VALUE object, VALUE value);
+RUBY_EXTERN VALUE rb_fb_is_buzz(VALUE object, VALUE value);
+RUBY_EXTERN VALUE rb_fb_is_fizzbuzz(VALUE object, VALUE value);
 
-RUBY_EXTERN VALUE fizzbuzz_square(VALUE object, VALUE value);
+RUBY_EXTERN VALUE rb_fb_square(VALUE object, VALUE value);
 
 #endif /* _FIZZBUZZ_H */
 

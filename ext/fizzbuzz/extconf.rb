@@ -22,7 +22,7 @@ require 'mkmf'
 
 RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
 
-$CFLAGS << ' -g -Wall'
+$CFLAGS << ' -std=c99 -g -Wall -Wextra -pedantic'
 
 have_header('ruby.h') or missing('ruby.h')
 
