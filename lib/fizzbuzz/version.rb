@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 #
-# fizzbuzz.rb
+# version.rb
 #
 # Copyright 2012 Krzysztof Wilczynski
 #
@@ -18,24 +18,9 @@
 # limitations under the License.
 #
 
-require 'fizzbuzz/fizzbuzz'
-require 'fizzbuzz/version'
-require 'fizzbuzz/integer'
-require 'fizzbuzz/bignum'
-
 class FizzBuzz
-  def self.fizzbuzz(start, stop, reverse = false, &block)
-    fb = FizzBuzz.new(start, stop)
-
-    if block_given?
-      fb.send(reverse ? :reverse_each : :each) {|i| block.call(i) }
-    else
-      reverse ? fb.to_a.reverse : fb.to_a
-    end
-  end
+  VERSION = "0.0.2"
 end
-
-FB = FizzBuzz
 
 # vim: set ts=2 sw=2 sts=2 et :
 # encoding: utf-8

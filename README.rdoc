@@ -1,0 +1,4 @@
+Yet another FizzBuzz in Ruby. Provides simple and fast solution
+to a popular FizzBuzz problem for Ruby.
+
+{<img src="https://travis-ci.org/kwilczynski/fizzbuzz.png?branch=master"/>}[https://travis-ci.org/kwilczynski/fizzbuzz]

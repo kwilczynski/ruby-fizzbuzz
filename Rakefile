@@ -52,8 +52,8 @@ Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
 
   s.files = Dir['ext/**/*.{c,h,rb}'] +
             Dir['lib/**/*.rb'] +
-            %w(Rakefile AUTHORS CHANGES CHANGES.markdown COPYRIGHT
-               LICENSE README README.markdown TODO VERSION)
+            %w(Rakefile AUTHORS CHANGES CHANGES.rdoc COPYRIGHT
+               LICENSE README README.rdoc TODO VERSION)
 
   s.executables   << 'fizzbuzz'
   s.require_paths << 'lib'

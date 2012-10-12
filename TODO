@@ -16,6 +16,7 @@ fizzbuzz (0.0.3)
   * Add pure-Ruby implementation;
   * Add RDoc and improve documentation i.e. source code commenting, README file, etc;
   * Add benchmarks;
-  * Add some examples.
+  * Add some examples;
+  * Add Doxygen style comments for other functions in the source code.
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Tue, 09 Oct 2012 22:26:19 +0100 
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Fri, 12 Oct 2012 13:39:49 +0100
