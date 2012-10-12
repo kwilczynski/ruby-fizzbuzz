@@ -92,16 +92,16 @@ typedef unsigned char uint8_t;
 #define LOOP_FORWARD(x) ((x) == D_LOOP_FORWARD)
 #define LOOP_REVERSE(x) ((x) == D_LOOP_REVERSE)
 
-#define CHECK_TYPE(x, m)                  \
-    do {                                  \
-        if (!INTEGER_P(x))                \
-            rb_raise(rb_eTypeError, (m)); \
+#define CHECK_TYPE(x, m)                        \
+    do {                                        \
+        if (!INTEGER_P(x))                      \
+            rb_raise(rb_eTypeError, "%s", (m)); \
     } while (0)
 
-#define CHECK_BOUNDARY(a, b, m)           \
-    do {                                  \
-        if (GREATER((a), (b)))            \
-            rb_raise(rb_eArgError, (m));  \
+#define CHECK_BOUNDARY(a, b, m)                 \
+    do {                                        \
+        if (GREATER((a), (b)))                  \
+            rb_raise(rb_eArgError, "%s", (m));  \
     } while (0)
 
 enum error {
