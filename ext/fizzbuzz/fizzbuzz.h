@@ -29,6 +29,12 @@ typedef signed char int8_t;
 typedef unsigned char uint8_t;
 #endif
 
+#if defined(UNUSED)
+# undef(UNUSED)
+#endif
+
+#define UNUSED(x) (void)(x)
+
 #if !defined(RVAL2CSTR)
 # define RVAL2CSTR(x) (NIL_P(x) ? NULL : STR2CSTR(x))
 #endif

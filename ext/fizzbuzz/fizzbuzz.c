@@ -300,7 +300,7 @@ rb_fb_reverse_enumerator(VALUE object)
 VALUE
 rb_fb_is_fizz(VALUE object, VALUE value)
 {
-    object = Qnil;
+    UNUSED(object);
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return CBOOL2RVAL(IS_FIZZ(value));
 }
@@ -329,7 +329,7 @@ rb_fb_is_fizz(VALUE object, VALUE value)
 VALUE
 rb_fb_is_buzz(VALUE object, VALUE value)
 {
-    object = Qnil;
+    UNUSED(object);
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return CBOOL2RVAL(IS_BUZZ(value));
 }
@@ -358,7 +358,7 @@ rb_fb_is_buzz(VALUE object, VALUE value)
 VALUE
 rb_fb_is_fizzbuzz(VALUE object, VALUE value)
 {
-    object = Qnil;
+    UNUSED(object);
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return CBOOL2RVAL(IS_FIZZBUZZ(value));
 }
@@ -392,7 +392,7 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
 VALUE
 rb_fb_square(VALUE object, VALUE value)
 {
-    object = Qnil;
+    UNUSED(object);
     CHECK_TYPE(value, errors[E_INVALID_TYPE]);
     return fizzbuzz_evaluate(value);
 }
