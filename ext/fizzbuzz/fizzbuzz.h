@@ -1,3 +1,5 @@
+/* :enddoc: */
+
 /*
  * fizzbuzz.h
  *
