@@ -33,12 +33,27 @@ DEFAULT_INSTANCE_METHODS  = [:to_a, :each, :reverse_each]
 
 DEFAULT_INSTANCE_METHODS_ADDED = [:fizz?, :buzz?, :fizzbuzz?]
 
-DEFAULT_INTEGER = 1
-DEFAULT_BIGNUM  = 1_000_000_000_000
-
-DEFAULT_LARGE_BIGNUM  = 1_000_000_000_000_000
+class Fixnum
+  class << self
+    def overflow_size_with_sign
+      bits = [''].pack('p').size * 8
+      2 ** (bits - 1) - 1
+    end
+  end
+end
 
 class BizzBuzz_Test < Test::Unit::TestCase
+  def setup
+    @integer = 1
+    @bignum       = 1_000_000_000_000
+    @large_bignum = 1_000_000_000_000_000
+
+    if Fixnum::overflow_size_with_sign + 1 > 2147483647
+      @bignum       = @bignum       ** 2
+      @large_bignum = @large_bignum ** 2
+    end
+  end
+
   def test_fizzbuzz_alias
     assert_equal(FB, FizzBuzz)
   end
@@ -61,13 +76,13 @@ class BizzBuzz_Test < Test::Unit::TestCase
 
   def test_integer_integration
     assert_block do
-      DEFAULT_INSTANCE_METHODS_ADDED.all? {|i| DEFAULT_INTEGER.respond_to?(i) }
+      DEFAULT_INSTANCE_METHODS_ADDED.all? {|i| @integer.respond_to?(i) }
     end
   end
 
   def test_bignum_integration
     assert_block do
-      DEFAULT_INSTANCE_METHODS_ADDED.all? {|i| DEFAULT_BIGNUM.respond_to?(i) }
+      DEFAULT_INSTANCE_METHODS_ADDED.all? {|i| @bignum.respond_to?(i) }
     end
   end
 
@@ -84,19 +99,19 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_singleton_fizzbuzz_integer
-    integer = DEFAULT_INTEGER + 14
+    integer = @integer + 14
     obtainted = FizzBuzz.fizzbuzz(integer, integer)
     assert_equal(obtainted, ['FizzBuzz'])
   end
 
   def test_singleton_fizzbuzz_bignum
-    bignum = DEFAULT_BIGNUM + 5
+    bignum = @bignum + 5
     obtainted = FizzBuzz.fizzbuzz(bignum, bignum)
     assert_equal(obtainted, ['FizzBuzz'])
   end
 
   def test_singleton_fizzbuzz_large_bignum
-    bignum = DEFAULT_LARGE_BIGNUM + 5
+    bignum = @large_bignum + 5
     obtainted = FizzBuzz.fizzbuzz(bignum, bignum)
     assert_equal(obtainted, ['FizzBuzz'])
   end
@@ -131,7 +146,7 @@ class BizzBuzz_Test < Test::Unit::TestCase
     obtained = [obtained_fizz, obtained_buzz, obtained_fizzbuzz]
 
     assert_block do
-      FizzBuzz[1].is_a?(Integer)
+      FizzBuzz[@integer].is_a?(Integer)
 
       obtained.each_with_index do |v,i|
           v.is_a?(String) and obtained[i] == DEFAULT_WORDS[i]
@@ -140,14 +155,14 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_singleton_squre_bignum
-    obtained_fizz     = FizzBuzz[DEFAULT_BIGNUM + 2]
-    obtained_buzz     = FizzBuzz[DEFAULT_BIGNUM + 15]
-    obtained_fizzbuzz = FizzBuzz[DEFAULT_BIGNUM + 5]
+    obtained_fizz     = FizzBuzz[@bignum + 2]
+    obtained_buzz     = FizzBuzz[@bignum + 15]
+    obtained_fizzbuzz = FizzBuzz[@bignum + 5]
 
     obtained = [obtained_fizz, obtained_buzz, obtained_fizzbuzz]
 
     assert_block do
-      FizzBuzz[DEFAULT_BIGNUM].is_a?(Bignum)
+      FizzBuzz[@bignum].is_a?(Bignum)
 
       obtained.each_with_index do |v,i|
           v.is_a?(String) and obtained[i] == DEFAULT_WORDS[i]
@@ -156,14 +171,14 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_singleton_squre_large_bignum
-    obtained_fizz     = FizzBuzz[DEFAULT_LARGE_BIGNUM + 2]
-    obtained_buzz     = FizzBuzz[DEFAULT_LARGE_BIGNUM + 15]
-    obtained_fizzbuzz = FizzBuzz[DEFAULT_LARGE_BIGNUM + 5]
+    obtained_fizz     = FizzBuzz[@large_bignum + 2]
+    obtained_buzz     = FizzBuzz[@large_bignum + 15]
+    obtained_fizzbuzz = FizzBuzz[@large_bignum + 5]
 
     obtained = [obtained_fizz, obtained_buzz, obtained_fizzbuzz]
 
     assert_block do
-      FizzBuzz[DEFAULT_LARGE_BIGNUM].is_a?(Bignum)
+      FizzBuzz[@large_bignum].is_a?(Bignum)
 
       obtained.each_with_index do |v,i|
           v.is_a?(String) and obtained[i] == DEFAULT_WORDS[i]
@@ -232,12 +247,12 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_for_fizzbuzz_bignum
-    fb = FizzBuzz.new(DEFAULT_BIGNUM + 5, DEFAULT_BIGNUM + 5)
+    fb = FizzBuzz.new(@bignum + 5, @bignum + 5)
     assert_equal(fb.to_a[0], 'FizzBuzz')
   end
 
   def test_for_fizzbuzz_large_bignum
-    fb = FizzBuzz.new(DEFAULT_LARGE_BIGNUM + 5, DEFAULT_LARGE_BIGNUM + 5)
+    fb = FizzBuzz.new(@large_bignum + 5, @large_bignum + 5)
     assert_equal(fb.to_a[0], 'FizzBuzz')
   end
 
@@ -252,22 +267,22 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_correct_start_bignum
-    fb = FizzBuzz.new(DEFAULT_BIGNUM, DEFAULT_BIGNUM)
+    fb = FizzBuzz.new(@bignum, @bignum)
 
     assert_block do
-      fb.start.is_a?(Bignum) and fb.start == DEFAULT_BIGNUM
-      fb.start = DEFAULT_BIGNUM - 5
-      fb.start.is_a?(Bignum) and fb.start == (DEFAULT_BIGNUM - 5)
+      fb.start.is_a?(Bignum) and fb.start == @bignum
+      fb.start = @bignum - 5
+      fb.start.is_a?(Bignum) and fb.start == (@bignum - 5)
     end
   end
 
   def test_correct_start_large_bignum
-    fb = FizzBuzz.new(DEFAULT_LARGE_BIGNUM, DEFAULT_LARGE_BIGNUM)
+    fb = FizzBuzz.new(@large_bignum, @large_bignum)
 
     assert_block do
-      fb.start.is_a?(Bignum) and fb.start == DEFAULT_LARGE_BIGNUM
-      fb.start = DEFAULT_LARGE_BIGNUM - 5
-      fb.start.is_a?(Bignum) and fb.start == (DEFAULT_LARGE_BIGNUM - 5)
+      fb.start.is_a?(Bignum) and fb.start == @large_bignum
+      fb.start = @large_bignum - 5
+      fb.start.is_a?(Bignum) and fb.start == (@large_bignum - 5)
     end
   end
 
@@ -282,22 +297,22 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_correct_stop_bignum
-    fb = FizzBuzz.new(DEFAULT_BIGNUM, DEFAULT_BIGNUM)
+    fb = FizzBuzz.new(@bignum, @bignum)
 
     assert_block do
-      fb.stop.is_a?(Bignum) and fb.stop == DEFAULT_BIGNUM
-      fb.stop = DEFAULT_BIGNUM + 5
-      fb.stop.is_a?(Bignum) and fb.stop == (DEFAULT_BIGNUM + 5)
+      fb.stop.is_a?(Bignum) and fb.stop == @bignum
+      fb.stop = @bignum + 5
+      fb.stop.is_a?(Bignum) and fb.stop == (@bignum + 5)
     end
   end
 
   def test_correct_stop_large_bignum
-    fb = FizzBuzz.new(DEFAULT_LARGE_BIGNUM, DEFAULT_LARGE_BIGNUM)
+    fb = FizzBuzz.new(@large_bignum, @large_bignum)
 
     assert_block do
-      fb.stop.is_a?(Bignum) and fb.stop == DEFAULT_LARGE_BIGNUM
-      fb.stop = DEFAULT_LARGE_BIGNUM + 5
-      fb.stop.is_a?(Bignum) and fb.stop == (DEFAULT_LARGE_BIGNUM + 5)
+      fb.stop.is_a?(Bignum) and fb.stop == @large_bignum
+      fb.stop = @large_bignum + 5
+      fb.stop.is_a?(Bignum) and fb.stop == (@large_bignum + 5)
     end
   end
 
@@ -369,8 +384,8 @@ class BizzBuzz_Test < Test::Unit::TestCase
 
   def test_for_range_error
     assert_nothing_raised do
-      FizzBuzz.new(DEFAULT_START, DEFAULT_BIGNUM ** 2)
-      FizzBuzz.new(-DEFAULT_LARGE_BIGNUM, DEFAULT_STOP)
+      FizzBuzz.new(DEFAULT_START, @bignum ** 2)
+      FizzBuzz.new(-@large_bignum, DEFAULT_STOP)
     end
   end
 end
