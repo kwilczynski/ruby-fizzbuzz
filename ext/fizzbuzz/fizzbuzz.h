@@ -21,7 +21,12 @@
 #ifndef _FIZZBUZZ_H
 #define _FIZZBUZZ_H
 
+#include <stdint.h>
 #include <ruby.h>
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
 
 #if !(defined(INT8_MIN) || defined(INT8_MAX))
 typedef signed char int8_t;
@@ -246,6 +251,10 @@ RUBY_EXTERN VALUE rb_fb_is_buzz(VALUE object, VALUE value);
 RUBY_EXTERN VALUE rb_fb_is_fizzbuzz(VALUE object, VALUE value);
 
 RUBY_EXTERN VALUE rb_fb_square(VALUE object, VALUE value);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _FIZZBUZZ_H */
 
