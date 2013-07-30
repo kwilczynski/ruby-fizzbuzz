@@ -63,12 +63,13 @@ Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
   s.require_paths << 'lib'
   s.extensions    << 'ext/fizzbuzz/extconf.rb'
 
+  s.add_development_dependency 'rake', '~> 0.8.7'
   s.add_development_dependency 'rdoc', '~> 3.12'
   s.add_development_dependency 'test-unit', '~> 2.5.2'
   s.add_development_dependency 'rake-compiler', '~> 0.7.1'
 end
 
-Rake::RDocTask.new do |d|
+RDoc::Task.new do |d|
   files = %w(AUTHORS CHANGES.rdoc COPYRIGHT LICENSE README.rdoc TODO)
 
   d.title = 'Yet another FizzBuzz in Ruby'
