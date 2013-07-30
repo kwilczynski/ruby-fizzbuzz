@@ -8,8 +8,10 @@ rvm:
 branches:
   only:
     - master
+install: true
 before_script:
-  - gem install --no-rdoc --no-ri --version '~> 3.12' rdoc
-  - gem install --no-rdoc --no-ri --version '~> 2.5.2' test-unit
-  - gem install --no-rdoc --no-ri --version '~> 0.7.1' rake-compiler
+  - gem install --no-rdoc --no-ri rake
+  - gem install --no-rdoc --no-ri rdoc
+  - gem install --no-rdoc --no-ri test-unit
+  - gem install --no-rdoc --no-ri rake-compiler
 script: rake test
