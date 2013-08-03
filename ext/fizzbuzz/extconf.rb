@@ -24,6 +24,9 @@ require 'mkmf'
 
 RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
 
+$LDFLAGS << " %s" % ENV['LDFLAGS'] if ENV['LDFLAGS']
+
+$CFLAGS << " %s" % ENV['CFLAGS'] if ENV['CFLAGS']
 $CFLAGS << ' -std=c99 -g -Wall -Wextra -pedantic'
 
 have_header('ruby.h') or missing('ruby.h')
