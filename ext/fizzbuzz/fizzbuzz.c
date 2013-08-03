@@ -447,22 +447,22 @@ Init_fizzbuzz(void)
 
     rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
 
-    rb_define_method(rb_cFizzBuzz, "initialize", rb_fb_initialize, -1);
+    rb_define_method(rb_cFizzBuzz, "initialize", RUBY_METHOD_FUNC(rb_fb_initialize), -1);
 
-    rb_define_method(rb_cFizzBuzz, "start", rb_fb_get_start, 0);
-    rb_define_method(rb_cFizzBuzz, "start=", rb_fb_set_start, 1);
-    rb_define_method(rb_cFizzBuzz, "stop", rb_fb_get_stop, 0);
-    rb_define_method(rb_cFizzBuzz, "stop=", rb_fb_set_stop, 1);
+    rb_define_method(rb_cFizzBuzz, "start", RUBY_METHOD_FUNC(rb_fb_get_start), 0);
+    rb_define_method(rb_cFizzBuzz, "start=", RUBY_METHOD_FUNC(rb_fb_set_start), 1);
+    rb_define_method(rb_cFizzBuzz, "stop", RUBY_METHOD_FUNC(rb_fb_get_stop), 0);
+    rb_define_method(rb_cFizzBuzz, "stop=", RUBY_METHOD_FUNC(rb_fb_set_stop), 1);
 
-    rb_define_method(rb_cFizzBuzz, "to_a", rb_fb_array, 0);
-    rb_define_method(rb_cFizzBuzz, "each", rb_fb_enumerator, 0);
-    rb_define_method(rb_cFizzBuzz, "reverse_each", rb_fb_reverse_enumerator, 0);
+    rb_define_method(rb_cFizzBuzz, "to_a", RUBY_METHOD_FUNC(rb_fb_array), 0);
+    rb_define_method(rb_cFizzBuzz, "each", RUBY_METHOD_FUNC(rb_fb_enumerator), 0);
+    rb_define_method(rb_cFizzBuzz, "reverse_each", RUBY_METHOD_FUNC(rb_fb_reverse_enumerator), 0);
 
-    rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", rb_fb_is_fizz, 1);
-    rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", rb_fb_is_buzz, 1);
-    rb_define_singleton_method(rb_cFizzBuzz, "is_fizzbuzz?", rb_fb_is_fizzbuzz, 1);
+    rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", RUBY_METHOD_FUNC(rb_fb_is_fizz), 1);
+    rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", RUBY_METHOD_FUNC(rb_fb_is_buzz), 1);
+    rb_define_singleton_method(rb_cFizzBuzz, "is_fizzbuzz?", RUBY_METHOD_FUNC(rb_fb_is_fizzbuzz), 1);
 
-    rb_define_singleton_method(rb_cFizzBuzz, "[]", rb_fb_square, 1);
+    rb_define_singleton_method(rb_cFizzBuzz, "[]", RUBY_METHOD_FUNC(rb_fb_square), 1);
 }
 
 /* vim: set ts=8 sw=4 sts=2 et : */
