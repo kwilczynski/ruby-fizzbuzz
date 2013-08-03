@@ -126,8 +126,8 @@ enum error {
 };
 
 enum return_type {
-  R_TYPE_ARRAY = 0,
-  R_TYPE_ENUMERATOR
+    R_TYPE_ARRAY = 0,
+    R_TYPE_ENUMERATOR
 };
 
 enum direction {
