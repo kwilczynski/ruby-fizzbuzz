@@ -135,9 +135,9 @@ enum direction {
     D_LOOP_REVERSE
 };
 
-typedef enum error       error_t;
+typedef enum error error_t;
 typedef enum return_type return_type_t;
-typedef enum direction   direction_t;
+typedef enum direction direction_t;
 
 static const char *errors[] = {
     "must be an integer value",
