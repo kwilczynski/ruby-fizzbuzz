@@ -42,10 +42,6 @@ typedef unsigned char uint8_t;
 
 #define UNUSED(x) (void)(x)
 
-#if !defined(RVAL2CSTR)
-# define RVAL2CSTR(x) (NIL_P(x) ? NULL : STR2CSTR(x))
-#endif
-
 #if !defined(CSTR2RVAL)
 # define CSTR2RVAL(x) ((x) == NULL ? Qnil : rb_str_new2(x))
 #endif
