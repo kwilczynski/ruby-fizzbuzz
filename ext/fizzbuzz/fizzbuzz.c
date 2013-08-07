@@ -384,8 +384,9 @@ fizzbuzz_evaluate(VALUE value)
 
     VALUE result = Qnil;
 
-    if (ZERO_P(value))
+    if (ZERO_P(value)) {
         return value;
+    }
 
     score = SCORE_VALUE(value);
 

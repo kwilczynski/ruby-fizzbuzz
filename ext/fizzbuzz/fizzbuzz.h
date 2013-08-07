@@ -152,8 +152,9 @@ static const char *words[] = {
 inline static VALUE
 fizzbuzz_plus(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b))
+    if (FIXNUM_P(a) && FIXNUM_P(b)) {
         return TYPE2NUM(NUM2TYPE(a) + NUM2TYPE(b));
+    }
 
     return rb_funcall(a, rb_intern("+"), 1, b);
 }
@@ -161,8 +162,9 @@ fizzbuzz_plus(VALUE a, VALUE b)
 inline static VALUE
 fizzbuzz_minus(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b))
+    if (FIXNUM_P(a) && FIXNUM_P(b)) {
         return TYPE2NUM(NUM2TYPE(a) - NUM2TYPE(b));
+    }
 
     return rb_funcall(a, rb_intern("-"), 1, b);
 }
@@ -170,8 +172,9 @@ fizzbuzz_minus(VALUE a, VALUE b)
 inline static VALUE
 fizzbuzz_modulo(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b))
+    if (FIXNUM_P(a) && FIXNUM_P(b)) {
         return TYPE2NUM(NUM2TYPE(a) % NUM2TYPE(b));
+    }
 
     return rb_funcall(a, rb_intern("%"), 1, b);
 }
@@ -181,10 +184,12 @@ fizzbuzz_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
-    if (FIXNUM_P(a) && FIXNUM_P(b))
+    if (FIXNUM_P(a) && FIXNUM_P(b)) {
         result = (NUM2TYPE(a) == NUM2TYPE(b));
-    else
+    }
+    else {
         result = rb_funcall(a, rb_intern("=="), 1, b);
+    }
 
     return RVAL2CBOOL(result);
 }
@@ -194,10 +199,12 @@ fizzbuzz_greater(VALUE a, VALUE b)
 {
     VALUE result;
 
-    if (FIXNUM_P(a) && FIXNUM_P(b))
+    if (FIXNUM_P(a) && FIXNUM_P(b)) {
         result = (NUM2TYPE(a) > NUM2TYPE(b));
-    else
+    }
+    else {
         result = rb_funcall(a, rb_intern(">"), 1, b);
+    }
 
     return RVAL2CBOOL(result);
 }
@@ -207,10 +214,12 @@ fizzbuzz_greater_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
-    if (FIXNUM_P(a) && FIXNUM_P(b))
+    if (FIXNUM_P(a) && FIXNUM_P(b)) {
         result = (NUM2TYPE(a) >= NUM2TYPE(b));
-    else
+    }
+    else {
         result = rb_funcall(a, rb_intern(">="), 1, b);
+    }
 
     return RVAL2CBOOL(result);
 }
@@ -220,10 +229,12 @@ fizzbuzz_less_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
-    if (FIXNUM_P(a) && FIXNUM_P(b))
+    if (FIXNUM_P(a) && FIXNUM_P(b)) {
         result = (NUM2TYPE(a) <= NUM2TYPE(b));
-    else
+    }
+    else {
         result = rb_funcall(a, rb_intern("<="), 1, b);
+    }
 
     return RVAL2CBOOL(result);
 }
