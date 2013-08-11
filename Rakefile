@@ -5,7 +5,7 @@
 #
 # Rakefile
 #
-# Copyright 2012 Krzysztof Wilczynski
+# Copyright 2012-2013 Krzysztof Wilczynski
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ CLEAN.include   '*{.h,.o,.log,.so}', 'ext/**/*{.o,.log,.so}', 'Makefile', 'ext/*
 CLOBBER.include 'lib/**/*.so', 'doc/**/*'
 
 gem = Gem::Specification.new do |s|
-  s.name        = 'fizzbuzz'
+  s.name        = 'ruby-fizzbuzz'
   s.description = 'Yet another FizzBuzz in Ruby'
   s.platform    = Gem::Platform::RUBY
   s.version     = File.read('VERSION').strip
@@ -48,7 +48,7 @@ gem = Gem::Specification.new do |s|
   s.email       = 'krzysztof.wilczynski@linux.com'
   s.homepage    = 'http://about.me/kwilczynski'
 
-  s.rubyforge_project = 'fizzbuzz'
+  s.rubyforge_project = 'ruby-fizzbuzz'
   s.rubygems_version  = '~> 1.3.7'
   s.has_rdoc          = true
 
