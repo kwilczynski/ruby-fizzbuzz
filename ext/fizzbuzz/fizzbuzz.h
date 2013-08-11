@@ -3,13 +3,13 @@
 /*
  * fizzbuzz.h
  *
- * Copyright 2012 Krzysztof Wilczynski
+ * Copyright 2012-2013 Krzysztof Wilczynski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,48 +18,13 @@
  * limitations under the License.
  */
 
-#ifndef _FIZZBUZZ_H
-#define _FIZZBUZZ_H
+#if !defined(_FIZZBUZZ_H)
+#define _FIZZBUZZ_H 1
 
-#include <stdint.h>
-#include <ruby.h>
+#include "common.h"
 
 #if defined(__cplusplus)
 extern "C" {
-#endif
-
-#if !(defined(INT8_MIN) || defined(INT8_MAX))
-typedef signed char int8_t;
-#endif
-
-#if !(defined(UINT8_MIN) || defined(UINT8_MAX))
-typedef unsigned char uint8_t;
-#endif
-
-#if defined(UNUSED)
-# undef(UNUSED)
-#endif
-
-#define UNUSED(x) (void)(x)
-
-#if !defined(CSTR2RVAL)
-# define CSTR2RVAL(x) ((x) == NULL ? Qnil : rb_str_new2(x))
-#endif
-
-#if !defined(RVAL2CBOOL)
-# define RVAL2CBOOL(x) (RTEST(x))
-#endif
-
-#if !defined(CBOOL2RVAL)
-# define CBOOL2RVAL(x) ((x) ? Qtrue : Qfalse)
-#endif
-
-#if !defined(HAVE_LONG_LONG)
-# define TYPE2NUM LONG2NUM
-# define NUM2TYPE NUM2LONG
-#else
-# define TYPE2NUM LL2NUM
-# define NUM2TYPE NUM2LL
 #endif
 
 #define ZERO  INT2FIX(0)
