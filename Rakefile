@@ -38,41 +38,7 @@ end
 CLEAN.include   '*{.h,.o,.log,.so}', 'ext/**/*{.o,.log,.so}', 'Makefile', 'ext/**/Makefile'
 CLOBBER.include 'lib/**/*.so', 'doc/**/*'
 
-gem = Gem::Specification.new do |s|
-  s.name        = 'ruby-fizzbuzz'
-  s.description = 'Yet another FizzBuzz in Ruby'
-  s.platform    = Gem::Platform::RUBY
-  s.version     = File.read('VERSION').strip
-  s.license     = 'Apache License, Version 2.0'
-  s.author      = 'Krzysztof Wilczynski'
-  s.email       = 'krzysztof.wilczynski@linux.com'
-  s.homepage    = 'http://about.me/kwilczynski'
-
-  s.rubyforge_project = 'ruby-fizzbuzz'
-  s.rubygems_version  = '~> 1.3.7'
-  s.has_rdoc          = true
-
-  s.summary = <<-EOS
-Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
-
-Written in C as an example of using Ruby's C API - with the support for
-arbitrary large numeric values via the Bignum class.
-  EOS
-
-  s.files = Dir['ext/**/*.{c,h,rb}'] +
-            Dir['lib/**/*.rb'] +
-            %w(Rakefile AUTHORS CHANGES CHANGES.rdoc COPYRIGHT
-               LICENSE README README.rdoc TODO VERSION)
-
-  s.executables   << 'fizzbuzz'
-  s.require_paths << 'lib'
-  s.extensions    << 'ext/fizzbuzz/extconf.rb'
-
-  s.add_development_dependency 'rake', '>= 0.8.7'
-  s.add_development_dependency 'rdoc', '>= 3.12'
-  s.add_development_dependency 'test-unit', '>= 2.5.2'
-  s.add_development_dependency 'rake-compiler', '>= 0.7.1'
-end
+gem = eval File.read('ruby-fizzbuzz.gemspec')
 
 RDoc::Task.new do |d|
   files = %w(AUTHORS CHANGES.rdoc COPYRIGHT LICENSE README.rdoc TODO)
