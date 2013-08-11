@@ -54,6 +54,9 @@ gem = Gem::Specification.new do |s|
 
   s.summary = <<-EOS
 Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
+
+Written in C as an example of using Ruby's C API - with the support for
+arbitrary large numeric values via the Bignum class.
   EOS
 
   s.files = Dir['ext/**/*.{c,h,rb}'] +
