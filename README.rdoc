@@ -4,4 +4,4 @@ to a popular FizzBuzz problem for Ruby.
 Written in C as an example of using Ruby's C API - with the support
 for arbitrary large numeric values via the Bignum class.
 
-{<img src="https://travis-ci.org/kwilczynski/fizzbuzz.png?branch=master"/>}[https://travis-ci.org/kwilczynski/fizzbuzz]
+{<img src="https://travis-ci.org/kwilczynski/ruby-fizzbuzz.png?branch=master"/>}[https://travis-ci.org/kwilczynski/ruby-fizzbuzz]
