@@ -29,7 +29,31 @@ $LDFLAGS << " %s" % ENV['LDFLAGS'] if ENV['LDFLAGS']
 $CFLAGS << " %s" % ENV['CFLAGS'] if ENV['CFLAGS']
 $CFLAGS << ' -std=c99 -g -Wall -Wextra -pedantic'
 
-have_header('ruby.h') or missing('ruby.h')
+unless have_header('ruby.h')
+  abort <<-EOS
+
+  You appear to be missing Ruby development libraries and/or header
+  files. You can install missing compile-time dependencies in one of
+  the following ways:
+
+  - Debian / Ubuntu
+
+      apt-get install ruby-dev
+
+  - Red Hat / CentOS / Fedora
+
+      yum install ruby-devel
+
+
+  Alternatively, you can use either of the following Ruby version
+  managers in order to install Ruby locally (for your user only)
+  and/or system-wide:
+
+  - Ruby Version Manager (for RVM, see http://rvm.io/)
+  - Ruby Environment (for rbenv, see http://github.com/sstephenson/rbenv)
+
+  EOS
+end
 
 dir_config('fizzbuzz')
 
