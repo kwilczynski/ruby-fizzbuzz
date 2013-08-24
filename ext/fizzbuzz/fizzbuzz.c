@@ -23,13 +23,23 @@
 #include <fizzbuzz.h>
 
 ID id_at_start, id_at_stop;
+
 VALUE rb_cFizzBuzz = Qnil;
+VALUE rb_eFizzBuzz = Qnil;
+
+VALUE rb_eFizzBuzzTypeError = Qnil;
+VALUE rb_eFizzBuzzRangeError = Qnil;
 
 void Init_fizzbuzz(void);
 
 static VALUE fizzbuzz_evaluate(VALUE value);
 static VALUE fizzbuzz_values(VALUE object, return_type_t type,
-        direction_t direction);
+	direction_t direction);
+
+static VALUE fizzbuzz_exception(void *data);
+static VALUE fizzbuzz_type_error(VALUE klass, const char *message);
+static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
+	const char *message);
 
 /*
  * call-seq:
@@ -48,10 +58,11 @@ static VALUE fizzbuzz_values(VALUE object, return_type_t type,
  *    fb = FizzBuzz.new(-15, 15)    #=> #<FizzBuzz:0xb6fd0460 @stop=15, @start=-15>
  *
  * The given value of +stop+ must always be greater than or equal to the
- * given value of +start+, otherwise raises an +ArgumentError+ exception.
+ * given value of +start+, otherwise raises an +FizzBuzz::RangeError+
+ * exception.
  *
- * Will raise a +TypeError+ exception if given value of either +start+
- * or +stop+ is not an integer type.
+ * Will raise a +FizzBuzz::TypeError+ exception if given value of either
+ * +start+ or +stop+ is not an integer type.
  *
  * See also:
  *
@@ -67,7 +78,7 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
     CHECK_TYPE(start, errors[E_INVALID_START_TYPE]);
     CHECK_TYPE(stop, errors[E_INVALID_STOP_TYPE]);
 
-    CHECK_BOUNDARY(start, stop, errors[E_BAD_VALUE_START]);
+    CHECK_RANGE(start, stop, errors[E_BAD_VALUE_START]);
 
     rb_ivar_set(object, id_at_start, start);
     rb_ivar_set(object, id_at_stop, stop);
@@ -84,7 +95,7 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 100) #=> #<FizzBuzz:0xf726b48c @stop=100, @start=1>
- *    fb.start                  #=> 1
+ *    fb.start			#=> 1
  */
 VALUE
 rb_fb_get_start(VALUE object)
@@ -97,17 +108,18 @@ rb_fb_get_start(VALUE object)
  *    fizzfuzz.start= (integer) -> integer
  *
  * Sets the current value of +start+ if given new value is lower or equal
- * to the current value of +stop+, or raises an +ArgumentError+ exception
- * otherwise.
+ * to the current value of +stop+, or raises an +FizzBuzz::RangeError+
+ * exception otherwise.
  *
  * Examples:
  *
  *    fb = FizzBuzz.new(1, 100) #=> #<FizzBuzz:0xf726f03c @stop=100, @start=1>
- *    fb.start                  #=> 1
- *    fb.start = 15             #=> 15
- *    fb.start                  #=> 15
+ *    fb.start			#=> 1
+ *    fb.start = 15		#=> 15
+ *    fb.start			#=> 15
  *
- * Will raise a +TypeError+ exception if given value is not an integer type.
+ * Will raise a +FizzBuzz::TypeError+ exception if given value is not
+ * an integer type.
  */
 VALUE
 rb_fb_set_start(VALUE object, VALUE value)
@@ -115,7 +127,7 @@ rb_fb_set_start(VALUE object, VALUE value)
     VALUE stop = rb_ivar_get(object, id_at_stop);
 
     CHECK_TYPE(value, errors[E_INVALID_START_TYPE]);
-    CHECK_BOUNDARY(value, stop, errors[E_BAD_VALUE_START]);
+    CHECK_RANGE(value, stop, errors[E_BAD_VALUE_START]);
 
     return rb_ivar_set(object, id_at_start, value);
 }
@@ -129,7 +141,7 @@ rb_fb_set_start(VALUE object, VALUE value)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 100) #=> #<FizzBuzz:0xf7272bec @stop=100, @start=1>
- *    fb.stop                   #=> 100
+ *    fb.stop			#=> 100
  */
 VALUE
 rb_fb_get_stop(VALUE object)
@@ -142,17 +154,18 @@ rb_fb_get_stop(VALUE object)
  *    fizzfuzz.start= (integer) -> integer
  *
  * Sets the current value of +stop+ if given new value is greater or equal
- * to the current value of +start+, or raises an +ArgumentError+ exception
- * otherwise.
+ * to the current value of +start+, or raises an +FizzBuzz::RangeError+
+ * exception otherwise.
  *
  * Example:
  *
  *    fb = FizzBuzz.new(1, 100) #=> #<FizzBuzz:0xf727679c @stop=100, @start=1>
- *    fb.stop                   #=> 100
- *    fb.stop = 15              #=> 15
- *    fb.stop                   #=> 15
+ *    fb.stop			#=> 100
+ *    fb.stop = 15		#=> 15
+ *    fb.stop			#=> 15
  *
- * Will raise a +TypeError+ exception if given value is not an integer type.
+ * Will raise a +FizzBuzz::TypeError+ exception if given value is not
+ * an integer type.
  */
 VALUE
 rb_fb_set_stop(VALUE object, VALUE value)
@@ -160,7 +173,7 @@ rb_fb_set_stop(VALUE object, VALUE value)
     VALUE start = rb_ivar_get(object, id_at_start);
 
     CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE]);
-    CHECK_BOUNDARY(start, value, errors[E_BAD_VALUE_STOP]);
+    CHECK_RANGE(start, value, errors[E_BAD_VALUE_STOP]);
 
     return rb_ivar_set(object, id_at_stop, value);
 }
@@ -175,7 +188,7 @@ rb_fb_set_stop(VALUE object, VALUE value)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 15) #=> #<FizzBuzz:0xf727fd60 @stop=15, @start=1>
- *    fb.to_a                  #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
+ *    fb.to_a		       #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
  *
  * See also: FizzBuzz::fizzbuzz
  */
@@ -188,7 +201,7 @@ rb_fb_array(VALUE object)
 /*
  * call-seq:
  *    fizzbuzz.each {|value| block } -> self
- *    fizzbuzz.each                  -> an Enumerator
+ *    fizzbuzz.each		     -> an Enumerator
  *
  * Calls the block once for each subsequent value for a given range
  * from +start+ to +stop+, passing the value as a parameter to the block.
@@ -229,7 +242,7 @@ rb_fb_enumerator(VALUE object)
 /*
  * call-seq:
  *    fizzbuzz.reverse_each {|value| block } -> self
- *    fizzbuzz.reverse_each                  -> an Enumerator
+ *    fizzbuzz.reverse_each		     -> an Enumerator
  *
  * Calls the block once for each subsequent value for a given range
  * from +start+ to +stop+ in an <i>reverse order</i>, passing the value
@@ -281,7 +294,8 @@ rb_fb_reverse_enumerator(VALUE object)
  *    FizzBuzz.is_fizz?(5)    #=> false
  *    FizzBuzz.is_fizz?(15)   #=> false
  *
- * Will raise a +TypeError+ exception if given value is not an integer type.
+ * Will raise a +FizzBuzz::TypeError+ exception if given value is not
+ * an integer type.
  *
  * See also: FizzBuzz::[]
  */
@@ -307,7 +321,8 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  *    FizzBuzz.is_buzz?(5)    #=> true
  *    FizzBuzz.is_buzz?(15)   #=> false
  *
- * Will raise a +TypeError+ exception if given value is not an integer type.
+ * Will raise a +FizzBuzz::TypeError+ exception if given value is not
+ * an integer type.
  *
  * See also: FizzBuzz::[]
  */
@@ -329,11 +344,12 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  *
  * Example:
  *
- *    FizzBuzz.is_fizzbuzz?(3)    #=> false
- *    FizzBuzz.is_fizzbuzz?(5)    #=> false
+ *    FizzBuzz.is_fizzbuzz?(3)	  #=> false
+ *    FizzBuzz.is_fizzbuzz?(5)	  #=> false
  *    FizzBuzz.is_fizzbuzz?(15)   #=> true
  *
- * Will raise a +TypeError+ exception if given value is not an integer type.
+ * Will raise a +FizzBuzz::TypeError+ exception if given value is not
+ * an integer type.
  *
  * See also: FizzBuzz::[]
  */
@@ -362,7 +378,8 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  *    FizzBuzz[5]    #=> "Buzz"
  *    FizzBuzz[15]   #=> "FizzBuzz"
  *
- * Will raise a +TypeError+ exception if given value is not an integer type.
+ * Will raise a +FizzBuzz::TypeError+ exception if given value is not
+ * an integer type.
  *
  * See also: FizzBuzz::is_fizz?, FizzBuzz::is_buzz? and FizzBuzz::is_fizzbuzz?
  */
@@ -385,24 +402,24 @@ fizzbuzz_evaluate(VALUE value)
     VALUE result = Qnil;
 
     if (ZERO_P(value)) {
-        return value;
+	return value;
     }
 
     score = SCORE_VALUE(value);
 
     switch(score) {
-        case 0:
-            result = value;
-            break;
-        case 1:
-            result = CSTR2RVAL(words[score - 1]);
-            break;
-        case 2:
-            result = CSTR2RVAL(words[score - 1]);
-            break;
-        case 3:
-            result = CSTR2RVAL(words[score - 1]);
-            break;
+	case 0:
+	    result = value;
+	    break;
+	case 1:
+	    result = CSTR2RVAL(words[score - 1]);
+	    break;
+	case 2:
+	    result = CSTR2RVAL(words[score - 1]);
+	    break;
+	case 3:
+	    result = CSTR2RVAL(words[score - 1]);
+	    break;
     }
 
     return result;
@@ -417,38 +434,99 @@ fizzbuzz_values(VALUE object, return_type_t type, direction_t direction)
     VALUE value = Qnil;
 
     VALUE start = rb_ivar_get(object, id_at_start);
-    VALUE stop  = rb_ivar_get(object, id_at_stop);
+    VALUE stop	= rb_ivar_get(object, id_at_stop);
 
     if (WANT_ARRAY(type)) {
-        array = rb_ary_new();
+	array = rb_ary_new();
     }
     else {
-        RETURN_ENUMERATOR(object, 0, 0);
+	RETURN_ENUMERATOR(object, 0, 0);
     }
 
     if (LOOP_FORWARD(direction)) {
-        for (i = start; LESS_EQUAL(i, stop); i = INCREASE(i)) {
-            value = fizzbuzz_evaluate(i);
-            WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
-        }
+	for (i = start; LESS_EQUAL(i, stop); i = INCREASE(i)) {
+	    value = fizzbuzz_evaluate(i);
+	    WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+	}
     }
     else {
-        for (i = stop; GREATER_EQUAL(i, start); i = DECREASE(i)) {
-            value = fizzbuzz_evaluate(i);
-            WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
-        }
+	for (i = stop; GREATER_EQUAL(i, start); i = DECREASE(i)) {
+	    value = fizzbuzz_evaluate(i);
+	    WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+	}
     }
 
     return WANT_ARRAY(type) ? array : object;
+}
+
+VALUE
+fizzbuzz_exception_wrapper(VALUE value)
+{
+    exception_t *e = (struct exception *)value;
+
+    return rb_exc_new2(e->klass, e->message);
+}
+
+VALUE
+fizzbuzz_exception(void *data)
+{
+    int exception = 0;
+    VALUE object = Qnil;
+
+    exception_t *e = data;
+
+    object = rb_protect(fizzbuzz_exception_wrapper, (VALUE)e, &exception);
+
+    if (exception != 0) {
+	rb_jump_tag(exception);
+    }
+
+    rb_iv_set(object, "@start", e->start);
+    rb_iv_set(object, "@stop", e->stop);
+
+    return object;
+}
+
+VALUE
+fizzbuzz_type_error(VALUE klass, const char *message)
+{
+    exception_t e;
+
+    e.start = Qnil;
+    e.stop = Qnil;
+    e.message = message;
+    e.klass = klass;
+
+    return fizzbuzz_exception(&e);
+}
+
+VALUE
+fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop, const char *message)
+{
+    exception_t e;
+
+    e.start = start;
+    e.stop = stop;
+    e.message = message;
+    e.klass = klass;
+
+    return fizzbuzz_exception(&e);
 }
 
 void
 Init_fizzbuzz(void)
 {
     id_at_start = rb_intern("@start");
-    id_at_stop  = rb_intern("@stop");
+    id_at_stop	= rb_intern("@stop");
 
     rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
+    rb_eFizzBuzz = rb_define_class_under(rb_cFizzBuzz, "Error", rb_eStandardError);
+
+    rb_define_attr(rb_eFizzBuzz, "start", 1, 0);
+    rb_define_attr(rb_eFizzBuzz, "stop", 1, 0);
+
+    rb_eFizzBuzzTypeError = rb_define_class_under(rb_cFizzBuzz, "TypeError", rb_eFizzBuzz);
+    rb_eFizzBuzzRangeError = rb_define_class_under(rb_cFizzBuzz, "RangeError", rb_eFizzBuzz);
 
     rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
 

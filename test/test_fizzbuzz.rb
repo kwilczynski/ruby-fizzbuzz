@@ -86,14 +86,14 @@ class BizzBuzz_Test < Test::Unit::TestCase
     end
   end
 
-  def test_singleton_fizzbuzz_incorrect_argument_error
-    assert_raise ArgumentError do
+  def test_singleton_fizzbuzz_incorrect_range_error
+    assert_raise FizzBuzz::RangeError do
       FizzBuzz.fizzbuzz(2, 1)
     end
   end
 
   def test_singleton_fizzbuzz_incorrect_type_error
-    assert_raise TypeError do
+    assert_raise FizzBuzz::TypeError do
       FizzBuzz.fizzbuzz('', '')
     end
   end
@@ -323,32 +323,32 @@ class BizzBuzz_Test < Test::Unit::TestCase
   end
 
   def test_arguments_type_error_strings
-    assert_raise TypeError do
+    assert_raise FizzBuzz::TypeError do
       FizzBuzz.new('', '')
     end
   end
 
   def test_arguments_type_error_nils
-    assert_raise TypeError do
+    assert_raise FizzBuzz::TypeError do
       FizzBuzz.new(nil, nil)
     end
   end
 
-  def test_incorrect_argument_error
-    assert_raise ArgumentError do
+  def test_incorrect_range_error
+    assert_raise FizzBuzz::RangeError do
       FizzBuzz.new(2, 1)
     end
   end
 
   def test_start_type_error
-    assert_raise TypeError do
+    assert_raise FizzBuzz::TypeError do
       fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
       fb.start = ''
     end
   end
 
   def test_stop_type_error
-    assert_raise TypeError do
+    assert_raise FizzBuzz::TypeError do
       fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
       fb.stop = ''
     end
@@ -366,18 +366,18 @@ class BizzBuzz_Test < Test::Unit::TestCase
     end
   end
 
-  def test_start_boundary_error
+  def test_start_range_error
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
 
-    assert_raise ArgumentError do
+    assert_raise FizzBuzz::RangeError do
       fb.start = 16
     end
   end
 
-  def test_stop_bondary_error
+  def test_stop_range_error
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
 
-    assert_raise ArgumentError do
+    assert_raise FizzBuzz::RangeError do
       fb.stop = -1
     end
   end
