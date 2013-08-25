@@ -107,7 +107,6 @@ struct exception {
     VALUE klass;
 };
 
-typedef enum error error_t;
 typedef enum return_type return_type_t;
 typedef enum direction direction_t;
 typedef struct exception exception_t;
