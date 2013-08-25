@@ -42,7 +42,7 @@ class Fixnum
   end
 end
 
-class BizzBuzz_Test < Test::Unit::TestCase
+class FizzBuzzTest < Test::Unit::TestCase
   def setup
     @integer = 1
     @bignum       = 1_000_000_000_000
