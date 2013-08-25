@@ -18,8 +18,6 @@
  * limitations under the License.
  */
 
-/* :startdoc: */
-
 #include <fizzbuzz.h>
 
 ID id_at_start, id_at_stop;
@@ -42,6 +40,8 @@ static VALUE fizzbuzz_exception(void *data);
 static VALUE fizzbuzz_type_error(VALUE klass, const char *message);
 static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
         const char *message);
+
+/* :startdoc: */
 
 /*
  * call-seq:
@@ -66,9 +66,7 @@ static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
  * Will raise a +FizzBuzz::TypeError+ exception if given value of either
  * +start+ or +stop+ is not an integer type.
  *
- * See also:
- *
- *    FizzBuzz::fizzbuzz
+ * See also: FizzBuzz::fizzbuzz
  */
 VALUE
 rb_fb_initialize(int argc, VALUE *argv, VALUE object)
@@ -192,9 +190,7 @@ rb_fb_set_stop(VALUE object, VALUE value)
  *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf727fd60 @stop=15, @start=1>
  *    fb.to_a                    #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
  *
- * See also:
- *
- *    FizzBuzz::fizzbuzz
+ * See also: FizzBuzz::fizzbuzz
  */
 VALUE
 rb_fb_array(VALUE object)
@@ -235,9 +231,7 @@ rb_fb_array(VALUE object)
  *    Got 14
  *    Got FizzBuzz
  *
- * See also:
- *
- *    FizzBuzz#reverse_each
+ * See also: FizzBuzz#reverse_each
  */
 VALUE
 rb_fb_enumerator(VALUE object)
@@ -279,9 +273,7 @@ rb_fb_enumerator(VALUE object)
  *    Got 2
  *    Got 1
  *
- * See also:
- *
- *    FizzBuzz#each
+ * See also: FizzBuzz#each
  */
 VALUE
 rb_fb_reverse_enumerator(VALUE object)
@@ -305,9 +297,7 @@ rb_fb_reverse_enumerator(VALUE object)
  * Will raise a +FizzBuzz::TypeError+ exception if given value is not
  * an integer type.
  *
- * See also:
- *
- *    FizzBuzz::[]
+ * See also: FizzBuzz::[]
  */
 VALUE
 rb_fb_is_fizz(VALUE object, VALUE value)
@@ -334,9 +324,7 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  * Will raise a +FizzBuzz::TypeError+ exception if given value is not
  * an integer type.
  *
- * See also:
- *
- *    FizzBuzz::[]
+ * See also: FizzBuzz::[]
  */
 VALUE
 rb_fb_is_buzz(VALUE object, VALUE value)
@@ -363,9 +351,7 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  * Will raise a +FizzBuzz::TypeError+ exception if given value is not
  * an integer type.
  *
- * See also:
- *
- *    FizzBuzz::[]
+ * See also: FizzBuzz::[]
  */
 VALUE
 rb_fb_is_fizzbuzz(VALUE object, VALUE value)
@@ -395,9 +381,7 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  * Will raise a +FizzBuzz::TypeError+ exception if given value is not
  * an integer type.
  *
- * See also:
- *
- *    FizzBuzz::is_fizz?, FizzBuzz::is_buzz? and FizzBuzz::is_fizzbuzz?
+ * See also: FizzBuzz::is_fizz?, FizzBuzz::is_buzz? and FizzBuzz::is_fizzbuzz?
  */
 VALUE
 rb_fb_square(VALUE object, VALUE value)

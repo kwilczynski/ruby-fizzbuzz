@@ -73,9 +73,7 @@ class FizzBuzz
   #    Got 14
   #    Got FizzBuzz
   #
-  # See also:
-  #
-  #    FizzBuzz::[], FizzBuzz::new, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
+  # See also: FizzBuzz::[], FizzBuzz::new, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
   #
   def self.fizzbuzz(start, stop, reverse = false)
     fb = FizzBuzz.new(start, stop)

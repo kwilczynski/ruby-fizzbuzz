@@ -39,9 +39,7 @@ class Integer
   #     5.fizz?   #=> false
   #    15.fizz?   #=> false
   #
-  # See also:
-  #
-  #    FizzBuzz::[] and FizzBuzz::is_fizz?
+  # See also: FizzBuzz::[] and FizzBuzz::is_fizz?
   #
   def fizz?
     FizzBuzz.is_fizz?(self)
@@ -60,9 +58,7 @@ class Integer
   #     5.buzz?   #=> true
   #    15.buzz?   #=> false
   #
-  # See also:
-  #
-  #    FizzBuzz::[] and FizzBuzz::is_buzz?
+  # See also: FizzBuzz::[] and FizzBuzz::is_buzz?
   #
   def buzz?
     FizzBuzz.is_buzz?(self)
@@ -81,9 +77,7 @@ class Integer
   #     5.fizzbuzz?   #=> false
   #    15.fizzbuzz?   #=> true
   #
-  # See also:
-  #
-  #    FizzBuzz::[] and FizzBuzz::is_fizzbuzz?
+  # See also: FizzBuzz::[] and FizzBuzz::is_fizzbuzz?
   #
   def fizzbuzz?
     FizzBuzz.is_fizzbuzz?(self)
