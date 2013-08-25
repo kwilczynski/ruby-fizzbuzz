@@ -25,10 +25,10 @@
 ID id_at_start, id_at_stop;
 
 VALUE rb_cFizzBuzz = Qnil;
-VALUE rb_eFizzBuzz = Qnil;
 
-VALUE rb_eFizzBuzzTypeError = Qnil;
-VALUE rb_eFizzBuzzRangeError = Qnil;
+VALUE rb_fb_eError = Qnil;
+VALUE rb_fb_eTypeError = Qnil;
+VALUE rb_fb_eRangeError = Qnil;
 
 void Init_fizzbuzz(void);
 
@@ -520,15 +520,14 @@ Init_fizzbuzz(void)
     id_at_stop	= rb_intern("@stop");
 
     rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
-    rb_eFizzBuzz = rb_define_class_under(rb_cFizzBuzz, "Error", rb_eStandardError);
-
-    rb_define_attr(rb_eFizzBuzz, "start", 1, 0);
-    rb_define_attr(rb_eFizzBuzz, "stop", 1, 0);
-
-    rb_eFizzBuzzTypeError = rb_define_class_under(rb_cFizzBuzz, "TypeError", rb_eFizzBuzz);
-    rb_eFizzBuzzRangeError = rb_define_class_under(rb_cFizzBuzz, "RangeError", rb_eFizzBuzz);
-
     rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
+
+    rb_fb_eError = rb_define_class_under(rb_cFizzBuzz, "Error", rb_eStandardError);
+    rb_define_attr(rb_fb_eError, "start", 1, 0);
+    rb_define_attr(rb_fb_eError, "stop", 1, 0);
+
+    rb_fb_eTypeError = rb_define_class_under(rb_cFizzBuzz, "TypeError", rb_fb_eError);
+    rb_fb_eRangeError = rb_define_class_under(rb_cFizzBuzz, "RangeError", rb_fb_eError);
 
     rb_define_method(rb_cFizzBuzz, "initialize", RUBY_METHOD_FUNC(rb_fb_initialize), -1);
 

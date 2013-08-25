@@ -66,20 +66,20 @@ extern "C" {
 #define LOOP_FORWARD(x) ((x) == D_LOOP_FORWARD)
 #define LOOP_REVERSE(x) ((x) == D_LOOP_REVERSE)
 
-#define CHECK_TYPE(x, m)							\
-    do {									\
-        if (!INTEGER_P(x)) {							\
-	    VALUE __e_type = fizzbuzz_type_error(rb_eFizzBuzzTypeError, (m));	\
-	    rb_exc_raise(__e_type);						\
-	}									\
+#define CHECK_TYPE(x, m)						    \
+    do {								    \
+        if (!INTEGER_P(x)) {						    \
+	    VALUE __e_type = fizzbuzz_type_error(rb_fb_eTypeError, (m));    \
+	    rb_exc_raise(__e_type);					    \
+	}								    \
     } while (0)
 
-#define CHECK_RANGE(x, y, m)								    \
-    do {										    \
-        if (GREATER(x, y)) {								    \
-	    VALUE __e_range = fizzbuzz_range_error(rb_eFizzBuzzRangeError, (x), (y), (m));  \
-	    rb_exc_raise(__e_range);							    \
-	}										    \
+#define CHECK_RANGE(x, y, m)								\
+    do {										\
+        if (GREATER(x, y)) {								\
+	    VALUE __e_range = fizzbuzz_range_error(rb_fb_eRangeError, (x), (y), (m));	\
+	    rb_exc_raise(__e_range);							\
+	}										\
     } while (0)
 
 enum error {
@@ -219,10 +219,10 @@ fizzbuzz_less_equal(VALUE a, VALUE b)
 RUBY_EXTERN ID id_at_start, id_at_stop;
 
 RUBY_EXTERN VALUE rb_cFizzBuzz;
-RUBY_EXTERN VALUE rb_eFizzBuzz;
 
-RUBY_EXTERN VALUE rb_eFizzBuzzTypeError;
-RUBY_EXTERN VALUE rb_eFizzBuzzRangeError;
+RUBY_EXTERN VALUE rb_fb_eError;
+RUBY_EXTERN VALUE rb_fb_eTypeError;
+RUBY_EXTERN VALUE rb_fb_eRangeError;
 
 RUBY_EXTERN VALUE rb_fb_initialize(int argc, VALUE *argv, VALUE object);
 
