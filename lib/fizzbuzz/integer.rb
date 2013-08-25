@@ -28,18 +28,20 @@
 class Integer
   #
   # call-seq:
-  #   Integer.fizz? -> true or false
+  #    Integer.fizz? -> true or false
   #
   # Returns +true+ if a given integer value is divisible by *three* (given
   # value is a _Fizz_), or +false+ otherwise.
   #
   # Example:
   #
-  #    3.fizz?    #=> true
-  #    5.fizz?    #=> false
-  #   15.fizz?    #=> false
+  #     3.fizz?   #=> true
+  #     5.fizz?   #=> false
+  #    15.fizz?   #=> false
   #
-  # See also: FizzBuzz::[] and FizzBuzz::is_fizz?
+  # See also:
+  #
+  #    FizzBuzz::[] and FizzBuzz::is_fizz?
   #
   def fizz?
     FizzBuzz.is_fizz?(self)
@@ -47,18 +49,20 @@ class Integer
 
   #
   # call-seq:
-  #   Integer.buzz? -> true or false
+  #    Integer.buzz? -> true or false
   #
   # Returns +true+ if a given integer value is divisible by *five* (given
   # value is a _Buzz_), or +false+ otherwise.
   #
   # Example:
   #
-  #    3.buzz?    #=> false
-  #    5.buzz?    #=> true
-  #   15.buzz?    #=> false
+  #     3.buzz?   #=> false
+  #     5.buzz?   #=> true
+  #    15.buzz?   #=> false
   #
-  # See also: FizzBuzz::[] and FizzBuzz::is_buzz?
+  # See also:
+  #
+  #    FizzBuzz::[] and FizzBuzz::is_buzz?
   #
   def buzz?
     FizzBuzz.is_buzz?(self)
@@ -73,11 +77,13 @@ class Integer
   #
   # Example:
   #
-  #    3.fizzbuzz?    #=> false
-  #    5.fizzbuzz?    #=> false
-  #   15.fizzbuzz?    #=> true
+  #     3.fizzbuzz?   #=> false
+  #     5.fizzbuzz?   #=> false
+  #    15.fizzbuzz?   #=> true
   #
-  # See also: FizzBuzz::[] and FizzBuzz::is_fizzbuzz?
+  # See also:
+  #
+  #    FizzBuzz::[] and FizzBuzz::is_fizzbuzz?
   #
   def fizzbuzz?
     FizzBuzz.is_fizzbuzz?(self)

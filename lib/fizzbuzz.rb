@@ -35,8 +35,8 @@ require 'fizzbuzz/bignum'
 class FizzBuzz
   #
   # call-seq:
-  #   FizzBuzz.fizzbuzz( start, stop, reverse )                  -> array
-  #   FizzBuzz.fizzbuzz( start, stop, reverse ) {|value| block } -> self
+  #    FizzBuzz.fizzbuzz( start, stop, reverse )                  -> array
+  #    FizzBuzz.fizzbuzz( start, stop, reverse ) {|value| block } -> self
   #
   # Returns either an array or accepts a block if such is given. When a block is given
   # then it will call the block once for each subsequent value for a given range from
@@ -48,32 +48,34 @@ class FizzBuzz
   #
   # Example:
   #
-  #   FizzBuzz.fizzbuzz(1, 15)          #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
-  #   FizzBuzz.fizzbuzz(1, 15, true)    #=> ["FizzBuzz", 14, 13, "Fizz", 11, "Buzz", "Fizz", 8, 7, "Fizz", "Buzz", 4, "Fizz", 2, 1]
+  #    FizzBuzz.fizzbuzz(1, 15)         #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
+  #    FizzBuzz.fizzbuzz(1, 15, true)   #=> ["FizzBuzz", 14, 13, "Fizz", 11, "Buzz", "Fizz", 8, 7, "Fizz", "Buzz", 4, "Fizz", 2, 1]
   #
   # Example:
   #
-  #   FizzBuzz.fizzbuzz(1, 15) {|value| puts "Got #{value}" }
+  #    FizzBuzz.fizzbuzz(1, 15) {|value| puts "Got #{value}" }
   #
   # Produces:
   #
-  #   Got 1
-  #   Got 2
-  #   Got Fizz
-  #   Got 4
-  #   Got Buzz
-  #   Got Fizz
-  #   Got 7
-  #   Got 8
-  #   Got Fizz
-  #   Got Buzz
-  #   Got 11
-  #   Got Fizz
-  #   Got 13
-  #   Got 14
-  #   Got FizzBuzz
+  #    Got 1
+  #    Got 2
+  #    Got Fizz
+  #    Got 4
+  #    Got Buzz
+  #    Got Fizz
+  #    Got 7
+  #    Got 8
+  #    Got Fizz
+  #    Got Buzz
+  #    Got 11
+  #    Got Fizz
+  #    Got 13
+  #    Got 14
+  #    Got FizzBuzz
   #
-  # See also: FizzBuzz::[], FizzBuzz::new, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
+  # See also:
+  #
+  #    FizzBuzz::[], FizzBuzz::new, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
   #
   def self.fizzbuzz(start, stop, reverse = false)
     fb = FizzBuzz.new(start, stop)
