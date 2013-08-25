@@ -36,7 +36,9 @@ static VALUE fizzbuzz_evaluate(VALUE value);
 static VALUE fizzbuzz_values(VALUE object, return_type_t type,
 	direction_t direction);
 
+static VALUE fizzbuzz_exception_wrapper(VALUE value);
 static VALUE fizzbuzz_exception(void *data);
+
 static VALUE fizzbuzz_type_error(VALUE klass, const char *message);
 static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
 	const char *message);
