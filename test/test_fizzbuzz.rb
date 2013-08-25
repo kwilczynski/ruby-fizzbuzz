@@ -66,6 +66,11 @@ class FizzBuzzTest < Test::Unit::TestCase
     end
   end
 
+  def test_fizzbuzz_new_instance
+    fb = FizzBuzz.new(0, 0)
+    assert_equal(fb.class, FizzBuzz)
+  end
+
   def test_fizzbuzz_instance_methods
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
 
