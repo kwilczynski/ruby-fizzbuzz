@@ -7,16 +7,17 @@ fizzbuzz (1.0.0)
 fizzbuzz (0.0.4)
 
   * Improve github project page;
-  * Re-factor unit tests to make them more idiotmatic (maybe move to Rspec and BDD?).
+  * Re-factor unit tests to make them more idiomatic (maybe move to Rspec and BDD?).
 
 -- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Mon, 08 Oct 2012 00:14:08 +0100
 
 fizzbuzz (0.0.3)
 
+  * Move to YARD from RDoc (as RDoc is very bad, really);
   * Add pure-Ruby implementation;
   * Add benchmarks;
   * Add some examples;
   * Add Doxygen style comments for other functions in the source code;
   * Improve documentation i.e. source code commenting, README file, etc.
 
--- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sat, 13 Oct 2012 16:08:26 +0100
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sun, 25 Aug 2013 22:38:06 +0100
