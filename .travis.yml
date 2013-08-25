@@ -18,8 +18,5 @@ branches:
     - master
 install: true
 before_script:
-  - gem install --no-rdoc --no-ri rake
-  - gem install --no-rdoc --no-ri rdoc
-  - gem install --no-rdoc --no-ri test-unit
-  - gem install --no-rdoc --no-ri rake-compiler
+  - travis_retry gem install --no-rdoc --no-ri rake rake-compiler test-unit rdoc
 script: rake test
