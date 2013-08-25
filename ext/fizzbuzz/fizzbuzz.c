@@ -75,10 +75,10 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
 
     rb_scan_args(argc, argv, "20", &start, &stop);
 
-    CHECK_TYPE(start, errors[E_INVALID_START_TYPE]);
-    CHECK_TYPE(stop, errors[E_INVALID_STOP_TYPE]);
+    CHECK_TYPE(start, error(E_INVALID_START_TYPE));
+    CHECK_TYPE(stop, error(E_INVALID_STOP_TYPE));
 
-    CHECK_RANGE(start, stop, errors[E_BAD_VALUE_START]);
+    CHECK_RANGE(start, stop, error(E_BAD_VALUE_START));
 
     rb_ivar_set(object, id_at_start, start);
     rb_ivar_set(object, id_at_stop, stop);
@@ -126,8 +126,8 @@ rb_fb_set_start(VALUE object, VALUE value)
 {
     VALUE stop = rb_ivar_get(object, id_at_stop);
 
-    CHECK_TYPE(value, errors[E_INVALID_START_TYPE]);
-    CHECK_RANGE(value, stop, errors[E_BAD_VALUE_START]);
+    CHECK_TYPE(value, error(E_INVALID_START_TYPE));
+    CHECK_RANGE(value, stop, error(E_BAD_VALUE_START));
 
     return rb_ivar_set(object, id_at_start, value);
 }
@@ -172,8 +172,8 @@ rb_fb_set_stop(VALUE object, VALUE value)
 {
     VALUE start = rb_ivar_get(object, id_at_start);
 
-    CHECK_TYPE(value, errors[E_INVALID_STOP_TYPE]);
-    CHECK_RANGE(start, value, errors[E_BAD_VALUE_STOP]);
+    CHECK_TYPE(value, error(E_INVALID_STOP_TYPE));
+    CHECK_RANGE(start, value, error(E_BAD_VALUE_STOP));
 
     return rb_ivar_set(object, id_at_stop, value);
 }
@@ -303,7 +303,7 @@ VALUE
 rb_fb_is_fizz(VALUE object, VALUE value)
 {
     UNUSED(object);
-    CHECK_TYPE(value, errors[E_INVALID_TYPE]);
+    CHECK_TYPE(value, error(E_INVALID_TYPE));
 
     return CBOOL2RVAL(IS_FIZZ(value));
 }
@@ -330,7 +330,7 @@ VALUE
 rb_fb_is_buzz(VALUE object, VALUE value)
 {
     UNUSED(object);
-    CHECK_TYPE(value, errors[E_INVALID_TYPE]);
+    CHECK_TYPE(value, error(E_INVALID_TYPE));
 
     return CBOOL2RVAL(IS_BUZZ(value));
 }
@@ -357,7 +357,7 @@ VALUE
 rb_fb_is_fizzbuzz(VALUE object, VALUE value)
 {
     UNUSED(object);
-    CHECK_TYPE(value, errors[E_INVALID_TYPE]);
+    CHECK_TYPE(value, error(E_INVALID_TYPE));
 
     return CBOOL2RVAL(IS_FIZZBUZZ(value));
 }
@@ -387,7 +387,7 @@ VALUE
 rb_fb_square(VALUE object, VALUE value)
 {
     UNUSED(object);
-    CHECK_TYPE(value, errors[E_INVALID_TYPE]);
+    CHECK_TYPE(value, error(E_INVALID_TYPE));
 
     return fizzbuzz_evaluate(value);
 }

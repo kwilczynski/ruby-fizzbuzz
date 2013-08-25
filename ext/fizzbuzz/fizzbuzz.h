@@ -82,6 +82,8 @@ extern "C" {
 	}										\
     } while (0)
 
+#define error(t) errors[(t)]
+
 enum error {
     E_INVALID_TYPE = 0,
     E_INVALID_START_TYPE,
