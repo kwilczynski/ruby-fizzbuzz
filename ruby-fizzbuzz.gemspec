@@ -21,7 +21,8 @@
 #
 
 Gem::Specification.new do |s|
-  s.name        = 'ruby-fizzbuzz'
+  s.name = 'ruby-fizzbuzz'
+
   s.description = <<-EOS
 Yet another FizzBuzz in Ruby.
 
@@ -30,12 +31,13 @@ Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
 Written in C as an example of using Ruby's C API - with the support for
 arbitrary large numeric values via the Bignum class.
   EOS
-  s.platform    = Gem::Platform::RUBY
-  s.version     = File.read('VERSION').strip
-  s.license     = 'Apache License, Version 2.0'
-  s.author      = 'Krzysztof Wilczynski'
-  s.email       = 'krzysztof.wilczynski@linux.com'
-  s.homepage    = 'http://about.me/kwilczynski'
+
+  s.platform = Gem::Platform::RUBY
+  s.version  = File.read('VERSION').strip
+  s.license  = 'Apache License, Version 2.0'
+  s.author   = 'Krzysztof Wilczynski'
+  s.email    = 'krzysztof.wilczynski@linux.com'
+  s.homepage = 'http://about.me/kwilczynski'
 
   s.rubyforge_project = 'ruby-fizzbuzz'
   s.rubygems_version  = '~> 1.3.7'
