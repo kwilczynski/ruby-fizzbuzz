@@ -67,7 +67,7 @@ class FizzBuzzTest < Test::Unit::TestCase
   end
 
   def test_fizzbuzz_new_instance
-    fb = FizzBuzz.new(0, 0)
+    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
     assert_equal(fb.class, FizzBuzz)
   end
 
@@ -391,6 +391,51 @@ class FizzBuzzTest < Test::Unit::TestCase
     assert_nothing_raised do
       FizzBuzz.new(DEFAULT_START, @bignum ** 2)
       FizzBuzz.new(-@large_bignum, DEFAULT_STOP)
+    end
+  end
+
+  def test_error_attributes_not_nil
+    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
+
+    begin
+      fb.start = 1
+      fb.stop  = 0
+    rescue FizzBuzz::RangeError => error
+      assert_equal(error.start, 1)
+      assert_equal(error.stop, 0)
+    end
+  end
+
+  def test_error_attributes_nil
+    begin
+      FizzBuzz.new('', '')
+    rescue FizzBuzz::TypeError => error
+      assert_equal(error.start, nil)
+      assert_equal(error.stop, nil)
+    end
+  end
+
+  def test_start_type_error_message
+    begin
+      FizzBuzz.new('', DEFAULT_STOP)
+    rescue FizzBuzz::TypeError => error
+      assert_equal(error.message, 'must be an Integer or Bignum type for start')
+    end
+  end
+
+  def test_stop_type_error_message
+    begin
+      FizzBuzz.new(DEFAULT_START, '')
+    rescue FizzBuzz::TypeError => error
+      assert_equal(error.message, 'must be an Integer or Bignum type for stop')
+    end
+  end
+
+  def test_range_error_message
+    begin
+      FizzBuzz.new(DEFAULT_STOP, DEFAULT_START)
+    rescue FizzBuzz::RangeError => error
+      assert_equal(error.message, 'start value is higher than stop value')
     end
   end
 end
