@@ -1,3 +1,19 @@
+fizzbuzz (0.0.3)
+
+  * Added custom exceptions and improved error handling;
+  * Added more variety of Rubies on which tests are being run with Travis CI;
+  * Added project to Rubygems (http://rubygems.org) so it can be installed
+    with just "gem install ruby-fizzbuzz" command;
+  * Renamed project from "fizzbuzz" to "ruby-fizzbuzz" to avoid clashes with
+    other Ruby gems hosted on Rubygems web site;
+  * Made "mkmf" in extconf.rb more user-friendly (it now reports missing
+    build-time dependencies better);
+  * Split Ruby gem specification (or gemspec if you wish) away from Rakefile
+    into its own file (namely ruby-fizzbuzz.gemspec);
+  * Improved documentation and removed bunch of small code smells.
+
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sat, 31 Aug 2013 17:54:54 +0000
+
 fizzbuzz (0.0.2)
 
   * Added is_fizz?, is_buzz? and is_fizzbuzz? singleton methods to FizzBuzz class;
