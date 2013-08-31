@@ -114,9 +114,9 @@ typedef enum direction direction_t;
 typedef struct exception exception_t;
 
 static const char *errors[] = {
-    "must be an integer value",
-    "must be an integer value for start",
-    "must be an integer value for stop",
+    "must be an Integer or Bignum type",
+    "must be an Integer or Bignum type for start",
+    "must be an Integer or Bignum type for stop",
     "start value is higher than stop value",
     "stop value is lower than start value",
     NULL

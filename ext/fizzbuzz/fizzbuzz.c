@@ -60,11 +60,11 @@ static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
  *    fb = FizzBuzz.new(-15, 15)    #=> #<FizzBuzz:0xb6fd0460 @stop=15, @start=-15>
  *
  * The given value of +stop+ must always be greater than or equal to the
- * given value of +start+, otherwise raises an +FizzBuzz::RangeError+
+ * given value of +start+, otherwise raises an <i>FizzBuzz::RangeError</i>
  * exception.
  *
- * Will raise a +FizzBuzz::TypeError+ exception if given value of either
- * +start+ or +stop+ is not an integer type.
+ * Will raise a <i>FizzBuzz::TypeError</i> exception if given value of either
+ * +start+ or +stop+ is not an _Integer_ or _Bignum_ type.
  *
  * See also: FizzBuzz::fizzbuzz
  */
@@ -108,7 +108,7 @@ rb_fb_get_start(VALUE object)
  *    fizzfuzz.start= (integer) -> integer
  *
  * Sets the current value of +start+ if given new value is lower or equal
- * to the current value of +stop+, or raises an +FizzBuzz::RangeError+
+ * to the current value of +stop+, or raises an <i>FizzBuzz::RangeError</i>
  * exception otherwise.
  *
  * Examples:
@@ -118,8 +118,8 @@ rb_fb_get_start(VALUE object)
  *    fb.start = 15               #=> 15
  *    fb.start                    #=> 15
  *
- * Will raise a +FizzBuzz::TypeError+ exception if given value is not
- * an integer type.
+ * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
+ * an _Integer_ or _Bignum_ type.
  */
 VALUE
 rb_fb_set_start(VALUE object, VALUE value)
@@ -151,10 +151,10 @@ rb_fb_get_stop(VALUE object)
 
 /*
  * call-seq:
- *    fizzfuzz.start= (integer) -> integer
+ *    fizzfuzz.stop= (integer) -> integer
  *
  * Sets the current value of +stop+ if given new value is greater or equal
- * to the current value of +start+, or raises an +FizzBuzz::RangeError+
+ * to the current value of +start+, or raises an <i>FizzBuzz::RangeError</i>
  * exception otherwise.
  *
  * Example:
@@ -164,8 +164,8 @@ rb_fb_get_stop(VALUE object)
  *    fb.stop = 15                #=> 15
  *    fb.stop                     #=> 15
  *
- * Will raise a +FizzBuzz::TypeError+ exception if given value is not
- * an integer type.
+ * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
+ * an _Integer_ or _Bignum_ type.
  */
 VALUE
 rb_fb_set_stop(VALUE object, VALUE value)
@@ -294,8 +294,8 @@ rb_fb_reverse_enumerator(VALUE object)
  *    FizzBuzz.is_fizz?(5)    #=> false
  *    FizzBuzz.is_fizz?(15)   #=> false
  *
- * Will raise a +FizzBuzz::TypeError+ exception if given value is not
- * an integer type.
+ * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
+ * an _Integer_ or _Bignum_ type.
  *
  * See also: FizzBuzz::[]
  */
@@ -321,8 +321,8 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  *    FizzBuzz.is_buzz?(5)    #=> true
  *    FizzBuzz.is_buzz?(15)   #=> false
  *
- * Will raise a +FizzBuzz::TypeError+ exception if given value is not
- * an integer type.
+ * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
+ * an _Integer_ or _Bignum_ type.
  *
  * See also: FizzBuzz::[]
  */
@@ -348,8 +348,8 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  *    FizzBuzz.is_fizzbuzz?(5)    #=> false
  *    FizzBuzz.is_fizzbuzz?(15)   #=> true
  *
- * Will raise a +FizzBuzz::TypeError+ exception if given value is not
- * an integer type.
+ * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
+ * an _Integer_ or _Bignum_ type.
  *
  * See also: FizzBuzz::[]
  */
@@ -378,8 +378,8 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  *    FizzBuzz[5]    #=> "Buzz"
  *    FizzBuzz[15]   #=> "FizzBuzz"
  *
- * Will raise a +FizzBuzz::TypeError+ exception if given value is not
- * an integer type.
+ * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
+ * an _Integer_ or _Bignum_ type.
  *
  * See also: FizzBuzz::is_fizz?, FizzBuzz::is_buzz? and FizzBuzz::is_fizzbuzz?
  */
@@ -522,11 +522,32 @@ Init_fizzbuzz(void)
     rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
     rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
 
+    /*
+     * Raised when _FizzBuzz_ encounters an error.
+     */
     rb_fb_eError = rb_define_class_under(rb_cFizzBuzz, "Error", rb_eStandardError);
+
+    /*
+     * Stores current value of +start+ for which the exception might have been
+     * raised, or +nil+ otherwise.
+     */
     rb_define_attr(rb_fb_eError, "start", 1, 0);
+
+    /*
+     * Stores current value of +stop+ for which the exception might have been
+     * raised, or +nil+ otherwise.
+     */
     rb_define_attr(rb_fb_eError, "stop", 1, 0);
 
+    /*
+     * Raised when the arguments are wrong or of an incompatible type.
+     */
     rb_fb_eTypeError = rb_define_class_under(rb_cFizzBuzz, "TypeError", rb_fb_eError);
+
+    /*
+     * Raised when the arguments are wrong or given range from +start+ to +stop+
+     * is incorrect.
+     */
     rb_fb_eRangeError = rb_define_class_under(rb_cFizzBuzz, "RangeError", rb_fb_eError);
 
     rb_define_method(rb_cFizzBuzz, "initialize", RUBY_METHOD_FUNC(rb_fb_initialize), -1);
