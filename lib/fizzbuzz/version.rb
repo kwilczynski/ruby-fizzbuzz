@@ -26,7 +26,7 @@ class FizzBuzz
   #
   # Current version of _FizzBuzz_.
   #
-  VERSION = '0.0.2'
+  VERSION = '0.0.3'
 end
 
 # :enddoc:
