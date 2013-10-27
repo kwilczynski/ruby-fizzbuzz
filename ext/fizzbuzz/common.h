@@ -21,12 +21,12 @@
 #if !defined(_COMMON_H)
 #define _COMMON_H 1
 
-#include <stdint.h>
-#include <ruby.h>
-
 #if defined(__cplusplus)
 extern "C" {
 #endif
+
+#include <stdint.h>
+#include <ruby.h>
 
 #if !(defined(INT8_MIN) || defined(INT8_MAX))
 typedef signed char int8_t;
