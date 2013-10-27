@@ -459,7 +459,7 @@ fizzbuzz_values(VALUE object, return_type_t type, direction_t direction)
     return WANT_ARRAY(type) ? array : object;
 }
 
-VALUE
+static VALUE
 fizzbuzz_exception_wrapper(VALUE value)
 {
     exception_t *e = (struct exception *)value;
@@ -467,7 +467,7 @@ fizzbuzz_exception_wrapper(VALUE value)
     return rb_exc_new2(e->klass, e->message);
 }
 
-VALUE
+static VALUE
 fizzbuzz_exception(void *data)
 {
     int exception = 0;
@@ -487,7 +487,7 @@ fizzbuzz_exception(void *data)
     return object;
 }
 
-VALUE
+static VALUE
 fizzbuzz_type_error(VALUE klass, const char *message)
 {
     exception_t e;
@@ -500,7 +500,7 @@ fizzbuzz_type_error(VALUE klass, const char *message)
     return fizzbuzz_exception(&e);
 }
 
-VALUE
+static VALUE
 fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop, const char *message)
 {
     exception_t e;
