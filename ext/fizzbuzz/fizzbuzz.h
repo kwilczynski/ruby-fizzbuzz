@@ -21,11 +21,11 @@
 #if !defined(_FIZZBUZZ_H)
 #define _FIZZBUZZ_H 1
 
-#include "common.h"
-
 #if defined(__cplusplus)
 extern "C" {
 #endif
+
+#include "common.h"
 
 #define ZERO  INT2FIX(0)
 #define ONE   INT2FIX(1)
