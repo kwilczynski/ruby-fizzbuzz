@@ -26,6 +26,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <assert.h>
 #include <ruby.h>
 
 #if !(defined(INT8_MIN) || defined(INT8_MAX))

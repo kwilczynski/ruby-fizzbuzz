@@ -474,10 +474,11 @@ fizzbuzz_exception(void *data)
     VALUE object = Qnil;
 
     exception_t *e = data;
+    assert(e != NULL && "Must be a valid pointer to `exception_t' type");
 
     object = rb_protect(fizzbuzz_exception_wrapper, (VALUE)e, &exception);
 
-    if (exception != 0) {
+    if (exception) {
         rb_jump_tag(exception);
     }
 
