@@ -16,6 +16,4 @@ matrix:
 branches:
   only:
     - master
-before_script:
-  - travis_retry gem install --no-rdoc --no-ri rake rake-compiler test-unit rdoc
 script: rake test
