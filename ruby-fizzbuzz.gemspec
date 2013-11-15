@@ -20,7 +20,7 @@
 # limitations under the License.
 #
 
-SIGNING_KEY = File.expand_path('~/.gem/kwilczynski-private.pem')
+signing_key = File.expand_path('~/.gem/kwilczynski-private.pem')
 
 Gem::Specification.new do |s|
   s.name = 'ruby-fizzbuzz'
@@ -61,7 +61,7 @@ arbitrary large numeric values via the Bignum class.
   s.add_development_dependency 'test-unit', '>= 2.5.2'
   s.add_development_dependency 'rake-compiler', '>= 0.7.1'
 
-  s.signing_key = SIGNING_KEY if File.exists?(SIGNING_KEY)
+  s.signing_key = signing_key if File.exists?(signing_key)
 end
 
 # vim: set ts=2 sw=2 sts=2 et :
