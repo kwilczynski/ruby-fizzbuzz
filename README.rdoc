@@ -6,3 +6,4 @@ for arbitrary large numeric values via the Bignum class.
 
 {<img src="https://travis-ci.org/kwilczynski/ruby-fizzbuzz.png?branch=master" alt="Build Status"/>}[https://travis-ci.org/kwilczynski/ruby-fizzbuzz]
 {<img src="https://badge.fury.io/rb/ruby-fizzbuzz.png" alt="Gem Version" />}[http://badge.fury.io/rb/ruby-fizzbuzz]
+{<img src="https://coveralls.io/repos/kwilczynski/ruby-fizzbuzz/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/kwilczynski/ruby-fizzbuzz?branch=master]
