@@ -20,8 +20,14 @@
 # limitations under the License.
 #
 
-require 'coveralls'
-Coveralls.wear!
+begin
+  require 'coveralls'
+  Coveralls.wear!
+rescue LoadError
+  STDERR.puts 'The Coveralls gem is not installed, skipping ...'
+end
+
+gem 'test-unit', '>= 2.5.2'
 
 require 'test/unit'
 require 'fizzbuzz'
@@ -58,7 +64,7 @@ class FizzBuzzTest < Test::Unit::TestCase
   end
 
   def test_fizzbuzz_alias
-    assert_equal(FB, FizzBuzz)
+    assert(FB == FizzBuzz)
   end
 
   def test_fizzbuzz_singleton_methods
@@ -71,7 +77,7 @@ class FizzBuzzTest < Test::Unit::TestCase
 
   def test_fizzbuzz_new_instance
     fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-    assert_equal(fb.class, FizzBuzz)
+    assert(fb.class == FizzBuzz)
   end
 
   def test_fizzbuzz_instance_methods
