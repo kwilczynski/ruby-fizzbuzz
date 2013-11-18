@@ -66,7 +66,7 @@ static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value of either
  * +start+ or +stop+ is not an _Integer_ or _Bignum_ type.
  *
- * See also: FizzBuzz::fizzbuzz
+ * See also: FizzBuzz::fizzbuzz and FizzBuzz::[]
  */
 VALUE
 rb_fb_initialize(int argc, VALUE *argv, VALUE object)
@@ -182,7 +182,7 @@ rb_fb_set_stop(VALUE object, VALUE value)
  * call-seq:
  *    fizzbuzz.to_a -> array
  *
- * Returns an array containing results upon calculating an appropriate
+ * Returns an +array+ containing results upon calculating an appropriate
  * values for a given range from +start+ to +stop+.
  *
  * Example:
@@ -203,7 +203,7 @@ rb_fb_array(VALUE object)
  *    fizzbuzz.each {|value| block } -> self
  *    fizzbuzz.each                  -> an Enumerator
  *
- * Calls the block once for each subsequent value for a given range
+ * Calls the block _once_ for each subsequent value for a given range
  * from +start+ to +stop+, passing the value as a parameter to the block.
  *
  * If no block is given, an +Enumerator+ is returned instead.
@@ -244,7 +244,7 @@ rb_fb_enumerator(VALUE object)
  *    fizzbuzz.reverse_each {|value| block } -> self
  *    fizzbuzz.reverse_each                  -> an Enumerator
  *
- * Calls the block once for each subsequent value for a given range
+ * Calls the block _once_ for each subsequent value for a given range
  * from +start+ to +stop+ in an <i>reverse order</i>, passing the value
  * as a parameter to the block.
  *
