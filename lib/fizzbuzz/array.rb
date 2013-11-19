@@ -3,7 +3,7 @@
 # :stopdoc:
 
 #
-# fizzbuzz.rb
+# array.rb
 #
 # Copyright 2012-2013 Krzysztof Wilczynski
 #
@@ -22,27 +22,18 @@
 
 # :startdoc:
 
-require 'fizzbuzz/fizzbuzz'
-require 'fizzbuzz/version'
-require 'fizzbuzz/integer'
-require 'fizzbuzz/bignum'
-require 'fizzbuzz/array'
-require 'fizzbuzz/range'
-
 #
-# Yet another _FizzBuzz_ in Ruby.
+# Provides a convenient integration of _FizzBuzz_ with _Array_ class.
 #
-# Provides simple and fast solution to a popular _FizzBuzz_ problem for Ruby.
-#
-class FizzBuzz
+class Array
   #
   # call-seq:
-  #    FizzBuzz.fizzbuzz( start, stop, reverse )                  -> array
-  #    FizzBuzz.fizzbuzz( start, stop, reverse ) {|value| block } -> self
+  #    array.fizzbuzz( reverse )                  -> array
+  #    array.fizzbuzz( reverse ) {|value| block } -> self
   #
   # Returns either an array or accepts a block if such is given. When a block is given
-  # then it will call the block once for each subsequent value for a given range from
-  # +start+ to +stop+, passing the value as a parameter to the block.
+  # then it will call the block once for each subsequent value for a given array, passing
+  # the value as a parameter to the block.
   #
   # Additionally, if the value of +reverse+ is set to be +true+ then the results will
   # be given in an <em>reverse order</em> whether in a resulting array or when passing
@@ -50,12 +41,14 @@ class FizzBuzz
   #
   # Example:
   #
-  #    FizzBuzz.fizzbuzz(1, 15)         #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
-  #    FizzBuzz.fizzbuzz(1, 15, true)   #=> ["FizzBuzz", 14, 13, "Fizz", 11, "Buzz", "Fizz", 8, 7, "Fizz", "Buzz", 4, "Fizz", 2, 1]
+  #    array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  #    array.fizzbuzz         #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
+  #    array.fizzbuzz(true)   #=> ["FizzBuzz", 14, 13, "Fizz", 11, "Buzz", "Fizz", 8, 7, "Fizz", "Buzz", 4, "Fizz", 2, 1]
   #
   # Example:
   #
-  #    FizzBuzz.fizzbuzz(1, 15) {|value| puts "Got #{value}" }
+  #    array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  #    array.fizzbuzz {|value| puts "Got #{value}" }
   #
   # Produces:
   #
@@ -75,22 +68,21 @@ class FizzBuzz
   #    Got 14
   #    Got FizzBuzz
   #
-  # See also: FizzBuzz::[], FizzBuzz::new, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
+  # See also: FizzBuzz::fizzbuzz, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
   #
-  def self.fizzbuzz(start, stop, reverse = false)
-    fb = FizzBuzz.new(start, stop)
+  def fizzbuzz(reverse = false)
+    values = self.send(reverse ? :reverse : :entries)
 
     if block_given?
-      fb.send(reverse ? :reverse_each : :each) {|i| yield i }
+      values.each {|i| yield FizzBuzz[i] }
+      self
     else
-      reverse ? fb.to_a.reverse : fb.to_a
+      values.collect {|i| FizzBuzz[i] }
     end
   end
 end
 
 # :enddoc:
-
-FB = FizzBuzz
 
 # vim: set ts=2 sw=2 sts=2 et :
 # encoding: utf-8

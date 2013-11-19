@@ -132,6 +132,58 @@ class FizzBuzzTest < Test::Unit::TestCase
     assert_equal((@bignum + 15).fizzbuzz?, false)
   end
 
+  def test_array_integration
+    assert([].respond_to?(:fizzbuzz))
+  end
+
+  def test_array_integration_fizzbuzz
+    obtainted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].fizzbuzz
+    assert_equal(obtainted, DEFAULT_EXPECTED)
+  end
+
+  def test_array_integration_fizzbuzz_reverse
+    obtainted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].fizzbuzz(true)
+    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+  end
+
+  def test_array_integration_fizzbuzz_block
+    obtainted = []
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].fizzbuzz {|i| obtainted << i }
+    assert_equal(obtainted, DEFAULT_EXPECTED)
+  end
+
+  def test_array_integration_fizzbuzz_block_reverse
+    obtainted = []
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].fizzbuzz(true) {|i| obtainted << i }
+    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+  end
+
+  def test_range_integration
+    assert((0..0).respond_to?(:fizzbuzz))
+  end
+
+  def test_range_integration_fizzbuzz
+    obtainted = (DEFAULT_START .. DEFAULT_STOP).fizzbuzz
+    assert_equal(obtainted, DEFAULT_EXPECTED)
+  end
+
+  def test_range_integration_fizzbuzz_reverse
+    obtainted = (DEFAULT_START .. DEFAULT_STOP).fizzbuzz(true)
+    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+  end
+
+  def test_range_integration_fizzbuzz_block
+    obtainted = []
+    (DEFAULT_START .. DEFAULT_STOP).fizzbuzz {|i| obtainted << i }
+    assert_equal(obtainted, DEFAULT_EXPECTED)
+  end
+
+  def test_range_integration_fizzbuzz_block_reverse
+    obtainted = []
+    (DEFAULT_START .. DEFAULT_STOP).fizzbuzz(true) {|i| obtainted << i }
+    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+  end
+
   def test_singleton_fizzbuzz_incorrect_range_error
     assert_raise FizzBuzz::RangeError do
       FizzBuzz.fizzbuzz(2, 1)
