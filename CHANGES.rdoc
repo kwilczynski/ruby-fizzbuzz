@@ -1,3 +1,10 @@
+fizzbuzz (0.0.5)
+
+  * Added integration with Array and Range types;
+  * Added simple benchmark.
+
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Tue, 26 Nov 2013 12:40:34 +0000
+
 fizzbuzz (0.0.4)
 
   * Retired support for Ruby 1.8.x (no support for MRI, Ruby Enterprise Edition and Rubinius);
