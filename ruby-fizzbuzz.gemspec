@@ -48,9 +48,12 @@ arbitrary large numeric values via the Bignum class.
   s.summary = 'Yet another FizzBuzz in Ruby'
 
   s.files = Dir['ext/**/*.{c,h,rb}'] +
-            Dir['lib/**/*.rb'] +
-            %w(Rakefile AUTHORS CHANGES CHANGES.rdoc COPYRIGHT
-               LICENSE README README.rdoc TODO VERSION)
+            Dir['lib/**/*.rb']       +
+            Dir['benchmark/**/*.rb'] +
+            Dir['test/**/*.rb']      +
+            %w(Rakefile ruby-fizzbuzz.gemspec AUTHORS
+               CHANGES CHANGES.rdoc COPYRIGHT LICENSE
+               README README.rdoc TODO VERSION)
 
   s.executables   << 'fizzbuzz'
   s.require_paths << 'lib'
