@@ -72,6 +72,24 @@ end
 
 Rake::Task[:test].prerequisites << :compile
 
+desc 'Run benchmarks'
+task :benchmark, [:first] => :test do |t,argument|
+  glob = File.expand_path("../benchmark/*.rb", __FILE__)
+  Dir[glob].each do |f|
+    process = ['ruby', f]
+    process << argument[:first] if argument[:first]
+
+    STDOUT.sync = true
+    STDERR.sync = true
+
+    IO.popen(process) do |stream|
+      stream.each {|line| puts line }
+    end
+
+    Process.waitpid rescue Errno::ECHILD
+  end
+end
+
 task :default => :package
 
 # vim: set ts=2 sw=2 sts=2 et :
