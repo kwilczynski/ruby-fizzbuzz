@@ -83,6 +83,7 @@ extern "C" {
     } while (0)
 
 #define error(t) errors[(t)]
+#define word(n)  words[(n) - 1]
 
 enum error {
     E_INVALID_TYPE = 0,

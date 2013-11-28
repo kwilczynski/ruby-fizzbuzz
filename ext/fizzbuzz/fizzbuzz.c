@@ -406,23 +406,10 @@ fizzbuzz_evaluate(VALUE value)
     }
 
     score = SCORE_VALUE(value);
+    assert((score >= 0 && score <= 3) && \
+            "Score value out of bounds, must be between 0 and 3 inclusive");
 
-    switch(score) {
-        case 0:
-            result = value;
-            break;
-        case 1:
-            result = CSTR2RVAL(words[score - 1]);
-            break;
-        case 2:
-            result = CSTR2RVAL(words[score - 1]);
-            break;
-        case 3:
-            result = CSTR2RVAL(words[score - 1]);
-            break;
-    }
-
-    return result;
+    return score < 1 ? value : CSTR2RVAL(word(score));
 }
 
 static VALUE
