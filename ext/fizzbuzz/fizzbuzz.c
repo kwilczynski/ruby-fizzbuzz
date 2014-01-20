@@ -399,8 +399,6 @@ fizzbuzz_evaluate(VALUE value)
 {
     int8_t score;
 
-    VALUE result = Qnil;
-
     if (ZERO_P(value)) {
         return value;
     }
