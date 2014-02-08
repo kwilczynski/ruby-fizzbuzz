@@ -85,7 +85,7 @@ extern "C" {
 #define error(t) errors[(t)]
 #define word(n)  words[(n) - 1]
 
-enum error {
+enum fizzbuzz_error {
     E_INVALID_TYPE = 0,
     E_INVALID_START_TYPE,
     E_INVALID_STOP_TYPE,
@@ -93,26 +93,27 @@ enum error {
     E_BAD_VALUE_STOP
 };
 
-enum return_type {
+enum fizzbuzz_return {
     R_TYPE_ARRAY = 0,
     R_TYPE_ENUMERATOR
 };
 
-enum direction {
+enum fizzbuzz_direction {
     D_LOOP_FORWARD = 0,
     D_LOOP_REVERSE
 };
 
-struct exception {
+typedef enum fizzbuzz_return fizzbuzz_return_t;
+typedef enum fizzbuzz_direction fizzbuzz_direction_t;
+
+struct fizzbuzz_exception {
     VALUE start;
     VALUE stop;
     const char *message;
     VALUE klass;
 };
 
-typedef enum return_type return_type_t;
-typedef enum direction direction_t;
-typedef struct exception exception_t;
+typedef struct fizzbuzz_exception fizzbuzz_exception_t;
 
 static const char *errors[] = {
     "must be an Integer or Bignum type",

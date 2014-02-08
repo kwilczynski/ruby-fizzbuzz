@@ -31,8 +31,8 @@ VALUE rb_fb_eRangeError = Qnil;
 void Init_fizzbuzz(void);
 
 static VALUE fizzbuzz_evaluate(VALUE value);
-static VALUE fizzbuzz_values(VALUE object, return_type_t type,
-        direction_t direction);
+static VALUE fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
+        fizzbuzz_direction_t direction);
 
 static VALUE fizzbuzz_exception_wrapper(VALUE value);
 static VALUE fizzbuzz_exception(void *data);
@@ -411,7 +411,7 @@ fizzbuzz_evaluate(VALUE value)
 }
 
 static VALUE
-fizzbuzz_values(VALUE object, return_type_t type, direction_t direction)
+fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direction)
 {
     VALUE i = Qnil;
 
@@ -447,7 +447,7 @@ fizzbuzz_values(VALUE object, return_type_t type, direction_t direction)
 static VALUE
 fizzbuzz_exception_wrapper(VALUE value)
 {
-    exception_t *e = (struct exception *)value;
+    fizzbuzz_exception_t *e = (struct fizzbuzz_exception *)value;
 
     return rb_exc_new2(e->klass, e->message);
 }
@@ -458,8 +458,8 @@ fizzbuzz_exception(void *data)
     int exception = 0;
     VALUE object = Qnil;
 
-    exception_t *e = data;
-    assert(e != NULL && "Must be a valid pointer to `exception_t' type");
+    fizzbuzz_exception_t *e = data;
+    assert(e != NULL && "Must be a valid pointer to `fizzbuzz_exception_t' type");
 
     object = rb_protect(fizzbuzz_exception_wrapper, (VALUE)e, &exception);
 
@@ -476,7 +476,7 @@ fizzbuzz_exception(void *data)
 static VALUE
 fizzbuzz_type_error(VALUE klass, const char *message)
 {
-    exception_t e;
+    fizzbuzz_exception_t e;
 
     e.start = Qnil;
     e.stop = Qnil;
@@ -489,7 +489,7 @@ fizzbuzz_type_error(VALUE klass, const char *message)
 static VALUE
 fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop, const char *message)
 {
-    exception_t e;
+    fizzbuzz_exception_t e;
 
     e.start = start;
     e.stop = stop;
