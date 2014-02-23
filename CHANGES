@@ -1,3 +1,15 @@
+fizzbuzz (0.0.6)
+
+  * Fixed issue reported by LLVM (clang);
+  * Updated development dependencies;
+  * Added Ruby 2.1.0 to Travis CI;
+  * Added BitDeli and Gemnasium integration;
+  * Re-factored and cleaned up small portions of code;
+  * Made Rake "test" task to be the default tasks;
+  * Updated the ".gitignore" file to cover Bundler, rbenv, etc.
+
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sun, 23 Feb 2014 13:52:08 +0000
+
 fizzbuzz (0.0.5)
 
   * Added integration with Array and Range types;
