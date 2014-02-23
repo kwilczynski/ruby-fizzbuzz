@@ -27,7 +27,7 @@ rescue LoadError
   STDERR.puts 'The Coveralls gem is not installed, skipping ...'
 end
 
-gem 'test-unit', '>= 2.5.2'
+gem 'test-unit', '>= 2.5.5'
 
 require 'test/unit'
 require 'fizzbuzz'
