@@ -90,7 +90,7 @@ task :benchmark, [:first] => :test do |t,argument|
   end
 end
 
-task :default => :package
+task :default => :test
 
 # vim: set ts=2 sw=2 sts=2 et :
 # encoding: utf-8
