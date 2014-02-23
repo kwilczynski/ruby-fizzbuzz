@@ -42,7 +42,7 @@ arbitrary large numeric values via the Bignum class.
   s.homepage = 'http://about.me/kwilczynski'
 
   s.rubyforge_project = 'ruby-fizzbuzz'
-  s.rubygems_version  = '~> 1.3.7'
+  s.rubygems_version  = '~> 2.2.0'
   s.has_rdoc          = true
 
   s.summary = 'Yet another FizzBuzz in Ruby'
@@ -59,10 +59,10 @@ arbitrary large numeric values via the Bignum class.
   s.require_paths << 'lib'
   s.extensions    << 'ext/fizzbuzz/extconf.rb'
 
-  s.add_development_dependency 'rake', '~> 0.8', '>= 0.8.7'
-  s.add_development_dependency 'rdoc', '~> 3.12'
-  s.add_development_dependency 'test-unit', '~> 2.5', '>= 2.5.2'
-  s.add_development_dependency 'rake-compiler', '~> 0.7', '>= 0.7.1'
+  s.add_development_dependency 'rake', '~> 10.1', '>= 10.1.1'
+  s.add_development_dependency 'rdoc', '~> 4.1', '>= 4.1.1'
+  s.add_development_dependency 'test-unit', '~> 2.5', '>= 2.5.5'
+  s.add_development_dependency 'rake-compiler', '~> 0.9', '>= 0.9.2'
 
   s.signing_key = signing_key if File.exists?(signing_key)
 end
