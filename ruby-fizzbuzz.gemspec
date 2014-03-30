@@ -23,7 +23,8 @@
 signing_key = File.expand_path('~/.gem/kwilczynski-private.pem')
 
 Gem::Specification.new do |s|
-  s.name = 'ruby-fizzbuzz'
+  s.name    = 'ruby-fizzbuzz'
+  s.summary = 'Yet another FizzBuzz in Ruby'
 
   s.description = <<-EOS
 Yet another FizzBuzz in Ruby.
@@ -40,12 +41,10 @@ arbitrary large numeric values via the Bignum class.
   s.author   = 'Krzysztof Wilczynski'
   s.email    = 'krzysztof.wilczynski@linux.com'
   s.homepage = 'http://about.me/kwilczynski'
+  s.has_rdoc = true
 
-  s.rubyforge_project = 'ruby-fizzbuzz'
-  s.rubygems_version  = '~> 2.2.0'
-  s.has_rdoc          = true
-
-  s.summary = 'Yet another FizzBuzz in Ruby'
+  s.required_ruby_version = '>= 1.9.2'
+  s.rubygems_version      = '~> 2.2.0'
 
   s.files = Dir['ext/**/*.{c,h,rb}'] +
             Dir['lib/**/*.rb']       +
