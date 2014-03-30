@@ -3,7 +3,7 @@
 # :stopdoc:
 
 #
-# range.rb
+# core/range.rb
 #
 # Copyright 2012-2014 Krzysztof Wilczynski
 #

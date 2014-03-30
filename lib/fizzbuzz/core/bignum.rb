@@ -3,7 +3,7 @@
 # :stopdoc:
 
 #
-# bignum.rb
+# core/bignum.rb
 #
 # Copyright 2012-2014 Krzysztof Wilczynski
 #

@@ -24,10 +24,10 @@
 
 require 'fizzbuzz/fizzbuzz'
 require 'fizzbuzz/version'
-require 'fizzbuzz/integer'
-require 'fizzbuzz/bignum'
-require 'fizzbuzz/array'
-require 'fizzbuzz/range'
+require 'fizzbuzz/core/integer'
+require 'fizzbuzz/core/bignum'
+require 'fizzbuzz/core/array'
+require 'fizzbuzz/core/range'
 
 #
 # Yet another _FizzBuzz_ in Ruby.

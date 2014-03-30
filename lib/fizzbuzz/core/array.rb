@@ -3,7 +3,7 @@
 # :stopdoc:
 
 #
-# array.rb
+# core/array.rb
 #
 # Copyright 2012-2014 Krzysztof Wilczynski
 #

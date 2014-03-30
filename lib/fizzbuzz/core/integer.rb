@@ -3,7 +3,7 @@
 # :stopdoc:
 
 #
-# integer.rb
+# core/integer.rb
 #
 # Copyright 2012-2014 Krzysztof Wilczynski
 #
