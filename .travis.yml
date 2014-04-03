@@ -22,4 +22,4 @@ branches:
     - master
 before_script:
   - export CC=$COMPILER
-script: rake test
+script: bundle exec rake test
