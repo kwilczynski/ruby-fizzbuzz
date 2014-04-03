@@ -70,8 +70,6 @@ Rake::ExtensionTask.new('fizzbuzz', gem) do |e|
   e.lib_dir = 'lib/fizzbuzz'
 end
 
-Rake::Task[:test].prerequisites << :compile
-
 desc 'Run benchmarks'
 task :benchmark, [:first] => :test do |t,argument|
   glob = File.expand_path("../benchmark/*.rb", __FILE__)
@@ -89,6 +87,9 @@ task :benchmark, [:first] => :test do |t,argument|
     Process.waitpid rescue Errno::ECHILD
   end
 end
+
+Rake::Task[:test].prerequisites << :clobber
+Rake::Task[:test].prerequisites << :compile
 
 task :default => :test
 
