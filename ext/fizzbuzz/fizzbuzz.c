@@ -18,6 +18,10 @@
  * limitations under the License.
  */
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 #include <fizzbuzz.h>
 
 ID id_at_start, id_at_stop;
@@ -553,5 +557,9 @@ Init_fizzbuzz(void)
 
     rb_define_singleton_method(rb_cFizzBuzz, "[]", RUBY_METHOD_FUNC(rb_fb_square), 1);
 }
+
+#if defined(__cplusplus)
+}
+#endif
 
 /* vim: set ts=8 sw=4 sts=2 et : */
