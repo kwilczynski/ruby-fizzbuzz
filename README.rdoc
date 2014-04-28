@@ -9,4 +9,3 @@ for arbitrary large numeric values via the Bignum class.
 {<img src="https://coveralls.io/repos/kwilczynski/ruby-fizzbuzz/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/kwilczynski/ruby-fizzbuzz?branch=master]
 {<img src="https://codeclimate.com/github/kwilczynski/ruby-fizzbuzz.png" />}[https://codeclimate.com/github/kwilczynski/ruby-fizzbuzz]
 {<img src="https://gemnasium.com/kwilczynski/ruby-fizzbuzz.png" alt="Dependency Status" />}[https://gemnasium.com/kwilczynski/ruby-fizzbuzz]
-{<img src="https://d2weczhvl823v0.cloudfront.net/kwilczynski/ruby-fizzbuzz/trend.png" alt="Bitdeli Badge" />}[https://bitdeli.com/free]
