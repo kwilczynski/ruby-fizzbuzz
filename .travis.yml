@@ -20,6 +20,6 @@ matrix:
 branches:
   only:
     - master
-script:
+before_script:
   - export CC=$COMPILER
-  - bundle exec rake test
+script: bundle exec rake test
