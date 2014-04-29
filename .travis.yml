@@ -1,6 +1,6 @@
 language: ruby
 cache: bundler
-bundler_args: --jobs 4 --retry 2 --without development --path vendor/bundle
+bundler_args: --jobs 4 --retry 4 --without development --path vendor/bundle
 rvm:
   - 1.9.2
   - 1.9.3
@@ -20,6 +20,6 @@ matrix:
 branches:
   only:
     - master
-before_script:
+script:
   - export CC=$COMPILER
-script: bundle exec rake test
+  - bundle exec rake test
