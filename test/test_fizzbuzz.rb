@@ -32,156 +32,173 @@ gem 'test-unit', '>= 2.5.5'
 require 'test/unit'
 require 'fizzbuzz'
 
-DEFAULT_START    = 1
-DEFAULT_STOP     = 15
-DEFAULT_WORDS    = ['Fizz', 'Buzz', 'FizzBuzz']
-DEFAULT_EXPECTED = [1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz', 11, 'Fizz', 13, 14, 'FizzBuzz']
-
-DEFAULT_SINGLETON_METHODS = [:fizzbuzz, :is_fizz?, :is_buzz?, :is_fizzbuzz?]
-DEFAULT_INSTANCE_METHODS  = [:to_a, :each, :reverse_each]
-
-DEFAULT_INSTANCE_METHODS_ADDED = [:fizz?, :buzz?, :fizzbuzz?]
-
 class Fixnum
-  class << self
-    def overflow_size_with_sign
-      bits = [''].pack('p').size * 8
-      2 ** (bits - 1) - 1
-    end
+  def self.overflow_size_with_sign
+    bits = [''].pack('p').size * 8
+    2 ** (bits - 1) - 1
   end
 end
 
 class FizzBuzzTest < Test::Unit::TestCase
   def setup
-    @integer = 1
+    @fixnum = 1
+
     @bignum       = 1_000_000_000_000
     @large_bignum = 1_000_000_000_000_000
 
-    if Fixnum::overflow_size_with_sign + 1 > 2147483647
+    if Fixnum.overflow_size_with_sign + 1 > 2147483647
       @bignum       = @bignum       ** 2
       @large_bignum = @large_bignum ** 2
     end
+
+    @words = %w(Fizz Buzz FizzBuzz).freeze
+
+    @expected = [
+      1,      2,      'Fizz',
+      4,      'Buzz', 'Fizz',
+      7,      8,      'Fizz',
+      'Buzz', 11,     'Fizz',
+      13,     14,     'FizzBuzz'
+    ].freeze
+
+    @expected_bignum = [
+      @bignum + 1,  'Fizz',     @bignum + 3,
+      @bignum + 4,  'FizzBuzz', @bignum + 6,
+      @bignum + 7,  'Fizz',     @bignum + 9,
+      'Buzz',       'Fizz',     @bignum + 12,
+      @bignum + 13, 'Fizz',     'Buzz'
+    ]
+
+    @fizzbuzz = FizzBuzz.new(1, 15)
   end
 
   def test_fizzbuzz_alias
-    assert(FB == FizzBuzz)
+    assert_same(FB, FizzBuzz)
   end
 
   def test_fizzbuzz_singleton_methods
-    fb = FizzBuzz
-
-    assert_block do
-      DEFAULT_SINGLETON_METHODS.all? {|i| fb.respond_to?(i) }
-    end
+    [
+      :fizzbuzz,
+      :is_fizz?,
+      :is_buzz?,
+      :is_fizzbuzz?
+    ].each {|i| assert_respond_to(FizzBuzz, i) }
   end
 
   def test_fizzbuzz_new_instance
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-    assert(fb.class == FizzBuzz)
+    assert(@fizzbuzz.class == FizzBuzz)
   end
 
   def test_fizzbuzz_instance_methods
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-
-    assert_block do
-      DEFAULT_INSTANCE_METHODS.all? {|i| fb.respond_to?(i) }
-    end
+    [
+      :to_a,
+      :each,
+      :reverse_each
+    ].each {|i| assert_respond_to(@fizzbuzz, i) }
   end
 
-  def test_integer_integration
-    assert_block do
-      DEFAULT_INSTANCE_METHODS_ADDED.all? {|i| @integer.respond_to?(i) }
-    end
+  def test_fixnum_integration
+    [
+      :fizz?,
+      :buzz?,
+      :fizzbuzz?
+    ].each {|i| assert_respond_to(@fixnum, i) }
   end
 
-  def test_integer_is_fizz
-    assert_equal(3.fizz?, true)
-    assert_equal(15.fizz?, false)
+  def test_fixnum_is_fizz
+    assert_true(3.fizz?)
+    assert_false(15.fizz?)
   end
 
-  def test_integer_is_buzz
-    assert_equal(5.buzz?, true)
-    assert_equal(15.buzz?, false)
+  def test_fixnum_is_buzz
+    assert_true(5.buzz?)
+    assert_false(15.buzz?)
   end
 
-  def test_integer_is_fizzbuzz
+  def test_fixnum_is_fizzbuzz
     assert_equal(15.fizzbuzz?, true)
-    assert_equal(3.fizzbuzz?, false)
-    assert_equal(5.fizzbuzz?, false)
+    assert_false(3.fizzbuzz?, false)
+    assert_false(5.fizzbuzz?, false)
   end
 
   def test_bignum_integration
-    assert_block do
-      DEFAULT_INSTANCE_METHODS_ADDED.all? {|i| @bignum.respond_to?(i) }
-    end
+    [
+      :fizz?,
+      :buzz?,
+      :fizzbuzz?
+    ].each {|i| assert_respond_to(@bignum, i) }
   end
 
   def test_bignum_is_fizz
-    assert_equal((@bignum + 2).fizz?, true)
-    assert_equal((@bignum + 15).fizz?, false)
+    assert_true((@bignum + 2).fizz?)
+    assert_false((@bignum + 15).fizz?)
   end
 
   def test_bignum_is_buzz
-    assert_equal((@bignum + 15).buzz?, true)
-    assert_equal((@bignum + 5).buzz?, false)
+    assert_true((@bignum + 15).buzz?)
+    assert_false((@bignum + 5).buzz?)
   end
 
   def test_bignum_is_fizzbuzz
-    assert_equal((@bignum + 5).fizzbuzz?, true)
-    assert_equal((@bignum + 2).fizzbuzz?, false)
-    assert_equal((@bignum + 15).fizzbuzz?, false)
+    assert_true((@bignum + 5).fizzbuzz?)
+    assert_false((@bignum + 2).fizzbuzz?)
+    assert_false((@bignum + 15).fizzbuzz?)
   end
 
   def test_array_integration
-    assert([].respond_to?(:fizzbuzz))
+    assert_respond_to([], :fizzbuzz)
   end
 
   def test_array_integration_fizzbuzz
-    obtainted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].fizzbuzz
-    assert_equal(obtainted, DEFAULT_EXPECTED)
+    obtained = Array(1..15).fizzbuzz
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, @expected)
   end
 
   def test_array_integration_fizzbuzz_reverse
-    obtainted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].fizzbuzz(true)
-    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+    obtained = Array(1..15).fizzbuzz(true)
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, @expected.reverse)
   end
 
   def test_array_integration_fizzbuzz_block
-    obtainted = []
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].fizzbuzz {|i| obtainted << i }
-    assert_equal(obtainted, DEFAULT_EXPECTED)
+    obtained = []
+    Array(1..15).fizzbuzz {|i| obtained << i }
+    assert_equal(obtained, @expected)
   end
 
   def test_array_integration_fizzbuzz_block_reverse
-    obtainted = []
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].fizzbuzz(true) {|i| obtainted << i }
-    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+    obtained = []
+    Array(1..15).fizzbuzz(true) {|i| obtained << i }
+    assert_equal(obtained, @expected.reverse)
   end
 
   def test_range_integration
-    assert((0..0).respond_to?(:fizzbuzz))
+    assert_respond_to((0..0), :fizzbuzz)
   end
 
   def test_range_integration_fizzbuzz
-    obtainted = (DEFAULT_START .. DEFAULT_STOP).fizzbuzz
-    assert_equal(obtainted, DEFAULT_EXPECTED)
+    obtained = (1..15).fizzbuzz
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, @expected)
   end
 
   def test_range_integration_fizzbuzz_reverse
-    obtainted = (DEFAULT_START .. DEFAULT_STOP).fizzbuzz(true)
-    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+    obtained = (1..15).fizzbuzz(true)
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, @expected.reverse)
   end
 
   def test_range_integration_fizzbuzz_block
-    obtainted = []
-    (DEFAULT_START .. DEFAULT_STOP).fizzbuzz {|i| obtainted << i }
-    assert_equal(obtainted, DEFAULT_EXPECTED)
+    obtained = []
+    (1..15).fizzbuzz {|i| obtained << i }
+    assert_equal(obtained, @expected)
   end
 
   def test_range_integration_fizzbuzz_block_reverse
-    obtainted = []
-    (DEFAULT_START .. DEFAULT_STOP).fizzbuzz(true) {|i| obtainted << i }
-    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+    obtained = []
+    (1..15).fizzbuzz(true) {|i| obtained << i }
+    assert_equal(obtained, @expected.reverse)
   end
 
   def test_singleton_fizzbuzz_incorrect_range_error
@@ -196,201 +213,263 @@ class FizzBuzzTest < Test::Unit::TestCase
     end
   end
 
-  def test_singleton_fizzbuzz_integer
-    integer = @integer + 14
-    obtainted = FizzBuzz.fizzbuzz(integer, integer)
-    assert_equal(obtainted, ['FizzBuzz'])
+  def test_singleton_fizzbuzz_fixnum
+    obtained = FizzBuzz.fizzbuzz(15, 15)
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, ['FizzBuzz'])
   end
 
   def test_singleton_fizzbuzz_bignum
-    bignum = @bignum + 5
-    obtainted = FizzBuzz.fizzbuzz(bignum, bignum)
-    assert_equal(obtainted, ['FizzBuzz'])
+    obtained = FizzBuzz.fizzbuzz(@bignum + 5, @bignum + 5)
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, ['FizzBuzz'])
   end
 
   def test_singleton_fizzbuzz_large_bignum
-    bignum = @large_bignum + 5
-    obtainted = FizzBuzz.fizzbuzz(bignum, bignum)
-    assert_equal(obtainted, ['FizzBuzz'])
+    obtained = FizzBuzz.fizzbuzz(@large_bignum + 5, @large_bignum + 5)
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, ['FizzBuzz'])
   end
 
   def test_singleton_fizzbuzz_array
-    obtained = FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP)
-    assert_equal(obtained, DEFAULT_EXPECTED)
+    obtained = FizzBuzz.fizzbuzz(1, 15)
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, @expected)
   end
 
   def test_singleton_fizzbuzz_array_reverse
-    obtained = FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP, true)
-    assert_equal(obtained, DEFAULT_EXPECTED.reverse)
+    obtained = FizzBuzz.fizzbuzz(1, 15, true)
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, @expected.reverse)
   end
 
   def test_singleton_fizzbuzz_block
-    obtainted = []
-    FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP) {|i| obtainted << i }
-    assert_equal(obtainted, DEFAULT_EXPECTED)
+    obtained = []
+    FizzBuzz.fizzbuzz(1, 15) {|i| obtained << i }
+    assert_equal(obtained, @expected)
   end
 
   def test_singleton_fizzbuzz_block_reverse
-    obtainted = []
-    FizzBuzz.fizzbuzz(DEFAULT_START, DEFAULT_STOP, true) {|i| obtainted << i }
-    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+    obtained = []
+    FizzBuzz.fizzbuzz(1, 15, true) {|i| obtained << i }
+    assert_equal(obtained, @expected.reverse)
   end
 
-  def test_singleton_squre
-    obtained_fizz     = FizzBuzz[3]
-    obtained_buzz     = FizzBuzz[5]
-    obtained_fizzbuzz = FizzBuzz[15]
+  def test_singleton_squre_fixnum
+    obtained = []
 
-    obtained = [obtained_fizz, obtained_buzz, obtained_fizzbuzz]
+    obtained << FizzBuzz[3]
+    obtained << FizzBuzz[5]
+    obtained << FizzBuzz[15]
 
-    assert(FizzBuzz[@integer].class == Fixnum)
-    assert_block do
-      obtained.each_with_index.all? do |v,i|
-        v.is_a?(String) && obtained[i] == DEFAULT_WORDS[i]
-      end
+    assert_kind_of(Fixnum, FizzBuzz[0])
+
+    obtained.each_with_index do |v,i|
+      assert_kind_of(String, v)
+      assert_equal(obtained[i], @words[i])
     end
   end
 
   def test_singleton_squre_bignum
-    obtained_fizz     = FizzBuzz[@bignum + 2]
-    obtained_buzz     = FizzBuzz[@bignum + 15]
-    obtained_fizzbuzz = FizzBuzz[@bignum + 5]
+    obtained = []
 
-    obtained = [obtained_fizz, obtained_buzz, obtained_fizzbuzz]
+    obtained << FizzBuzz[@bignum + 2]
+    obtained << FizzBuzz[@bignum + 15]
+    obtained << FizzBuzz[@bignum + 5]
 
-    assert(FizzBuzz[@bignum + 3].class == Bignum)
-    assert_block do
-      obtained.each_with_index.all? do |v,i|
-        v.is_a?(String) && obtained[i] == DEFAULT_WORDS[i]
-      end
+    assert_kind_of(Bignum, FizzBuzz[@bignum + 3])
+
+    obtained.each_with_index do |v,i|
+      assert_kind_of(String, v)
+      assert_equal(obtained[i], @words[i])
     end
   end
 
   def test_singleton_squre_large_bignum
-    obtained_fizz     = FizzBuzz[@large_bignum + 2]
-    obtained_buzz     = FizzBuzz[@large_bignum + 15]
-    obtained_fizzbuzz = FizzBuzz[@large_bignum + 5]
+    obtained = []
 
-    obtained = [obtained_fizz, obtained_buzz, obtained_fizzbuzz]
+    obtained << FizzBuzz[@large_bignum + 2]
+    obtained << FizzBuzz[@large_bignum + 15]
+    obtained << FizzBuzz[@large_bignum + 5]
 
-    assert(FizzBuzz[@large_bignum + 3].class == Bignum)
-    assert_block do
-      obtained.each_with_index.all? do |v,i|
-        v.is_a?(String) && obtained[i] == DEFAULT_WORDS[i]
-      end
+    assert_kind_of(Bignum, FizzBuzz[@large_bignum + 3])
+
+    obtained.each_with_index do |v,i|
+      assert_kind_of(String, v)
+      assert_equal(obtained[i], @words[i])
     end
   end
 
   def test_singleton_is_fizz
-    assert_equal(FizzBuzz.is_fizz?(3), true)
-    assert_equal(FizzBuzz.is_fizz?(15), false)
+    assert_true(FizzBuzz.is_fizz?(3))
+    assert_false(FizzBuzz.is_fizz?(15))
   end
 
   def test_singleton_is_buzz
-    assert_equal(FizzBuzz.is_buzz?(5), true)
-    assert_equal(FizzBuzz.is_buzz?(15), false)
+    assert_true(FizzBuzz.is_buzz?(5))
+    assert_false(FizzBuzz.is_buzz?(15))
   end
 
   def test_singleton_is_fizzbuzz
-    assert_equal(FizzBuzz.is_fizzbuzz?(15), true)
-    assert_equal(FizzBuzz.is_fizzbuzz?(3), false)
-    assert_equal(FizzBuzz.is_fizzbuzz?(5), false)
+    assert_true(FizzBuzz.is_fizzbuzz?(15))
+    assert_false(FizzBuzz.is_fizzbuzz?(3))
+    assert_false(FizzBuzz.is_fizzbuzz?(5))
   end
 
   def test_fizzbuzz_for_0
     obtained_square      = FizzBuzz[0]
     obtained_is_fizzbuzz = FizzBuzz.is_fizzbuzz?(0)
 
-    assert(obtained_square.is_a?(Integer) && obtained_square == 0)
-    assert(obtained_is_fizzbuzz.is_a?(FalseClass) && obtained_is_fizzbuzz == false)
+    assert_kind_of(Fixnum, obtained_square)
+    assert_equal(obtained_square, 0)
+    assert_false(obtained_is_fizzbuzz)
   end
 
-  def test_to_a
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-    assert_equal(fb.to_a, DEFAULT_EXPECTED)
+  def test_fizzbuzz_for_negative_fixnum
+    obtained_square      = FizzBuzz[-1]
+    obtained_is_fizzbuzz = FizzBuzz.is_fizzbuzz?(-1)
+
+    assert_kind_of(Fixnum, obtained_square)
+    assert_equal(obtained_square, -1)
+    assert_false(obtained_is_fizzbuzz)
   end
 
-  def test_each
-    obtainted = []
+  def test_to_a_fixnum
+    obtained = @fizzbuzz.to_a
 
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-    fb.each {|i| obtainted << i }
-
-    assert_equal(obtainted, DEFAULT_EXPECTED)
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, @expected)
   end
 
-  def test_reverse_each
-    obtainted = []
-
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-    fb.reverse_each {|i| obtainted << i }
-
-    assert_equal(obtainted, DEFAULT_EXPECTED.reverse)
+  def test_each_fixnum
+    obtained = []
+    @fizzbuzz.each {|i| obtained << i }
+    assert_equal(obtained, @expected)
   end
 
-  def test_for_fizzbuzz_integer
-    fb = FizzBuzz.new(DEFAULT_START, 15)
-    assert_equal(fb.to_a[14], 'FizzBuzz')
+  def test_reverse_each_fixnum
+    obtained = []
+    @fizzbuzz.reverse_each {|i| obtained << i }
+    assert_equal(obtained, @expected.reverse)
+  end
+
+  def test_to_a_bignum
+    @fizzbuzz = FizzBuzz.new(@bignum + 1, @bignum + 15)
+    obtained = @fizzbuzz.to_a
+
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained, @expected_bignum)
+  end
+
+  def test_each_bignum
+    @fizzbuzz = FizzBuzz.new(@bignum + 1, @bignum + 15)
+
+    obtained = []
+    @fizzbuzz.each {|i| obtained << i }
+
+    assert_equal(obtained, @expected_bignum)
+  end
+
+  def test_reverse_each_bignum
+    @fizzbuzz = FizzBuzz.new(@bignum + 1, @bignum + 15)
+
+    obtained = []
+    @fizzbuzz.reverse_each {|i| obtained << i }
+
+    assert_equal(obtained, @expected_bignum.reverse)
+  end
+
+  def test_for_fizzbuzz_fixnum
+    obtained = @fizzbuzz.to_a
+
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained[14], 'FizzBuzz')
   end
 
   def test_for_fizzbuzz_bignum
-    fb = FizzBuzz.new(@bignum + 5, @bignum + 5)
-    assert_equal(fb.to_a[0], 'FizzBuzz')
+    @fizzbuzz = FizzBuzz.new(@bignum + 5, @bignum + 5)
+
+    obtained = @fizzbuzz.to_a
+
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained[0], 'FizzBuzz')
   end
 
   def test_for_fizzbuzz_large_bignum
-    fb = FizzBuzz.new(@large_bignum + 5, @large_bignum + 5)
-    assert_equal(fb.to_a[0], 'FizzBuzz')
+    @fizzbuzz = FizzBuzz.new(@large_bignum + 5, @large_bignum + 5)
+
+    obtained = @fizzbuzz.to_a
+
+    assert_kind_of(Array, obtained)
+    assert_equal(obtained[0], 'FizzBuzz')
   end
 
-  def test_correct_start_integer
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
+  def test_correct_start_fixnum
+    assert_kind_of(Fixnum, @fizzbuzz.start)
+    assert_equal(@fizzbuzz.start, 1)
 
-    assert(fb.start.is_a?(Integer) && fb.start == 1)
-    fb.start = 2
-    assert(fb.start.is_a?(Integer) && fb.start == 2)
+    @fizzbuzz.start = 2
+
+    assert_kind_of(Fixnum, @fizzbuzz.start)
+    assert_equal(@fizzbuzz.start, 2)
   end
 
   def test_correct_start_bignum
-    fb = FizzBuzz.new(@bignum, @bignum)
+    @fizzbuzz = FizzBuzz.new(@bignum, @bignum)
 
-    assert_block do
-      fb.start.is_a?(Bignum) && fb.start == @bignum
-      fb.start = @bignum - 5
-      fb.start.is_a?(Bignum) && fb.start == (@bignum - 5)
-    end
+    assert_kind_of(Bignum, @fizzbuzz.start)
+    assert_equal(@fizzbuzz.start, @bignum)
+
+    @fizzbuzz.start = @bignum - 5
+
+    assert_kind_of(Bignum, @fizzbuzz.start)
+    assert_equal(@fizzbuzz.start, @bignum - 5)
   end
 
   def test_correct_start_large_bignum
-    fb = FizzBuzz.new(@large_bignum, @large_bignum)
+    @fizzbuzz = FizzBuzz.new(@large_bignum, @large_bignum)
 
-    assert(fb.start.is_a?(Bignum) && fb.start == @large_bignum)
-    fb.start = @large_bignum - 5
-    assert(fb.start.is_a?(Bignum) && fb.start == (@large_bignum - 5))
+    assert_kind_of(Bignum, @fizzbuzz.start)
+    assert_equal(@fizzbuzz.start, @large_bignum)
+
+    @fizzbuzz.start = @large_bignum - 5
+
+    assert_kind_of(Bignum, @fizzbuzz.start)
+    assert_equal(@fizzbuzz.start, @large_bignum - 5)
   end
 
-  def test_correct_stop_integer
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
+  def test_correct_stop_fixnum
+    assert_kind_of(Fixnum, @fizzbuzz.stop)
+    assert_equal(@fizzbuzz.stop, 15)
 
-    assert(fb.stop.is_a?(Integer) && fb.stop == 15)
-    fb.stop = 5
-    assert(fb.stop.is_a?(Integer) && fb.stop == 5)
+    @fizzbuzz.stop = 5
+
+    assert_kind_of(Fixnum, @fizzbuzz.stop)
+    assert_equal(@fizzbuzz.stop, 5)
   end
 
   def test_correct_stop_bignum
-    fb = FizzBuzz.new(@bignum, @bignum)
+    @fizzbuzz = FizzBuzz.new(@bignum, @bignum)
 
-    assert(fb.stop.is_a?(Bignum) && fb.stop == @bignum)
-    fb.stop = @bignum + 5
-    assert(fb.stop.is_a?(Bignum) && fb.stop == (@bignum + 5))
+    assert_kind_of(Bignum, @fizzbuzz.stop)
+    assert_equal(@fizzbuzz.stop, @bignum)
+
+    @fizzbuzz.stop = @bignum + 5
+
+    assert_kind_of(Bignum, @fizzbuzz.stop)
+    assert_equal(@fizzbuzz.stop, @bignum + 5)
   end
 
   def test_correct_stop_large_bignum
-    fb = FizzBuzz.new(@large_bignum, @large_bignum)
+    @fizzbuzz = FizzBuzz.new(@large_bignum, @large_bignum)
 
-    assert(fb.stop.is_a?(Bignum) && fb.stop == @large_bignum)
-    fb.stop = @large_bignum + 5
-    assert(fb.stop.is_a?(Bignum) && fb.stop == (@large_bignum + 5))
+    assert_kind_of(Bignum, @fizzbuzz.stop)
+    assert_equal(@fizzbuzz.stop, @large_bignum)
+
+    @fizzbuzz.stop = @large_bignum + 5
+
+    assert_kind_of(Bignum, @fizzbuzz.stop)
+    assert_equal(@fizzbuzz.stop, @large_bignum + 5)
   end
 
   def test_missing_arguments
@@ -403,6 +482,12 @@ class FizzBuzzTest < Test::Unit::TestCase
     assert_raise FizzBuzz::TypeError do
       FizzBuzz.new('', '')
     end
+  end
+
+  def test_arguments_type_error_message
+    FizzBuzz['']
+  rescue FizzBuzz::TypeError => error
+    assert_equal(error.message, 'must be a Fixnum or Bignum type')
   end
 
   def test_arguments_type_error_nils
@@ -419,94 +504,87 @@ class FizzBuzzTest < Test::Unit::TestCase
 
   def test_start_type_error
     assert_raise FizzBuzz::TypeError do
-      fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-      fb.start = ''
+      @fizzbuzz.start = ''
     end
   end
 
   def test_stop_type_error
     assert_raise FizzBuzz::TypeError do
-      fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-      fb.stop = ''
+      @fizzbuzz.stop = ''
     end
   end
 
   def test_correct_start_stop
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
+    @fizzbuzz.start = 2
+    @fizzbuzz.stop  = 3
 
-    fb.start = 2
-    fb.stop  = 3
+    assert_kind_of(Fixnum, @fizzbuzz.start)
+    assert_kind_of(Fixnum, @fizzbuzz.stop)
+    assert_equal(@fizzbuzz.start, 2)
+    assert_equal(@fizzbuzz.stop, 3)
+  end
 
-    assert(fb.start.is_a?(Integer) && fb.start == 2)
-    assert(fb.stop.is_a?(Integer) && fb.stop == 3)
+  def test_fizzbuzz_error
+    message = 'The quick brown fox jumps over the lazy dog'
+    error = FizzBuzz::Error.new(message)
+
+    assert_respond_to(error, :start)
+    assert_respond_to(error, :stop)
+    assert_equal(error.message, message)
+    assert_nil(error.start)
+    assert_nil(error.stop)
   end
 
   def test_start_range_error
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-
     assert_raise FizzBuzz::RangeError do
-      fb.start = 16
+      @fizzbuzz.start = 16
     end
   end
 
   def test_stop_range_error
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-
     assert_raise FizzBuzz::RangeError do
-      fb.stop = -1
+      @fizzbuzz.stop = -1
     end
   end
 
-  def test_for_range_error
+  def test_for_not_raising_range_error
     assert_nothing_raised do
-      FizzBuzz.new(DEFAULT_START, @bignum ** 2)
-      FizzBuzz.new(-@large_bignum, DEFAULT_STOP)
+      FizzBuzz.new(1, @bignum ** 2)
+      FizzBuzz.new(-@large_bignum, 15)
     end
   end
 
   def test_error_attributes_not_nil
-    fb = FizzBuzz.new(DEFAULT_START, DEFAULT_STOP)
-
-    begin
-      fb.start = 1
-      fb.stop  = 0
-    rescue FizzBuzz::RangeError => error
-      assert_equal(error.start, 1)
-      assert_equal(error.stop, 0)
-    end
+    @fizzbuzz.start = 1
+    @fizzbuzz.stop  = 0
+  rescue FizzBuzz::RangeError => error
+    assert_equal(error.start, 1)
+    assert_equal(error.stop, 0)
   end
 
   def test_error_attributes_nil
-    begin
-      FizzBuzz.new('', '')
-    rescue FizzBuzz::TypeError => error
-      assert_equal(error.start, nil)
-      assert_equal(error.stop, nil)
-    end
+    FizzBuzz.new('', '')
+  rescue FizzBuzz::TypeError => error
+    assert_nil(error.start)
+    assert_nil(error.stop)
   end
 
   def test_start_type_error_message
-    begin
-      FizzBuzz.new('', DEFAULT_STOP)
-    rescue FizzBuzz::TypeError => error
-      assert_equal(error.message, 'must be an Integer or Bignum type for start')
-    end
+    FizzBuzz.new('', 15)
+  rescue FizzBuzz::TypeError => error
+    assert_equal(error.message, 'must be a Fixnum or Bignum type for start')
   end
 
   def test_stop_type_error_message
-    begin
-      FizzBuzz.new(DEFAULT_START, '')
-    rescue FizzBuzz::TypeError => error
-      assert_equal(error.message, 'must be an Integer or Bignum type for stop')
-    end
+    FizzBuzz.new(1, '')
+  rescue FizzBuzz::TypeError => error
+    assert_equal(error.message, 'must be a Fixnum or Bignum type for stop')
   end
 
   def test_range_error_message
-    begin
-      FizzBuzz.new(DEFAULT_STOP, DEFAULT_START)
-    rescue FizzBuzz::RangeError => error
-      assert_equal(error.message, 'start value is higher than stop value')
-    end
+    FizzBuzz.new(15, 1)
+  rescue FizzBuzz::RangeError => error
+    assert_equal(error.message, 'start value is higher than stop value')
   end
 end
 
