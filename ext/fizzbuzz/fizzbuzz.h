@@ -116,9 +116,9 @@ struct fizzbuzz_exception {
 typedef struct fizzbuzz_exception fizzbuzz_exception_t;
 
 static const char *errors[] = {
-    "must be an Integer or Bignum type",
-    "must be an Integer or Bignum type for start",
-    "must be an Integer or Bignum type for stop",
+    "must be a Fixnum or Bignum type",
+    "must be a Fixnum or Bignum type for start",
+    "must be a Fixnum or Bignum type for stop",
     "start value is higher than stop value",
     "stop value is lower than start value",
     NULL

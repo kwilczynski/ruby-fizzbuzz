@@ -53,7 +53,7 @@ static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
  *
  * Returns a new _FizzBuzz_.
  *
- * The given +start+ and +stop+ values must be of an integer type and
+ * The given +start+ and +stop+ values must be of an _Integer_ type and
  * will establish a +range+ within which calculation of any relevant
  * _FizzBuzz_ results will have place.
  *
@@ -68,7 +68,7 @@ static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
  * exception.
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value of either
- * +start+ or +stop+ is not an _Integer_ or _Bignum_ type.
+ * +start+ or +stop+ is not an _Fixnum_ or _Bignum_ type.
  *
  * See also: FizzBuzz::fizzbuzz and FizzBuzz::[]
  */
@@ -123,7 +123,7 @@ rb_fb_get_start(VALUE object)
  *    fb.start                    #=> 15
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Integer_ or _Bignum_ type.
+ * an _Fixnum_ or _Bignum_ type.
  */
 VALUE
 rb_fb_set_start(VALUE object, VALUE value)
@@ -169,7 +169,7 @@ rb_fb_get_stop(VALUE object)
  *    fb.stop                     #=> 15
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Integer_ or _Bignum_ type.
+ * an _Fixnum_ or _Bignum_ type.
  */
 VALUE
 rb_fb_set_stop(VALUE object, VALUE value)
@@ -299,7 +299,7 @@ rb_fb_reverse_enumerator(VALUE object)
  *    FizzBuzz.is_fizz?(15)   #=> false
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Integer_ or _Bignum_ type.
+ * an _Fixnum_ or _Bignum_ type.
  *
  * See also: FizzBuzz::[]
  */
@@ -326,7 +326,7 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  *    FizzBuzz.is_buzz?(15)   #=> false
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Integer_ or _Bignum_ type.
+ * an _Fixnum_ or _Bignum_ type.
  *
  * See also: FizzBuzz::[]
  */
@@ -353,7 +353,7 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  *    FizzBuzz.is_fizzbuzz?(15)   #=> true
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Integer_ or _Bignum_ type.
+ * an _Fixnum_ or _Bignum_ type.
  *
  * See also: FizzBuzz::[]
  */
@@ -383,7 +383,7 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  *    FizzBuzz[15]   #=> "FizzBuzz"
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Integer_ or _Bignum_ type.
+ * an _Fixnum_ or _Bignum_ type.
  *
  * See also: FizzBuzz::is_fizz?, FizzBuzz::is_buzz? and FizzBuzz::is_fizzbuzz?
  */
