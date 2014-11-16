@@ -1,6 +1,6 @@
 language: ruby
 cache: bundler
-bundler_args: --jobs 4 --retry 4 --without development --path vendor/bundle
+bundler_args: --jobs 1 --retry 4 --without development --path vendor/bundle
 rvm:
   - 1.9.3
   - 2.0.0
