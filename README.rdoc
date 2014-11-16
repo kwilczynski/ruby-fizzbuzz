@@ -5,7 +5,8 @@ Written in C as an example of using Ruby's C API - with the support
 for arbitrary large numeric values via the Bignum class.
 
 {<img src="https://travis-ci.org/kwilczynski/ruby-fizzbuzz.png?branch=master" alt="Build Status"/>}[https://travis-ci.org/kwilczynski/ruby-fizzbuzz]
+{<img src="http://inch-ci.org/github/kwilczynski/ruby-fizzbuzz.svg?branch=master" alt="Documentation Status" />}[http://inch-ci.org/github/kwilczynski/ruby-fizzbuzz]
 {<img src="https://badge.fury.io/rb/ruby-fizzbuzz.png" alt="Gem Version" />}[http://badge.fury.io/rb/ruby-fizzbuzz]
 {<img src="https://coveralls.io/repos/kwilczynski/ruby-fizzbuzz/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/kwilczynski/ruby-fizzbuzz?branch=master]
-{<img src="https://codeclimate.com/github/kwilczynski/ruby-fizzbuzz.png" />}[https://codeclimate.com/github/kwilczynski/ruby-fizzbuzz]
+{<img src="https://codeclimate.com/github/kwilczynski/ruby-fizzbuzz.png" alt="Code Quality" />}[https://codeclimate.com/github/kwilczynski/ruby-fizzbuzz]
 {<img src="https://gemnasium.com/kwilczynski/ruby-fizzbuzz.png" alt="Dependency Status" />}[https://gemnasium.com/kwilczynski/ruby-fizzbuzz]
