@@ -12,7 +12,7 @@ gem 'rdoc', '~> 4.1', '>= 4.1.1'
 gem 'rake-compiler', '~> 0.9', '>= 0.9.2'
 
 group :test do
-  gem 'test-unit', '~> 2.5', '>= 2.5.5'
+  gem 'test-unit', '~> 3.0', '>= 3.0.0'
   gem 'coveralls', '>= 0.7.0', :require => false
 end
 
