@@ -1,55 +1,55 @@
 fizzbuzz (0.0.6)
 
-  * Fixed issue reported by LLVM (clang);
-  * Updated development dependencies;
-  * Added Ruby 2.1.0 to Travis CI;
-  * Added BitDeli and Gemnasium integration;
-  * Re-factored and cleaned up small portions of code;
-  * Made Rake "test" task to be the default tasks;
+  * Fixed issue reported by LLVM (clang).
+  * Updated development dependencies.
+  * Added Ruby 2.1.0 to Travis CI.
+  * Added BitDeli and Gemnasium integration.
+  * Re-factored and cleaned up small portions of code.
+  * Made Rake "test" task to be the default tasks.
   * Updated the ".gitignore" file to cover Bundler, rbenv, etc.
 
 -- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sun, 23 Feb 2014 13:52:08 +0000
 
 fizzbuzz (0.0.5)
 
-  * Added integration with Array and Range types;
+  * Added integration with Array and Range types.
   * Added simple benchmark.
 
 -- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Tue, 26 Nov 2013 12:40:34 +0000
 
 fizzbuzz (0.0.4)
 
-  * Retired support for Ruby 1.8.x (no support for MRI, Ruby Enterprise Edition and Rubinius);
-  * Added Coveralls and Code Climate integration (and hence improved code test coverage);
-  * Improved error handling and made code more resilient to errors;
+  * Retired support for Ruby 1.8.x (no support for MRI, Ruby Enterprise Edition and Rubinius).
+  * Added Coveralls and Code Climate integration (and hence improved code test coverage).
+  * Improved error handling and made code more resilient to errors.
   * Fixed formatting and white spaces.
 
 -- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Mon, 18 Nov 2013 11:22:26 +0000
 
 fizzbuzz (0.0.3)
 
-  * Added custom exceptions and improved error handling;
-  * Added more variety of Rubies on which tests are being run with Travis CI;
+  * Added custom exceptions and improved error handling.
+  * Added more variety of Rubies on which tests are being run with Travis CI.
   * Added project to Rubygems (http://rubygems.org) so it can be installed
-    with just "gem install ruby-fizzbuzz" command;
+    with just "gem install ruby-fizzbuzz" command.
   * Renamed project from "fizzbuzz" to "ruby-fizzbuzz" to avoid clashes with
-    other Ruby gems hosted on Rubygems web site;
+    other Ruby gems hosted on Rubygems web site.
   * Made "mkmf" in extconf.rb more user-friendly (it now reports missing
-    build-time dependencies better);
+    build-time dependencies better).
   * Split Ruby gem specification (or gemspec if you wish) away from Rakefile
-    into its own file (namely ruby-fizzbuzz.gemspec);
+    into its own file (namely ruby-fizzbuzz.gemspec).
   * Improved documentation and removed bunch of small code smells.
 
 -- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Sat, 31 Aug 2013 17:54:54 +0000
 
 fizzbuzz (0.0.2)
 
-  * Added is_fizz?, is_buzz? and is_fizzbuzz? singleton methods to FizzBuzz class;
+  * Added is_fizz?, is_buzz? and is_fizzbuzz? singleton methods to FizzBuzz class.
   * Added fizz?, buzz? and fizzbuzz? methods to the Integer class via a monkey-patch
-    for convenience;
+    for convenience.
   * Changed behaviour of the FizzBuzz#[] singleton method, so it will yield a FizzBuzz
-    result for a given arbitrary Integer value;
-  * Re-factored code to make it cleaner, and added more tests and improved coverage;
+    result for a given arbitrary Integer value.
+  * Re-factored code to make it cleaner, and added more tests and improved coverage.
   * Re-factored FizzBuzz so it now does not assume that we always want to calculate
     results from 1 to n -- it is now possible to calculate FizzBuzz results for given
     n, m values, where n denotes start and m denotes stop value.
