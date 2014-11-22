@@ -71,7 +71,7 @@ Rake::ExtensionTask.new('fizzbuzz', gem) do |e|
 end
 
 desc 'Run benchmarks'
-task :benchmark, [:first] => :test do |t,argument|
+task :benchmark, [:first] do |t,argument|
   glob = File.expand_path("../benchmark/*.rb", __FILE__)
   Dir[glob].each do |f|
     process = ['ruby', f]
