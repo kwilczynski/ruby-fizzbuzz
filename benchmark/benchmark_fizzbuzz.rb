@@ -37,10 +37,12 @@ CAPTION = "%8s%12s%11s%10s\n" % %w(User System Total Real)
 n = (ARGV.shift || 1_000_000).to_i
 
 start   = Time.now
-array   = (1 .. n).to_a
+array   = (1..n).to_a
 reports = []
 
 puts "FizzBuzz #{FizzBuzz::VERSION}, n = #{n}\n\n"
+
+GC.start
 
 Benchmark.benchmark(CAPTION, 24) do |bm|
   reports << bm.report('FizzBuzz::fizzbuzz') do
@@ -76,11 +78,11 @@ Benchmark.benchmark(CAPTION, 24) do |bm|
   end
 
   reports << bm.report('Array#fizzbuzz') do
-    (1 .. n).fizzbuzz
+    array.fizzbuzz
   end
 
   reports << bm.report('Range#fizzbuzz') do
-    array.fizzbuzz
+    (1..n).fizzbuzz {|i| i }
   end
 
   []
