@@ -179,14 +179,14 @@ class FizzBuzzTest < Test::Unit::TestCase
 
   def test_range_integration_fizzbuzz
     obtained = (1..15).fizzbuzz
-    assert_kind_of(Array, obtained)
-    assert_equal(obtained, @expected)
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.to_a, @expected)
   end
 
   def test_range_integration_fizzbuzz_reverse
     obtained = (1..15).fizzbuzz(true)
-    assert_kind_of(Array, obtained)
-    assert_equal(obtained, @expected.reverse)
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.to_a, @expected.reverse)
   end
 
   def test_range_integration_fizzbuzz_block

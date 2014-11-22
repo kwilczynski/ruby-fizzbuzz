@@ -68,14 +68,12 @@ class Range
   #
   # See also: FizzBuzz::fizzbuzz, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
   #
-  def fizzbuzz(reverse = false)
-    values = self.collect {|i| FizzBuzz[i] }.send(reverse ? :reverse : :entries)
-
+  def fizzbuzz(reverse = false, &block)
     if block_given?
-      values.each {|i| yield i }
+      FizzBuzz.fizzbuzz(self.begin, self.end, reverse, &block)
       self
     else
-      values
+      enum_for(:fizzbuzz, reverse)
     end
   end
 end
