@@ -77,13 +77,14 @@ class FizzBuzz
   #
   # See also: FizzBuzz::[], FizzBuzz::new, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
   #
-  def self.fizzbuzz(start, stop, reverse = false)
-    fb = FizzBuzz.new(start, stop)
+  def self.fizzbuzz(start, stop, reverse = false, &block)
+    fb = new(start, stop)
 
     if block_given?
-      fb.send(reverse ? :reverse_each : :each) {|i| yield i }
+      fb.send(reverse ? :reverse_each : :each, &block)
+      self
     else
-      reverse ? fb.to_a.reverse : fb.to_a
+      fb.to_a.send(reverse ? :reverse : :to_a)
     end
   end
 end

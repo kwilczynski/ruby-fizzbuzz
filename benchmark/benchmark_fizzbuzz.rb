@@ -42,8 +42,6 @@ reports = []
 
 puts "FizzBuzz #{FizzBuzz::VERSION}, n = #{n}\n\n"
 
-GC.start
-
 Benchmark.benchmark(CAPTION, 24) do |bm|
   reports << bm.report('FizzBuzz::fizzbuzz') do
     FizzBuzz.fizzbuzz(1, n)
