@@ -71,7 +71,7 @@ class Array
   # See also: FizzBuzz::fizzbuzz, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
   #
   def fizzbuzz(reverse = false)
-    values = self.send(reverse ? :reverse : :entries)
+    values = self.send(reverse ? :reverse : :to_a)
 
     if block_given?
       values.each {|i| yield FizzBuzz[i] }
