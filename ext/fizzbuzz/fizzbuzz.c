@@ -411,6 +411,12 @@ fizzbuzz_evaluate(VALUE value)
     assert((score >= 0 && score <= 3) && \
             "Score value out of bounds, must be between 0 and 3 inclusive");
 
+    /*
+     * The CSTR2RVAL macro uses rb_str_new2(const char *) which is
+     * rather slow due to all the heavy lifting done internally by
+     * str_new0(VALUE, const char *, long, int) to allocate space
+     * for the new String object, etc.
+     */
     return score < 1 ? value : CSTR2RVAL(word(score));
 }
 
