@@ -28,10 +28,10 @@
 class Array
   #
   # call-seq:
-  #    array.fizzbuzz( reverse )                  -> array
   #    array.fizzbuzz( reverse ) {|value| block } -> self
+  #    array.fizzbuzz( reverse )                  -> array
   #
-  # Returns either an array or accepts a block if such is given. When a block is given
+  # Returns either an +array+ or accepts a block if such is given. When a block is given
   # then it will call the block once for each subsequent value for a given array, passing
   # the value as a parameter to the block.
   #

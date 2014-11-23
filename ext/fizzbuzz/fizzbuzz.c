@@ -215,6 +215,11 @@ rb_fb_array(VALUE object)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
+ *    fb.each                    #=> #<Enumerator: #<FizzBuzz:0x007fc5139e5540 @start=1, @stop=15>:each>
+ *
+ * Example:
+ *
+ *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
  *    fb.each {|value| puts "Got #{value}" }
  *
  * Produces:
@@ -252,9 +257,14 @@ rb_fb_enumerator(VALUE object)
  * from +start+ to +stop+ in an <i>reverse order</i>, passing the value
  * as a parameter to the block.
  *
+ * If no block is given, an +Enumerator+ is returned instead.
+ *
  * Example:
  *
- * If no block is given, an +Enumerator+ is returned instead.
+ *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
+ *    fb.each                    #=> #<Enumerator: #<FizzBuzz:0x007fc513a0de00 @start=1, @stop=15>:reverse_each>
+ *
+ * Example:
  *
  *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xb7308664 @stop=15, @start=1>
  *    fb.reverse_each {|value| puts "Got #{value}" }

@@ -93,7 +93,10 @@ class FizzBuzzTest < Test::Unit::TestCase
     [
       :to_a,
       :each,
-      :reverse_each
+      :reverse_each,
+      :to_hash,
+      :as_json,
+      :to_json
     ].each {|i| assert_respond_to(@fizzbuzz, i) }
   end
 
@@ -103,6 +106,50 @@ class FizzBuzzTest < Test::Unit::TestCase
       :buzz?,
       :fizzbuzz?
     ].each {|i| assert_respond_to(@fixnum, i) }
+  end
+
+  def test_to_hash
+    obtained = @fizzbuzz.to_hash
+    assert({
+      'fizzbuzz' => {
+        'start' => 1,
+        'stop' => 15
+      }
+    } == obtained)
+  end
+
+  def test_as_json
+    obtained = @fizzbuzz.as_json
+    assert({
+      'json_class' => 'FizzBuzz',
+      'fizzbuzz' => {
+        'start' => 1,
+        'stop' => 15
+      }
+    } == obtained)
+  end
+
+  def test_to_json
+    obtained = @fizzbuzz.to_json
+    assert({
+      'json_class' => 'FizzBuzz',
+      'fizzbuzz' => {
+        'start' => 1,
+        'stop' => 15
+      }
+    }.to_json == obtained)
+  end
+
+  def test_singleton_from_json
+    # About JSON::parse, see:
+    # https://www.ruby-lang.org/en/news/2013/02/22/json-dos-cve-2013-0269/
+    obtained = @fizzbuzz.to_json
+    assert({
+      'fizzbuzz' => {
+        'start' => 1,
+        'stop' => 15
+      }
+    } == JSON.load(obtained).to_hash)
   end
 
   def test_fixnum_is_fizz
