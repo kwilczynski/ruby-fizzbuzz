@@ -28,12 +28,12 @@
 class Range
   #
   # call-seq:
-  #    range.fizzbuzz( reverse )                  -> array
   #    range.fizzbuzz( reverse ) {|value| block } -> self
+  #    range.fizzbuzz( reverse )                  -> an Enumerator
   #
-  # Returns either an array or accepts a block if such is given. When a block is given
-  # then it will call the block once for each subsequent value for a given range, passing
-  # the value as a parameter to the block.
+  # Returns either an +Enumerator+ or accepts a block if such is given. When a block is
+  # given then it will call the block once for each subsequent value for a given range,
+  # passing the value as a parameter to the block.
   #
   # Additionally, if the value of +reverse+ is set to be +true+ then the results will
   # be given in an <em>reverse order</em> whether in a resulting array or when passing
@@ -41,8 +41,8 @@ class Range
   #
   # Example:
   #
-  #    (1..15).fizzbuzz         #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
-  #    (1..15).fizzbuzz(true)   #=> ["FizzBuzz", 14, 13, "Fizz", 11, "Buzz", "Fizz", 8, 7, "Fizz", "Buzz", 4, "Fizz", 2, 1]
+  #    (1..15).fizzbuzz         #=> #<Enumerator: 1..15:fizzbuzz(false)>
+  #    (1..15).fizzbuzz(true)   #=> #<Enumerator: 1..15:fizzbuzz(true)>
   #
   # Example:
   #

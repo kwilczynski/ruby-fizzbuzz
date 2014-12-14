@@ -7,6 +7,7 @@ platforms :rbx do
   gem 'psych'
 end
 
+gem 'json', '~> 1.8', '>= 1.8.1'
 gem 'rake', '~> 10.1', '>= 10.1.1'
 gem 'rdoc', '~> 4.1', '>= 4.1.1'
 gem 'rake-compiler', '~> 0.9', '>= 0.9.2'

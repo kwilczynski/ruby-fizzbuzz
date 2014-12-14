@@ -22,12 +22,16 @@
 
 # :startdoc:
 
-require 'fizzbuzz/fizzbuzz'
-require 'fizzbuzz/version'
-require 'fizzbuzz/core/integer'
-require 'fizzbuzz/core/bignum'
-require 'fizzbuzz/core/array'
-require 'fizzbuzz/core/range'
+gem 'json', '>= 1.8.1'
+
+require 'json'
+
+require_relative 'fizzbuzz/fizzbuzz'
+require_relative 'fizzbuzz/version'
+require_relative 'fizzbuzz/core/integer'
+require_relative 'fizzbuzz/core/bignum'
+require_relative 'fizzbuzz/core/array'
+require_relative 'fizzbuzz/core/range'
 
 #
 # Yet another _FizzBuzz_ in Ruby.
@@ -37,12 +41,12 @@ require 'fizzbuzz/core/range'
 class FizzBuzz
   #
   # call-seq:
-  #    FizzBuzz.fizzbuzz( start, stop, reverse )                  -> array
   #    FizzBuzz.fizzbuzz( start, stop, reverse ) {|value| block } -> self
+  #    FizzBuzz.fizzbuzz( start, stop, reverse )                  -> array
   #
-  # Returns either an array or accepts a block if such is given. When a block is given
-  # then it will call the block once for each subsequent value for a given range from
-  # +start+ to +stop+, passing the value as a parameter to the block.
+  # Returns either an +array+ or accepts a block if such is given. When a block is
+  # given then it will call the block once for each subsequent value for a given
+  # range from +start+ to +stop+, passing the value as a parameter to the block.
   #
   # Additionally, if the value of +reverse+ is set to be +true+ then the results will
   # be given in an <em>reverse order</em> whether in a resulting array or when passing
@@ -87,6 +91,132 @@ class FizzBuzz
       fb.to_a.send(reverse ? :reverse : :to_a)
     end
   end
+
+  #
+  # call-seq:
+  #    fizzbuzz.to_hash -> hash
+  #
+  # Returns a +hash+ representing the _FizzBuzz_ object.
+  #
+  # Example:
+  #
+  #    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0x007fbe84 @start=1, @stop=15>
+  #    fb.to_hash
+  #
+  # Produces:
+  #
+  #    {
+  #      "fizzbuzz" => {
+  #        "start" => 1,
+  #         "stop" => 15
+  #      }
+  #    }
+  #
+  # See also: FizzBuzz#as_json and FizzBuzz#to_json
+  #
+  def to_hash
+    {
+      'fizzbuzz' => {
+        'start' => @start,
+        'stop' => @stop
+      }
+    }
+  end
+
+  #
+  # call-seq:
+  #    fizzbuzz.as_json -> hash
+  #
+  # Returns a +hash+ representing the _FizzBuzz_ object that will be
+  # used when generating a _JSON_ string representation.
+  #
+  # Example:
+  #
+  #    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0x007f90c1 @start=1, @stop=15>
+  #    fb.as_json
+  #
+  # Produces:
+  #
+  #    {
+  #      "json_class" => "FizzBuzz",
+  #        "fizzbuzz" => {
+  #        "start" => 1,
+  #         "stop" => 15
+  #      }
+  #    }
+  #
+  # See also: FizzBuzz#to_json and FizzBuzz#to_hash
+  #
+  def as_json(*arguments)
+    { JSON.create_id => self.class.name }.merge(to_hash)
+  end
+
+  #
+  # call-seq:
+  #    fizzbuzz.to_json -> string
+  #
+  # Returns a _JSON_ string representing the _FizzBuzz_ object.
+  #
+  # Example:
+  #
+  #    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0x007fce83 @start=1, @stop=15>
+  #    fb.to_json
+  #
+  # Produces:
+  #
+  #    {
+  #      "json_class": "FizzBuzz",
+  #      "fizzbuzz": {
+  #        "start": 1,
+  #        "stop": 15
+  #      }
+  #    }
+  #
+  # See also: FizzBuzz::json_create, FizzBuzz#as_json and FizzBuzz#to_hash
+  #
+  def to_json(*arguments)
+    as_json.to_json(*arguments)
+  end
+
+  #
+  # call-seq:
+  #    FizzBuzz.json_create( object ) -> FizzBuzz
+  #
+  # Creates a new _FizzBuzz_ object with both the +start+ and +stop+ values
+  # set accordingly given a _JSON_ string that is an representation of the
+  # _FizzBuzz_ object.
+  #
+  # Example:
+  #
+  #    json = <<-EOS
+  #      {
+  #        "json_class": "FizzBuzz",
+  #        "fizzbuzz": {
+  #          "start": 1,
+  #          "stop": 15
+  #        }
+  #      }
+  #    EOS
+  #
+  #    fb = JSON.load(json)   #=> #<FizzBuzz:0x007fc082 @start=1, @stop=15>
+  #    fb.to_hash
+  #
+  # Produces:
+  #
+  #    {
+  #      "fizzbuzz" => {
+  #        "start" => 1,
+  #         "stop" => 15
+  #      }
+  #    }
+  #
+  # See also: FizzBuzz#to_json, FizzBuzz::[], FizzBuzz::new and FizzBuzz::fizzbuzz
+  #
+  def self.json_create(object)
+    new(*object['fizzbuzz'].values_at('start', 'stop'))
+  end
+
+  alias_method :to_h, :to_hash
 end
 
 # :enddoc:
