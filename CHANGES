@@ -1,3 +1,24 @@
+fizzbuzz (0.7.0)
+
+  * Added to_hash, as_json, to_json and from_json (singleton) to the FizzBuzz class.
+  * Add rudimentary Vagrantfile that can be used to build a development environment.
+  * Re-factored fizzbuzz (singleton) from the FizzBuzz class to speed it up.
+  * No longer use of Enumerable#entries in the Array integration, achieving better performance.
+  * Correctly return Enumerator when integrating with the Range class.
+  * Updated Rakefile to no longer run test before benchmark.
+  * Fixed benchmarks concerning Array and Range integration.
+  * Retired testing with Ruby 1.9.2 and 2.1.0, and added 2.1.5 on Travis CI.
+  * Fixed Travis CI build against Rubinius.
+  * Re-factored tests to utilise modern version of the "test-unit" Ruby gem.
+  * Fixed build to make it work with C++ compilers.
+  * Added the Guard Ruby gem for convenience, with an appropriate Guardfile.
+  * Added LLVM (clang) compiler to build with to Travis CI.
+  * Fixed version number to comply with Semantic Versioning 2 (http://semver.org/).
+  * Re-factored and cleaned up small portions of code and documentation.
+  * Removed BitDeli badge.
+
+-- Krzysztof Wilczynski <krzysztof.wilczynski@linux.com>  Mon, 15 Dec 2014 00:27:26 +0000
+
 fizzbuzz (0.0.6)
 
   * Fixed issue reported by LLVM (clang).
