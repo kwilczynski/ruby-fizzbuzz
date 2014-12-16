@@ -92,7 +92,7 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
 
 /*
  * call-seq:
- *    fizzfuzz.start -> integer
+ *    fizzbuzz.start -> integer
  *
  * Returns the current value for +start+.
  *
@@ -109,7 +109,7 @@ rb_fb_get_start(VALUE object)
 
 /*
  * call-seq:
- *    fizzfuzz.start= (integer) -> integer
+ *    fizzbuzz.start= (integer) -> integer
  *
  * Sets the current value of +start+ if given new value is lower or equal
  * to the current value of +stop+, or raises an <i>FizzBuzz::RangeError</i>
@@ -138,7 +138,7 @@ rb_fb_set_start(VALUE object, VALUE value)
 
 /*
  * call-seq:
- *    fizzfuzz.stop -> integer
+ *    fizzbuzz.stop -> integer
  *
  * Returns the current value for +stop+.
  *
@@ -155,7 +155,7 @@ rb_fb_get_stop(VALUE object)
 
 /*
  * call-seq:
- *    fizzfuzz.stop= (integer) -> integer
+ *    fizzbuzz.stop= (integer) -> integer
  *
  * Sets the current value of +stop+ if given new value is greater or equal
  * to the current value of +start+, or raises an <i>FizzBuzz::RangeError</i>
@@ -215,7 +215,7 @@ rb_fb_array(VALUE object)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
- *    fb.each                    #=> #<Enumerator: #<FizzBuzz:0x007fc5139e5540 @start=1, @stop=15>:each>
+ *    fb.each                    #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:each>
  *
  * Example:
  *
@@ -262,7 +262,7 @@ rb_fb_enumerator(VALUE object)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
- *    fb.each                    #=> #<Enumerator: #<FizzBuzz:0x007fc513a0de00 @start=1, @stop=15>:reverse_each>
+ *    fb.each                    #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:reverse_each>
  *
  * Example:
  *

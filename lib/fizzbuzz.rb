@@ -125,7 +125,7 @@ class FizzBuzz
 
   #
   # call-seq:
-  #    fizzbuzz.as_json -> hash
+  #    fizzbuzz.as_json ( arguments ) -> hash
   #
   # Returns a +hash+ representing the _FizzBuzz_ object that will be
   # used when generating a _JSON_ string representation.
@@ -147,13 +147,13 @@ class FizzBuzz
   #
   # See also: FizzBuzz#to_json and FizzBuzz#to_hash
   #
-  def as_json(*arguments)
+  def as_json(*)
     { JSON.create_id => self.class.name }.merge(to_hash)
   end
 
   #
   # call-seq:
-  #    fizzbuzz.to_json -> string
+  #    fizzbuzz.to_json ( arguments ) -> string
   #
   # Returns a _JSON_ string representing the _FizzBuzz_ object.
   #
