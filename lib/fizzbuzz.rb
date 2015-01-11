@@ -5,7 +5,7 @@
 #
 # fizzbuzz.rb
 #
-# Copyright 2012-2014 Krzysztof Wilczynski
+# Copyright 2012-2015 Krzysztof Wilczynski
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -125,7 +125,7 @@ class FizzBuzz
 
   #
   # call-seq:
-  #    fizzbuzz.as_json ( arguments ) -> hash
+  #    fizzbuzz.as_json( arguments ) -> hash
   #
   # Returns a +hash+ representing the _FizzBuzz_ object that will be
   # used when generating a _JSON_ string representation.
@@ -153,7 +153,7 @@ class FizzBuzz
 
   #
   # call-seq:
-  #    fizzbuzz.to_json ( arguments ) -> string
+  #    fizzbuzz.to_json( arguments ) -> string
   #
   # Returns a _JSON_ string representing the _FizzBuzz_ object.
   #

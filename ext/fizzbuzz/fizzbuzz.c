@@ -3,7 +3,7 @@
 /*
  * fizzbuzz.c
  *
- * Copyright 2012-2014 Krzysztof Wilczynski
+ * Copyright 2012-2015 Krzysztof Wilczynski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,7 +109,7 @@ rb_fb_get_start(VALUE object)
 
 /*
  * call-seq:
- *    fizzbuzz.start= (integer) -> integer
+ *    fizzbuzz.start=( integer ) -> integer
  *
  * Sets the current value of +start+ if given new value is lower or equal
  * to the current value of +stop+, or raises an <i>FizzBuzz::RangeError</i>
@@ -155,7 +155,7 @@ rb_fb_get_stop(VALUE object)
 
 /*
  * call-seq:
- *    fizzbuzz.stop= (integer) -> integer
+ *    fizzbuzz.stop=( integer ) -> integer
  *
  * Sets the current value of +stop+ if given new value is greater or equal
  * to the current value of +start+, or raises an <i>FizzBuzz::RangeError</i>
@@ -406,7 +406,7 @@ rb_fb_square(VALUE object, VALUE value)
     return fizzbuzz_evaluate(value);
 }
 
-/* :enddoc: */
+/* :stopdoc: */
 
 static VALUE
 fizzbuzz_evaluate(VALUE value)
@@ -519,6 +519,8 @@ fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop, const char *message)
     return fizzbuzz_exception(&e);
 }
 
+/* :startdoc: */
+
 void
 Init_fizzbuzz(void)
 {
@@ -573,6 +575,8 @@ Init_fizzbuzz(void)
 
     rb_define_singleton_method(rb_cFizzBuzz, "[]", RUBY_METHOD_FUNC(rb_fb_square), 1);
 }
+
+/* :enddoc: */
 
 #if defined(__cplusplus)
 }
