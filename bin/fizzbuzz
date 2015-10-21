@@ -31,7 +31,7 @@ rescue LoadError
   require 'fizzbuzz'
 end
 
-script_name = File.basename($0)
+script_name = File.basename($PROGRAM_NAME)
 
 start = 1
 stop  = 100
@@ -51,32 +51,37 @@ Usage:
 
   option.separator "\nOptions:\n\n"
 
-  option.on('--start <NUMBER>',
+  option.on(
+    '--start <NUMBER>',
     "Specify the start value (default: #{start})."
-  ) do | value|
+  ) do |value|
     start = value.to_i if value
   end
 
-  option.on('--stop <NUMBER>',
+  option.on(
+    '--stop <NUMBER>',
     "Specify the stop value (default: #{stop})."
   ) do |value|
     stop = value.to_i if value
   end
 
-  option.on('--reverse',
-    "Print results in a reverse order."
+  option.on(
+    '--reverse',
+    'Print results in a reverse order.'
   ) do
     reverse = true
   end
 
-  option.on('-v', '--version',
+  option.on(
+    '-v', '--version',
     'Show version number.'
   ) do
     puts FizzBuzz::VERSION
     exit
   end
 
-  option.on('-h', '--help',
+  option.on(
+    '-h', '--help',
     'Display this help message.'
   ) do
     puts option.help
@@ -96,9 +101,9 @@ end
 parser.parse!
 
 begin
-  FizzBuzz.fizzbuzz(start, stop, reverse) {|i| puts i }
+  FizzBuzz.fizzbuzz(start, stop, reverse) { |i| puts i }
 rescue => e
-  puts "An error occurred: #{e.to_s}"
+  puts "An error occurred: #{e}"
   exit 1
 end
 
