@@ -433,6 +433,8 @@ fizzbuzz_evaluate(VALUE value)
 static VALUE
 fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direction)
 {
+    int forward = LOOP_FORWARD(direction);
+
     VALUE i = Qnil;
 
     VALUE array = Qnil;
@@ -448,17 +450,12 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direc
         RETURN_ENUMERATOR(object, 0, 0);
     }
 
-    if (LOOP_FORWARD(direction)) {
-        for (i = start; LESS_EQUAL(i, stop); i = INCREASE(i)) {
-            value = fizzbuzz_evaluate(i);
-            WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
-        }
-    }
-    else {
-        for (i = stop; GREATER_EQUAL(i, start); i = DECREASE(i)) {
-            value = fizzbuzz_evaluate(i);
-            WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
-        }
+    i = forward ? start : stop;
+
+    while(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start)) {
+        value = fizzbuzz_evaluate(i);
+        WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+	i = forward ? INCREASE(i) : DECREASE(i);
     }
 
     return WANT_ARRAY(type) ? array : object;
