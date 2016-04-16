@@ -28,6 +28,14 @@ branches:
   only:
     - master
 
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+before_install:
+  - gem update bundler
+
 before_script:
   - export CC=$COMPILER
   - bundle exec rake clean clobber
