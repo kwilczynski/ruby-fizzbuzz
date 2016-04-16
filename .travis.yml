@@ -34,10 +34,10 @@ notifications:
     on_failure: change
 
 before_install:
-  - gem update bundler
+  - export CC=$(which $COMPILER)
 
 before_script:
-  - export CC=$COMPILER
+  - gem update bundler
   - bundle exec rake clean clobber
 
 script:
