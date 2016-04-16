@@ -1,24 +1,36 @@
 language: ruby
-cache: bundler
-bundler_args: --jobs 1 --retry 4 --without development --path vendor/bundle
+
+cache:
+  - bundler
+
+bundler_args: --jobs 1 --retry 5 --without development --path vendor/bundle
+
 rvm:
   - 1.9.3
   - 2.0.0
-  - 2.1.7
-  - 2.2.3
+  - 2.1.9
+  - 2.2.4
+  - 2.3.0
   - ruby-head
   - rbx-2
+
 env:
   - COMPILER=gcc
   - COMPILER=clang
+
 matrix:
   fast_finish: true
   allow_failures:
     - rvm: ruby-head
     - rvm: rbx-2
+
 branches:
   only:
     - master
+
 before_script:
   - export CC=$COMPILER
-script: bundle exec rake test
+  - bundle exec rake clean
+
+script:
+  - bundle exec rake test
