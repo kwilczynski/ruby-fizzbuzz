@@ -437,8 +437,8 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direc
 
     VALUE i = Qnil;
 
-    VALUE array = Qnil;
-    VALUE value = Qnil;
+    volatile VALUE array = Qnil;
+    volatile VALUE value = Qnil;
 
     VALUE start = rb_ivar_get(object, id_at_start);
     VALUE stop  = rb_ivar_get(object, id_at_stop);
@@ -452,7 +452,7 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direc
 
     i = forward ? start : stop;
 
-    while(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start)) {
+    while(LIKELY(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start))) {
         value = fizzbuzz_evaluate(i);
         WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
 	i = forward ? INCREASE(i) : DECREASE(i);

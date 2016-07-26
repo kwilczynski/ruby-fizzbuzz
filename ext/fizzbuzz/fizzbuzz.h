@@ -40,7 +40,7 @@ extern "C" {
 #define GREATER_EQUAL(a, b) fizzbuzz_greater_equal((a), (b))
 #define LESS_EQUAL(a, b)    fizzbuzz_less_equal((a), (b))
 
-#define INTEGER_P(x) (TYPE(x) == T_FIXNUM || TYPE(x) == T_BIGNUM)
+#define INTEGER_P(x) (RB_TYPE_P((x), T_FIXNUM) || RB_TYPE_P((x), T_BIGNUM))
 
 #define ZERO_P(x) \
     (FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_equal((x), ZERO))
