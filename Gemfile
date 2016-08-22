@@ -7,9 +7,9 @@ platforms :rbx do
   gem 'psych'
 end
 
-gem 'json', '~> 2.0', '>= 2.0.1'
+gem 'json', '~> 1.8', '>= 1.8.1'
 gem 'rake', '~> 11.2', '>= 11.2.2'
-gem 'rdoc', '~> 4.1', '>= 4.1.1'
+gem 'rdoc', '~> 4.2', '>= 4.2.2'
 gem 'rake-compiler', '~> 1.0', '>= 1.0.1'
 
 group :test do
