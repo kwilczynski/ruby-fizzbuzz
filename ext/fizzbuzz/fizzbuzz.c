@@ -34,6 +34,8 @@ VALUE rb_fb_eRangeError = Qnil;
 
 void Init_fizzbuzz(void);
 
+static inline void fizzbuzz_allocate_words(VALUE *value);
+
 static VALUE fizzbuzz_evaluate(VALUE value);
 static VALUE fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
         fizzbuzz_direction_t direction);
@@ -86,6 +88,8 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
 
     rb_ivar_set(object, id_at_start, start);
     rb_ivar_set(object, id_at_stop, stop);
+
+    fizzbuzz_allocate_words(words);
 
     return object;
 }
@@ -408,6 +412,22 @@ rb_fb_square(VALUE object, VALUE value)
 
 /* :stopdoc: */
 
+static inline void
+fizzbuzz_allocate_words(VALUE *value)
+{
+    /*
+     * The CSTR2RVAL macro uses rb_str_new2(const char *) which is
+     * rather slow due to all the heavy lifting done internally by
+     * str_new0(VALUE, const char *, long, int) to allocate space
+     * for the new String object, etc.
+     */
+    if (NIL_P(value[0])) {
+        value[0] = CSTR2RVAL("Fizz");
+        value[1] = CSTR2RVAL("Buzz");
+        value[2] = CSTR2RVAL("FizzBuzz");
+    }
+}
+
 static VALUE
 fizzbuzz_evaluate(VALUE value)
 {
@@ -421,13 +441,9 @@ fizzbuzz_evaluate(VALUE value)
     assert((score >= 0 && score <= 3) && \
             "Score value out of bounds, must be between 0 and 3 inclusive");
 
-    /*
-     * The CSTR2RVAL macro uses rb_str_new2(const char *) which is
-     * rather slow due to all the heavy lifting done internally by
-     * str_new0(VALUE, const char *, long, int) to allocate space
-     * for the new String object, etc.
-     */
-    return score < 1 ? value : CSTR2RVAL(word(score));
+    fizzbuzz_allocate_words(words);
+
+    return score < 1 ? value : word(score);
 }
 
 static VALUE

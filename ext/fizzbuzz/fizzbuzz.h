@@ -124,9 +124,9 @@ static const char *errors[] = {
     NULL
 };
 
-static const char *words[] = {
-    "Fizz", "Buzz",
-    "FizzBuzz", NULL
+static VALUE words[] = {
+    Qnil, Qnil,
+    Qnil, Qnil
 };
 
 inline static VALUE
