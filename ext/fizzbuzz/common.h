@@ -21,6 +21,14 @@
 #if !defined(_COMMON_H)
 #define _COMMON_H 1
 
+#if !defined(_GNU_SOURCE)
+# define _GNU_SOURCE 1
+#endif
+
+#if !defined(_BSD_SOURCE)
+# define _BSD_SOURCE 1
+#endif
+
 #if defined(__cplusplus)
 extern "C" {
 #endif

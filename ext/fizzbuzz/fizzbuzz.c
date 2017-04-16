@@ -431,8 +431,8 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direc
 
     VALUE i = Qnil;
 
-    volatile VALUE array = Qnil;
-    volatile VALUE value = Qnil;
+    VALUE array = Qnil;
+    VALUE value = Qnil;
 
     VALUE start = rb_ivar_get(object, id_at_start);
     VALUE stop  = rb_ivar_get(object, id_at_stop);
@@ -451,6 +451,9 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direc
         WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
 	i = forward ? INCREASE(i) : DECREASE(i);
     }
+
+    RB_GC_GUARD(array);
+    RB_GC_GUARD(value);
 
     return WANT_ARRAY(type) ? array : object;
 }
