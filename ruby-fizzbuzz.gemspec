@@ -58,7 +58,7 @@ arbitrary large numeric values via the Bignum class.
   s.require_paths << 'lib'
   s.extensions    << 'ext/fizzbuzz/extconf.rb'
 
-  s.signing_key = signing_key if File.exists?(signing_key)
+  s.signing_key = signing_key if File.exist?(signing_key)
 end
 
 # vim: set ts=2 sw=2 sts=2 et :
