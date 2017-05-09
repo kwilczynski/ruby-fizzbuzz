@@ -69,6 +69,14 @@ class FizzBuzzTest < Test::Unit::TestCase
     assert_same(FB, FizzBuzz)
   end
 
+  def test_fizzbuzz_words_constants
+    [
+      :WORD_FIZZ,
+      :WORD_BUZZ,
+      :WORD_FIZZBUZZ
+    ].each {|i| assert_const_defined(FizzBuzz, i) }
+  end
+
   def test_fizzbuzz_singleton_methods
     [
       :fizzbuzz,
