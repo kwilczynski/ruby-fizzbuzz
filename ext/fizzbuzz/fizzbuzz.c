@@ -36,14 +36,14 @@ void Init_fizzbuzz(void);
 
 static VALUE fizzbuzz_evaluate(VALUE value);
 static VALUE fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
-        fizzbuzz_direction_t direction);
+                             fizzbuzz_direction_t direction);
 
 static VALUE fizzbuzz_exception_wrapper(VALUE value);
 static VALUE fizzbuzz_exception(void *data);
 
 static VALUE fizzbuzz_type_error(VALUE klass, const char *message);
 static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
-        const char *message);
+                                  const char *message);
 
 /* :startdoc: */
 
@@ -68,7 +68,8 @@ static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
  * exception.
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value of either
- * +start+ or +stop+ is not an _Fixnum_ or _Bignum_ type.
+ * +start+ or +stop+ is not a _Fixnum_ or _Bignum_ type, or an _Integer_ type
+ * starting from Ruby version 2.4 onwards.
  *
  * See also: FizzBuzz::fizzbuzz and FizzBuzz::[]
  */
@@ -123,7 +124,8 @@ rb_fb_get_start(VALUE object)
  *    fb.start                    #=> 15
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Fixnum_ or _Bignum_ type.
+ * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
+ * version 2.4 onwards.
  */
 VALUE
 rb_fb_set_start(VALUE object, VALUE value)
@@ -169,7 +171,8 @@ rb_fb_get_stop(VALUE object)
  *    fb.stop                     #=> 15
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Fixnum_ or _Bignum_ type.
+ * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
+ * version 2.4 onwards.
  */
 VALUE
 rb_fb_set_stop(VALUE object, VALUE value)
@@ -309,7 +312,8 @@ rb_fb_reverse_enumerator(VALUE object)
  *    FizzBuzz.is_fizz?(15)   #=> false
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Fixnum_ or _Bignum_ type.
+ * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
+ * version 2.4 onwards.
  *
  * See also: FizzBuzz::[]
  */
@@ -336,7 +340,8 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  *    FizzBuzz.is_buzz?(15)   #=> false
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Fixnum_ or _Bignum_ type.
+ * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
+ * version 2.4 onwards.
  *
  * See also: FizzBuzz::[]
  */
@@ -363,7 +368,8 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  *    FizzBuzz.is_fizzbuzz?(15)   #=> true
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Fixnum_ or _Bignum_ type.
+ * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
+ * version 2.4 onwards.
  *
  * See also: FizzBuzz::[]
  */
@@ -393,7 +399,8 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  *    FizzBuzz[15]   #=> "FizzBuzz"
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
- * an _Fixnum_ or _Bignum_ type.
+ * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
+ * version 2.4 onwards.
  *
  * See also: FizzBuzz::is_fizz?, FizzBuzz::is_buzz? and FizzBuzz::is_fizzbuzz?
  */

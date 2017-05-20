@@ -20,8 +20,6 @@
 # limitations under the License.
 #
 
-# :startdoc:
-
 gem 'json', '>= 1.8.1'
 
 require 'json'
@@ -32,6 +30,8 @@ require_relative 'fizzbuzz/core/integer'
 require_relative 'fizzbuzz/core/bignum'
 require_relative 'fizzbuzz/core/array'
 require_relative 'fizzbuzz/core/range'
+
+# :startdoc:
 
 #
 # Yet another _FizzBuzz_ in Ruby.

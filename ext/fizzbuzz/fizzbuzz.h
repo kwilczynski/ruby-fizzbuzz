@@ -116,9 +116,15 @@ struct fizzbuzz_exception {
 typedef struct fizzbuzz_exception fizzbuzz_exception_t;
 
 static const char *errors[] = {
+#if defined(RUBY_INTEGER_UNIFICATION)
+    "must be an Integer type",
+    "must be an Integer type for start",
+    "must be an Integer type for stop",
+#else
     "must be a Fixnum or Bignum type",
     "must be a Fixnum or Bignum type for start",
     "must be a Fixnum or Bignum type for stop",
+#endif
     "start value is higher than stop value",
     "stop value is lower than start value",
     NULL

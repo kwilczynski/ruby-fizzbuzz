@@ -20,6 +20,9 @@
 # limitations under the License.
 #
 
+# Support for Ruby version 2.4 onwards.
+return if 0.class == Integer
+
 # :startdoc:
 
 #
