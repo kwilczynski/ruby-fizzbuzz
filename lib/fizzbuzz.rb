@@ -27,7 +27,12 @@ require 'json'
 require_relative 'fizzbuzz/fizzbuzz'
 require_relative 'fizzbuzz/version'
 require_relative 'fizzbuzz/core/integer'
-require_relative 'fizzbuzz/core/bignum'
+
+# Support for Ruby version older than 2.4 and newer.
+unless 0.class == Integer
+  require_relative 'fizzbuzz/core/bignum'
+end
+
 require_relative 'fizzbuzz/core/array'
 require_relative 'fizzbuzz/core/range'
 
