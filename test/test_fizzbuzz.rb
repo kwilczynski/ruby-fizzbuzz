@@ -35,6 +35,18 @@ class FizzBuzzTest < Test::Unit::TestCase
     @large_integer      = 1_000_000_000_000
     @very_large_integer = 1_000_000_000_000_000
 
+    unless 0.class == Integer
+      overflow_size_with_sign = ->() do
+        bits = [''].pack('p').size * 8
+        2 ** (bits - 1) - 1
+      end
+
+      if overflow_size_with_sign.() + 1 > 2147483647
+        @large_integer      = @large_integer      ** 2
+        @very_large_integer = @very_large_integer ** 2
+      end
+    end
+
     @words = %w(Fizz Buzz FizzBuzz).freeze
 
     @expected_integer = [
