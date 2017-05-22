@@ -116,7 +116,7 @@ struct fizzbuzz_exception {
 typedef struct fizzbuzz_exception fizzbuzz_exception_t;
 
 static const char *errors[] = {
-#if defined(RUBY_INTEGER_UNIFICATION)
+#if defined(HAVE_INTEGER_UNIFICATION)
     "must be an Integer type",
     "must be an Integer type for start",
     "must be an Integer type for stop",

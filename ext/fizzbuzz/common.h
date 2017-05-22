@@ -79,6 +79,10 @@ typedef unsigned char uint8_t;
 # define UNLIKELY(x) (x)
 #endif
 
+#if defined(RUBY_INTEGER_UNIFICATION) || (RUBY_API_VERSION_CODE >= 20400)
+# define HAVE_INTEGER_UNIFICATION 1
+#endif
+
 #if defined(__cplusplus)
 }
 #endif
