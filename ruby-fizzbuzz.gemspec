@@ -51,9 +51,11 @@ starting from Ruby version 2.4 onwards.
             Dir['lib/**/*.rb']       +
             Dir['benchmark/**/*.rb'] +
             Dir['test/**/*.rb']      +
-            %w(Rakefile ruby-fizzbuzz.gemspec AUTHORS
-               CHANGES CHANGES.rdoc COPYRIGHT LICENSE
-               README README.rdoc TODO VERSION)
+            %w(Rakefile Gemfile Guardfile Vagrantfile
+               AUTHORS CHANGES CHANGES.rdoc COPYRIGHT
+               LICENSE README README.rdoc TODO VERSION
+               ruby-fizzbuzz.gemspec kwilczynski.asc
+               kwilczynski-public.pem)
 
   s.executables   << 'fizzbuzz'
   s.require_paths << 'lib'
