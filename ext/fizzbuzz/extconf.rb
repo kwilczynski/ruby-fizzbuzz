@@ -5,7 +5,7 @@
 #
 # extconf.rb
 #
-# Copyright 2012-2015 Krzysztof Wilczynski
+# Copyright 2012-2017 Krzysztof Wilczynski
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ unless have_header('ruby.h')
 
   - Red Hat / CentOS / Fedora
 
-      yum install ruby-devel
+      yum install ruby-devel or dnf install ruby-devel
 
 
   Alternatively, you can use either of the following Ruby version
@@ -58,6 +58,7 @@ unless have_header('ruby.h')
 
   - Ruby Version Manager (for RVM, see http://rvm.io/)
   - Ruby Environment (for rbenv, see http://github.com/sstephenson/rbenv)
+  - chruby (see https://github.com/postmodern/chruby)
 
   EOS
 end
