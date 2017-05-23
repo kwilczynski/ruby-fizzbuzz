@@ -42,3 +42,6 @@ before_script:
 
 script:
   - bundle exec rake test
+
+after_success:
+  - bundle exec rake benchmark
