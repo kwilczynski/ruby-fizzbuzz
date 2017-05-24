@@ -1,27 +1,3 @@
-# -*- encoding: utf-8 -*-
-
-# :stopdoc:
-
-#
-# core/integer.rb
-#
-# Copyright 2012-2017 Krzysztof Wilczynski
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
-# :startdoc:
-
 #
 # Provides a convenient integration of _FizzBuzz_ with _Integer_ class.
 #
@@ -35,9 +11,9 @@ class Integer
   #
   # Example:
   #
-  #     3.fizz?   #=> true
-  #     5.fizz?   #=> false
-  #    15.fizz?   #=> false
+  #     3.fizz?    #=> true
+  #     5.fizz?    #=> false
+  #    15.fizz?    #=> false
   #
   # See also: FizzBuzz::[] and FizzBuzz::is_fizz?
   #
@@ -54,9 +30,9 @@ class Integer
   #
   # Example:
   #
-  #     3.buzz?   #=> false
-  #     5.buzz?   #=> true
-  #    15.buzz?   #=> false
+  #     3.buzz?    #=> false
+  #     5.buzz?    #=> true
+  #    15.buzz?    #=> false
   #
   # See also: FizzBuzz::[] and FizzBuzz::is_buzz?
   #
@@ -73,9 +49,9 @@ class Integer
   #
   # Example:
   #
-  #     3.fizzbuzz?   #=> false
-  #     5.fizzbuzz?   #=> false
-  #    15.fizzbuzz?   #=> true
+  #     3.fizzbuzz?    #=> false
+  #     5.fizzbuzz?    #=> false
+  #    15.fizzbuzz?    #=> true
   #
   # See also: FizzBuzz::[] and FizzBuzz::is_fizzbuzz?
   #
@@ -83,8 +59,3 @@ class Integer
     FizzBuzz.is_fizzbuzz?(self)
   end
 end
-
-# :enddoc:
-
-# vim: set ts=2 sw=2 sts=2 et :
-# encoding: utf-8

@@ -1,23 +1,3 @@
-/* :enddoc: */
-
-/*
- * fizzbuzz.h
- *
- * Copyright 2012-2017 Krzysztof Wilczynski
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 #if !defined(_FIZZBUZZ_H)
 #define _FIZZBUZZ_H 1
 
@@ -36,14 +16,15 @@ extern "C" {
 #define MINUS(a, b) fizzbuzz_minus((a), (b))
 #define MOD(a, b)   fizzbuzz_modulo((a), (b))
 
-#define GREATER(a, b)       fizzbuzz_greater((a), (b))
+#define GREATER(a, b)	    fizzbuzz_greater((a), (b))
 #define GREATER_EQUAL(a, b) fizzbuzz_greater_equal((a), (b))
 #define LESS_EQUAL(a, b)    fizzbuzz_less_equal((a), (b))
 
-#define INTEGER_P(x) (RB_TYPE_P((x), T_FIXNUM) || RB_TYPE_P((x), T_BIGNUM))
+#define INTEGER_P(x) \
+	(RB_TYPE_P((x), T_FIXNUM) || RB_TYPE_P((x), T_BIGNUM))
 
 #define ZERO_P(x) \
-    (FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_equal((x), ZERO))
+	(FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_equal((x), ZERO))
 
 #define INCREASE(x) PLUS((x),  ONE)
 #define DECREASE(x) MINUS((x), ONE)
@@ -55,7 +36,7 @@ extern "C" {
 #define SCORE_BIGNUM(x) (uint8_t)(COMPUTE_MOD_3(x) + 2 * COMPUTE_MOD_5(x))
 
 #define SCORE_VALUE(x) \
-    (FIXNUM_P(x) ? SCORE_FIXNUM(NUM2TYPE(x)) : SCORE_BIGNUM(x))
+	(FIXNUM_P(x) ? SCORE_FIXNUM(NUM2TYPE(x)) : SCORE_BIGNUM(x))
 
 #define IS_FIZZ(x)     (!ZERO_P(x) && (SCORE_VALUE(x) == 1))
 #define IS_BUZZ(x)     (!ZERO_P(x) && (SCORE_VALUE(x) == 2))
@@ -66,20 +47,17 @@ extern "C" {
 #define LOOP_FORWARD(x) ((x) == D_LOOP_FORWARD)
 #define LOOP_REVERSE(x) ((x) == D_LOOP_REVERSE)
 
-#define CHECK_TYPE(x, m)                                                    \
-    do {                                                                    \
-        if (!INTEGER_P(x)) {                                                \
-            VALUE __e_type = fizzbuzz_type_error(rb_fb_eTypeError, (m));    \
-            rb_exc_raise(__e_type);                                         \
-        }                                                                   \
+#define CHECK_TYPE(x, m)						\
+    do {								\
+	if (!INTEGER_P(x))						\
+	    rb_exc_raise(fizzbuzz_type_error(rb_fb_eTypeError, (m)));	\
     } while (0)
 
-#define CHECK_RANGE(x, y, m)                                                            \
-    do {                                                                                \
-        if (GREATER(x, y)) {                                                            \
-            VALUE __e_range = fizzbuzz_range_error(rb_fb_eRangeError, (x), (y), (m));   \
-            rb_exc_raise(__e_range);                                                    \
-        }                                                                               \
+#define CHECK_RANGE(x, y, m)					    \
+    do {							    \
+	if (GREATER(x, y))					    \
+	    rb_exc_raise(fizzbuzz_range_error(rb_fb_eRangeError,    \
+					      (x), (y), (m)));	    \
     } while (0)
 
 #define error(t) errors[(t)]
@@ -138,9 +116,8 @@ static VALUE words[] = {
 inline static VALUE
 fizzbuzz_plus(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b)) {
-        return TYPE2NUM(NUM2TYPE(a) + NUM2TYPE(b));
-    }
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+	return TYPE2NUM(NUM2TYPE(a) + NUM2TYPE(b));
 
     return rb_funcall(a, rb_intern("+"), 1, b);
 }
@@ -148,9 +125,8 @@ fizzbuzz_plus(VALUE a, VALUE b)
 inline static VALUE
 fizzbuzz_minus(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b)) {
-        return TYPE2NUM(NUM2TYPE(a) - NUM2TYPE(b));
-    }
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+	return TYPE2NUM(NUM2TYPE(a) - NUM2TYPE(b));
 
     return rb_funcall(a, rb_intern("-"), 1, b);
 }
@@ -158,9 +134,8 @@ fizzbuzz_minus(VALUE a, VALUE b)
 inline static VALUE
 fizzbuzz_modulo(VALUE a, VALUE b)
 {
-    if (FIXNUM_P(a) && FIXNUM_P(b)) {
-        return TYPE2NUM(NUM2TYPE(a) % NUM2TYPE(b));
-    }
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+	return TYPE2NUM(NUM2TYPE(a) % NUM2TYPE(b));
 
     return rb_funcall(a, rb_intern("%"), 1, b);
 }
@@ -170,12 +145,10 @@ fizzbuzz_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
-    if (FIXNUM_P(a) && FIXNUM_P(b)) {
-        result = (NUM2TYPE(a) == NUM2TYPE(b));
-    }
-    else {
-        result = rb_funcall(a, rb_intern("=="), 1, b);
-    }
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+	result = (NUM2TYPE(a) == NUM2TYPE(b));
+    else
+	result = rb_funcall(a, rb_intern("=="), 1, b);
 
     return RVAL2CBOOL(result);
 }
@@ -185,12 +158,10 @@ fizzbuzz_greater(VALUE a, VALUE b)
 {
     VALUE result;
 
-    if (FIXNUM_P(a) && FIXNUM_P(b)) {
-        result = (NUM2TYPE(a) > NUM2TYPE(b));
-    }
-    else {
-        result = rb_funcall(a, rb_intern(">"), 1, b);
-    }
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+	result = (NUM2TYPE(a) > NUM2TYPE(b));
+    else
+	result = rb_funcall(a, rb_intern(">"), 1, b);
 
     return RVAL2CBOOL(result);
 }
@@ -200,12 +171,10 @@ fizzbuzz_greater_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
-    if (FIXNUM_P(a) && FIXNUM_P(b)) {
-        result = (NUM2TYPE(a) >= NUM2TYPE(b));
-    }
-    else {
-        result = rb_funcall(a, rb_intern(">="), 1, b);
-    }
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+	result = (NUM2TYPE(a) >= NUM2TYPE(b));
+    else
+	result = rb_funcall(a, rb_intern(">="), 1, b);
 
     return RVAL2CBOOL(result);
 }
@@ -215,12 +184,10 @@ fizzbuzz_less_equal(VALUE a, VALUE b)
 {
     VALUE result;
 
-    if (FIXNUM_P(a) && FIXNUM_P(b)) {
-        result = (NUM2TYPE(a) <= NUM2TYPE(b));
-    }
-    else {
-        result = rb_funcall(a, rb_intern("<="), 1, b);
-    }
+    if (FIXNUM_P(a) && FIXNUM_P(b))
+	result = (NUM2TYPE(a) <= NUM2TYPE(b));
+    else
+	result = rb_funcall(a, rb_intern("<="), 1, b);
 
     return RVAL2CBOOL(result);
 }
@@ -255,5 +222,3 @@ RUBY_EXTERN VALUE rb_fb_square(VALUE object, VALUE value);
 #endif
 
 #endif /* _FIZZBUZZ_H */
-
-/* vim: set ts=8 sw=4 sts=2 et : */

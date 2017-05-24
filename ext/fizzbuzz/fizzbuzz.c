@@ -1,23 +1,3 @@
-/* :stopdoc: */
-
-/*
- * fizzbuzz.c
- *
- * Copyright 2012-2017 Krzysztof Wilczynski
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 #if defined(__cplusplus)
 extern "C" {
 #endif
@@ -36,16 +16,14 @@ void Init_fizzbuzz(void);
 
 static VALUE fizzbuzz_evaluate(VALUE value);
 static VALUE fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
-                             fizzbuzz_direction_t direction);
+			     fizzbuzz_direction_t direction);
 
 static VALUE fizzbuzz_exception_wrapper(VALUE value);
 static VALUE fizzbuzz_exception(void *data);
 
 static VALUE fizzbuzz_type_error(VALUE klass, const char *message);
 static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
-                                  const char *message);
-
-/* :startdoc: */
+				  const char *message);
 
 /*
  * call-seq:
@@ -59,9 +37,9 @@ static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 100)     #=> #<FizzBuzz:0xb6fd3b38 @stop=100, @start=1>
- *    fb = FizzBuzz.new(-100,-1)    #=> #<FizzBuzz:0xb72d5700 @stop=-1, @start=-100>
- *    fb = FizzBuzz.new(-15, 15)    #=> #<FizzBuzz:0xb6fd0460 @stop=15, @start=-15>
+ *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xb6fd3b38 @stop=100, @start=1>
+ *    fb = FizzBuzz.new(-100, -1)  #=> #<FizzBuzz:0xb72d5700 @stop=-1, @start=-100>
+ *    fb = FizzBuzz.new(-15, 15)   #=> #<FizzBuzz:0xb6fd0460 @stop=15, @start=-15>
  *
  * The given value of +stop+ must always be greater than or equal to the
  * given value of +start+, otherwise raises an <i>FizzBuzz::RangeError</i>
@@ -99,8 +77,8 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 100)   #=> #<FizzBuzz:0xf726b48c @stop=100, @start=1>
- *    fb.start                    #=> 1
+ *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xf726b48c @stop=100, @start=1>
+ *    fb.start                     #=> 1
  */
 VALUE
 rb_fb_get_start(VALUE object)
@@ -118,10 +96,10 @@ rb_fb_get_start(VALUE object)
  *
  * Examples:
  *
- *    fb = FizzBuzz.new(1, 100)   #=> #<FizzBuzz:0xf726f03c @stop=100, @start=1>
- *    fb.start                    #=> 1
- *    fb.start = 15               #=> 15
- *    fb.start                    #=> 15
+ *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xf726f03c @stop=100, @start=1>
+ *    fb.start                     #=> 1
+ *    fb.start = 15                #=> 15
+ *    fb.start                     #=> 15
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
  * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
@@ -146,8 +124,8 @@ rb_fb_set_start(VALUE object, VALUE value)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 100)   #=> #<FizzBuzz:0xf7272bec @stop=100, @start=1>
- *    fb.stop                     #=> 100
+ *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xf7272bec @stop=100, @start=1>
+ *    fb.stop                      #=> 100
  */
 VALUE
 rb_fb_get_stop(VALUE object)
@@ -165,10 +143,10 @@ rb_fb_get_stop(VALUE object)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 100)   #=> #<FizzBuzz:0xf727679c @stop=100, @start=1>
- *    fb.stop                     #=> 100
- *    fb.stop = 15                #=> 15
- *    fb.stop                     #=> 15
+ *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xf727679c @stop=100, @start=1>
+ *    fb.stop                      #=> 100
+ *    fb.stop = 15                 #=> 15
+ *    fb.stop                      #=> 15
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
  * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
@@ -194,8 +172,8 @@ rb_fb_set_stop(VALUE object, VALUE value)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf727fd60 @stop=15, @start=1>
- *    fb.to_a                    #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
+ *    fb = FizzBuzz.new(1, 15)    #=> #<FizzBuzz:0xf727fd60 @stop=15, @start=1>
+ *    fb.to_a                     #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
  *
  * See also: FizzBuzz::fizzbuzz
  */
@@ -208,7 +186,7 @@ rb_fb_array(VALUE object)
 /*
  * call-seq:
  *    fizzbuzz.each {|value| block } -> self
- *    fizzbuzz.each                  -> an Enumerator
+ *    fizzbuzz.each		     -> an Enumerator
  *
  * Calls the block _once_ for each subsequent value for a given range
  * from +start+ to +stop+, passing the value as a parameter to the block.
@@ -217,12 +195,12 @@ rb_fb_array(VALUE object)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
- *    fb.each                    #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:each>
+ *    fb = FizzBuzz.new(1, 15)    #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
+ *    fb.each                     #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:each>
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
+ *    fb = FizzBuzz.new(1, 15)	 #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
  *    fb.each {|value| puts "Got #{value}" }
  *
  * Produces:
@@ -254,7 +232,7 @@ rb_fb_enumerator(VALUE object)
 /*
  * call-seq:
  *    fizzbuzz.reverse_each {|value| block } -> self
- *    fizzbuzz.reverse_each                  -> an Enumerator
+ *    fizzbuzz.reverse_each		     -> an Enumerator
  *
  * Calls the block _once_ for each subsequent value for a given range
  * from +start+ to +stop+ in an <i>reverse order</i>, passing the value
@@ -264,12 +242,12 @@ rb_fb_enumerator(VALUE object)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
- *    fb.each                    #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:reverse_each>
+ *    fb = FizzBuzz.new(1, 15)    #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
+ *    fb.each                     #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:reverse_each>
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 15)   #=> #<FizzBuzz:0xb7308664 @stop=15, @start=1>
+ *    fb = FizzBuzz.new(1, 15)	 #=> #<FizzBuzz:0xb7308664 @stop=15, @start=1>
  *    fb.reverse_each {|value| puts "Got #{value}" }
  *
  * Produces:
@@ -318,11 +296,9 @@ rb_fb_reverse_enumerator(VALUE object)
  * See also: FizzBuzz::[]
  */
 VALUE
-rb_fb_is_fizz(VALUE object, VALUE value)
+rb_fb_is_fizz(RB_UNUSED_VAR(VALUE object), VALUE value)
 {
-    UNUSED(object);
     CHECK_TYPE(value, error(E_INVALID_TYPE));
-
     return CBOOL2RVAL(IS_FIZZ(value));
 }
 
@@ -346,11 +322,9 @@ rb_fb_is_fizz(VALUE object, VALUE value)
  * See also: FizzBuzz::[]
  */
 VALUE
-rb_fb_is_buzz(VALUE object, VALUE value)
+rb_fb_is_buzz(RB_UNUSED_VAR(VALUE object), VALUE value)
 {
-    UNUSED(object);
     CHECK_TYPE(value, error(E_INVALID_TYPE));
-
     return CBOOL2RVAL(IS_BUZZ(value));
 }
 
@@ -374,11 +348,9 @@ rb_fb_is_buzz(VALUE object, VALUE value)
  * See also: FizzBuzz::[]
  */
 VALUE
-rb_fb_is_fizzbuzz(VALUE object, VALUE value)
+rb_fb_is_fizzbuzz(RB_UNUSED_VAR(VALUE object), VALUE value)
 {
-    UNUSED(object);
     CHECK_TYPE(value, error(E_INVALID_TYPE));
-
     return CBOOL2RVAL(IS_FIZZBUZZ(value));
 }
 
@@ -405,34 +377,31 @@ rb_fb_is_fizzbuzz(VALUE object, VALUE value)
  * See also: FizzBuzz::is_fizz?, FizzBuzz::is_buzz? and FizzBuzz::is_fizzbuzz?
  */
 VALUE
-rb_fb_square(VALUE object, VALUE value)
+rb_fb_square(RB_UNUSED_VAR(VALUE object), VALUE value)
 {
-    UNUSED(object);
     CHECK_TYPE(value, error(E_INVALID_TYPE));
-
     return fizzbuzz_evaluate(value);
 }
-
-/* :stopdoc: */
 
 static VALUE
 fizzbuzz_evaluate(VALUE value)
 {
     int8_t score;
 
-    if (ZERO_P(value)) {
-        return value;
-    }
+    if (ZERO_P(value))
+	return value;
 
     score = SCORE_VALUE(value);
+
     assert((score >= 0 && score <= 3) && \
-            "Score value out of bounds, must be between 0 and 3 inclusive");
+	   "Score value out of bounds, must be between 0 and 3 inclusive");
 
     return score < 1 ? value : word(score);
 }
 
 static VALUE
-fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direction)
+fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
+		fizzbuzz_direction_t direction)
 {
     int forward = LOOP_FORWARD(direction);
 
@@ -442,20 +411,18 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type, fizzbuzz_direction_t direc
     VALUE value = Qnil;
 
     VALUE start = rb_ivar_get(object, id_at_start);
-    VALUE stop  = rb_ivar_get(object, id_at_stop);
+    VALUE stop = rb_ivar_get(object, id_at_stop);
 
-    if (WANT_ARRAY(type)) {
-        array = rb_ary_new();
-    }
-    else {
-        RETURN_ENUMERATOR(object, 0, 0);
-    }
+    if (WANT_ARRAY(type))
+	array = rb_ary_new();
+    else
+	RETURN_ENUMERATOR(object, 0, 0);
 
     i = forward ? start : stop;
 
-    while(LIKELY(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start))) {
-        value = fizzbuzz_evaluate(i);
-        WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+    while (RB_UNLIKELY(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start))) {
+	value = fizzbuzz_evaluate(i);
+	WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
 	i = forward ? INCREASE(i) : DECREASE(i);
     }
 
@@ -469,7 +436,6 @@ static VALUE
 fizzbuzz_exception_wrapper(VALUE value)
 {
     fizzbuzz_exception_t *e = (struct fizzbuzz_exception *)value;
-
     return rb_exc_new2(e->klass, e->message);
 }
 
@@ -480,13 +446,14 @@ fizzbuzz_exception(void *data)
     VALUE object = Qnil;
 
     fizzbuzz_exception_t *e = data;
-    assert(e != NULL && "Must be a valid pointer to `fizzbuzz_exception_t' type");
+
+    assert(e != NULL && \
+	   "Must be a valid pointer to `fizzbuzz_exception_t' type");
 
     object = rb_protect(fizzbuzz_exception_wrapper, (VALUE)e, &exception);
 
-    if (exception) {
-        rb_jump_tag(exception);
-    }
+    if (exception)
+	rb_jump_tag(exception);
 
     rb_iv_set(object, "@start", e->start);
     rb_iv_set(object, "@stop", e->stop);
@@ -508,7 +475,8 @@ fizzbuzz_type_error(VALUE klass, const char *message)
 }
 
 static VALUE
-fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop, const char *message)
+fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
+		     const char *message)
 {
     fizzbuzz_exception_t e;
 
@@ -520,13 +488,11 @@ fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop, const char *message)
     return fizzbuzz_exception(&e);
 }
 
-/* :startdoc: */
-
 void
 Init_fizzbuzz(void)
 {
     id_at_start = rb_intern("@start");
-    id_at_stop  = rb_intern("@stop");
+    id_at_stop	= rb_intern("@stop");
 
     rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
     rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
@@ -542,9 +508,9 @@ Init_fizzbuzz(void)
     rb_define_const(rb_cFizzBuzz, "WORD_FIZZBUZZ", CSTR2RVAL("FizzBuzz"));
 
     if (NIL_P(words[0])) {
-        words[0] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZ"));
-        words[1] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_BUZZ"));
-        words[2] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZBUZZ"));
+	words[0] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZ"));
+	words[1] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_BUZZ"));
+	words[2] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZBUZZ"));
     }
 
     /*
@@ -593,10 +559,6 @@ Init_fizzbuzz(void)
     rb_define_singleton_method(rb_cFizzBuzz, "[]", RUBY_METHOD_FUNC(rb_fb_square), 1);
 }
 
-/* :enddoc: */
-
 #if defined(__cplusplus)
 }
 #endif
-
-/* vim: set ts=8 sw=4 sts=2 et : */

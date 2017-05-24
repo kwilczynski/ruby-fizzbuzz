@@ -1,39 +1,17 @@
-# -*- encoding: utf-8 -*-
-
-# :enddoc:
-
-#
-# ruby-fizzbuzz.gemspec
-#
-# Copyright 2012-2017 Krzysztof Wilczynski
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
 signing_key = File.expand_path('~/.gem/kwilczynski-private.pem')
 
 Gem::Specification.new do |s|
   s.name    = 'ruby-fizzbuzz'
   s.summary = 'Yet another FizzBuzz in Ruby'
 
-  s.description = <<-EOS
-Yet another FizzBuzz in Ruby.
+  s.description = (<<-EOS).gsub(/^[ ]+/, '')
+    Yet another FizzBuzz in Ruby.
 
-Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
+    Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
 
-Written in C as an example of using Ruby's C API - with the support for
-arbitrary large numeric values via the Bignum class, or the Integer class
-starting from Ruby version 2.4 onwards.
+    Written in C as an example of using Ruby's C API - with the support for
+    arbitrary large numeric values via the Bignum class, or the Integer class
+    starting from Ruby version 2.4 onwards.
   EOS
 
   s.platform = Gem::Platform::RUBY
@@ -63,6 +41,3 @@ starting from Ruby version 2.4 onwards.
 
   s.signing_key = signing_key if File.exist?(signing_key)
 end
-
-# vim: set ts=2 sw=2 sts=2 et :
-# encoding: utf-8
