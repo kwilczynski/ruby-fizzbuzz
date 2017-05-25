@@ -386,7 +386,7 @@ rb_fb_square(RB_UNUSED_VAR(VALUE object), VALUE value)
 static VALUE
 fizzbuzz_evaluate(VALUE value)
 {
-    int8_t score;
+    int score;
 
     if (ZERO_P(value))
 	return value;
@@ -420,7 +420,7 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
 
     i = forward ? start : stop;
 
-    while (RB_UNLIKELY(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start))) {
+    while (RB_LIKELY(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start))) {
 	value = fizzbuzz_evaluate(i);
 	WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
 	i = forward ? INCREASE(i) : DECREASE(i);

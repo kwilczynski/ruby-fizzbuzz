@@ -17,14 +17,6 @@ extern "C" {
 #include <assert.h>
 #include <ruby.h>
 
-#if !(defined(INT8_MIN) || defined(INT8_MAX))
-typedef signed char int8_t;
-#endif
-
-#if !(defined(UINT8_MIN) || defined(UINT8_MAX))
-typedef unsigned char uint8_t;
-#endif
-
 #if !defined(ANYARGS)
 # if defined(__cplusplus)
 #  define ANYARGS ...

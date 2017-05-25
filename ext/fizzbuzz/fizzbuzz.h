@@ -32,8 +32,8 @@ extern "C" {
 #define COMPUTE_MOD_3(x) ZERO_P(MOD((x), THREE))
 #define COMPUTE_MOD_5(x) ZERO_P(MOD((x), FIVE))
 
-#define SCORE_FIXNUM(x) (uint8_t)(!((x) % 3) + 2 * !((x) % 5))
-#define SCORE_BIGNUM(x) (uint8_t)(COMPUTE_MOD_3(x) + 2 * COMPUTE_MOD_5(x))
+#define SCORE_FIXNUM(x) (int)(!((x) % 3) + 2 * !((x) % 5))
+#define SCORE_BIGNUM(x) (int)(COMPUTE_MOD_3(x) + 2 * COMPUTE_MOD_5(x))
 
 #define SCORE_VALUE(x) \
 	(FIXNUM_P(x) ? SCORE_FIXNUM(NUM2TYPE(x)) : SCORE_BIGNUM(x))
@@ -107,7 +107,7 @@ static VALUE words[] = {
     Qundef
 };
 
-inline static VALUE
+static VALUE
 fizzbuzz_plus(VALUE a, VALUE b)
 {
     return (FIXNUM_P(a) && FIXNUM_P(b)) ?	 \
@@ -115,7 +115,7 @@ fizzbuzz_plus(VALUE a, VALUE b)
 	   rb_funcall(a, rb_intern("+"), 1, b);
 }
 
-inline static VALUE
+static VALUE
 fizzbuzz_minus(VALUE a, VALUE b)
 {
     return (FIXNUM_P(a) && FIXNUM_P(b)) ?	 \
@@ -123,7 +123,7 @@ fizzbuzz_minus(VALUE a, VALUE b)
 	   rb_funcall(a, rb_intern("-"), 1, b);
 }
 
-inline static VALUE
+static VALUE
 fizzbuzz_modulo(VALUE a, VALUE b)
 {
     return (FIXNUM_P(a) && FIXNUM_P(b)) ?	 \
@@ -131,52 +131,36 @@ fizzbuzz_modulo(VALUE a, VALUE b)
 	   rb_funcall(a, rb_intern("%"), 1, b);
 }
 
-inline static VALUE
+static int
 fizzbuzz_equal(VALUE a, VALUE b)
 {
-    VALUE result;
-
-    result = (FIXNUM_P(a) && FIXNUM_P(b)) ? \
-    	     (NUM2TYPE(a) == NUM2TYPE(b)) : \
-    	     rb_funcall(a, rb_intern("=="), 1, b);
-
-    return RVAL2CBOOL(result);
+    return RB_LIKELY(FIXNUM_P(a) && FIXNUM_P(b)) ?  \
+	   (NUM2TYPE(a) == NUM2TYPE(b)) :	    \
+	   RVAL2CBOOL(rb_funcall(a, rb_intern("=="), 1, b));
 }
 
-inline static VALUE
+static int
 fizzbuzz_greater(VALUE a, VALUE b)
 {
-    VALUE result;
-
-    result = (FIXNUM_P(a) && FIXNUM_P(b)) ? \
-    	     (NUM2TYPE(a) > NUM2TYPE(b)) :  \
-    	     rb_funcall(a, rb_intern(">"), 1, b);
-
-    return RVAL2CBOOL(result);
+    return RB_LIKELY(FIXNUM_P(a) && FIXNUM_P(b)) ?  \
+	   (NUM2TYPE(a) > NUM2TYPE(b)) :	    \
+	   RVAL2CBOOL(rb_funcall(a, rb_intern(">"), 1, b));
 }
 
-inline static VALUE
+static int
 fizzbuzz_greater_equal(VALUE a, VALUE b)
 {
-    VALUE result;
-
-    result = (FIXNUM_P(a) && FIXNUM_P(b)) ? \
-    	     (NUM2TYPE(a) >= NUM2TYPE(b)) : \
-    	     rb_funcall(a, rb_intern(">="), 1, b);
-
-    return RVAL2CBOOL(result);
+    return RB_LIKELY(FIXNUM_P(a) && FIXNUM_P(b)) ?  \
+	   (NUM2TYPE(a) >= NUM2TYPE(b)) :	    \
+	   RVAL2CBOOL(rb_funcall(a, rb_intern(">="), 1, b));
 }
 
-inline static VALUE
+static int
 fizzbuzz_less_equal(VALUE a, VALUE b)
 {
-    VALUE result;
-
-    result = (FIXNUM_P(a) && FIXNUM_P(b)) ? \
-    	     (NUM2TYPE(a) <= NUM2TYPE(b)) : \
-    	     rb_funcall(a, rb_intern("<="), 1, b);
-
-    return RVAL2CBOOL(result);
+    return RB_LIKELY(FIXNUM_P(a) && FIXNUM_P(b)) ?  \
+	   (NUM2TYPE(a) <= NUM2TYPE(b)) :	    \
+	   RVAL2CBOOL(rb_funcall(a, rb_intern("<="), 1, b));
 }
 
 RUBY_EXTERN ID id_at_start, id_at_stop;
