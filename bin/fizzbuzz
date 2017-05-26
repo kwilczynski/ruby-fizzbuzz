@@ -8,72 +8,58 @@ script_name = File.basename($PROGRAM_NAME)
 start = 1
 stop  = 100
 
+line    = false
 reverse = false
 
-parser = OptionParser.new do |option|
-  option.banner = <<-EOS
+OptionParser.new do |option|
+  option.banner = (<<-EOS).gsub(/^[ ]{,4}/, '')
+    Yet another FizzBuzz in Ruby.
 
-Yet another FizzBuzz in Ruby.
+    Usage:
 
-Usage:
-
-#{option.summary_indent}#{script_name} [--start <NUMBER>] [--stop <NUMBER>] [--reverse]
-#{option.summary_indent}#{script_name} [--version] [--help]
+    #{option.summary_indent}#{script_name} [--start <NUMBER>] [--stop <NUMBER>] [--reverse]
+    #{option.summary_indent}#{script_name} [--version] [--help]
   EOS
 
   option.separator "\nOptions:\n\n"
 
-  option.on(
-    '--start <NUMBER>',
-    "Specify the start value (default: #{start})."
-  ) do |value|
+  option.on('--start <NUMBER>', "Specify the start value (default: #{start}).") do |value|
     start = value.to_i if value
   end
 
-  option.on(
-    '--stop <NUMBER>',
-    "Specify the stop value (default: #{stop})."
-  ) do |value|
+  option.on('--stop <NUMBER>', "Specify the stop value (default: #{stop}).") do |value|
     stop = value.to_i if value
   end
 
-  option.on(
-    '--reverse',
-    'Print results in a reverse order.'
-  ) do
+  option.on('--line', 'Print results in a single line.') do
+    line = true
+  end
+
+  option.on('--reverse', 'Print results in a reverse order.') do
     reverse = true
   end
 
-  option.on(
-    '-v', '--version',
-    'Show version number.'
-  ) do
+  option.on('-v', '--version', 'Show version number.') do
     puts FizzBuzz::VERSION
     exit
   end
 
-  option.on(
-    '-h', '--help',
-    'Display this help message.'
-  ) do
+  option.on('-h', '--help', 'Display this help message.') do
     puts option.help
     exit
   end
 
-  option.separator <<-EOS
+  option.separator "\n" + (<<-EOS).gsub(/^[ ]{,4}/, '')
+    Note:
 
-Note:
-
-  By default, the results from #{start} to #{stop} will be shown in a descending order.
+      By default, the results from #{start} to #{stop} will be shown in a descending order.
   EOS
-
-  option.separator "\n"
-end
-
-parser.parse!
+end.parse!
 
 begin
-  FizzBuzz.fizzbuzz(start, stop, reverse) { |i| puts i }
+  FizzBuzz.fizzbuzz(start, stop, reverse) do |i|
+    print format('%s%s', i, line ? ' ' : "\n")
+  end
 rescue => e
   puts "An error occurred: #{e}"
   exit 1
