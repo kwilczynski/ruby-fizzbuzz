@@ -46,14 +46,16 @@ class Array
   #
   # See also: FizzBuzz::fizzbuzz, FizzBuzz#to_a, FizzBuzz#each and FizzBuzz#reverse_each
   #
-  def fizzbuzz(reverse = false)
-    values = send(reverse ? :reverse : :to_a)
-
+  def fizzbuzz(reverse = false, &block)
     if block_given?
-      values.each {|i| yield FizzBuzz[i] }
+      send(reverse ? :reverse : :to_a).each do |i|
+        yield FizzBuzz[i]
+      end
       self
     else
-      values.collect {|i| FizzBuzz[i] }
+      send(reverse ? :reverse : :to_a).map do |i|
+        FizzBuzz[i]
+      end
     end
   end
 end
