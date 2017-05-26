@@ -435,7 +435,7 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
 static VALUE
 fizzbuzz_exception_wrapper(VALUE value)
 {
-    fizzbuzz_exception_t *e = (struct fizzbuzz_exception *)value;
+    fizzbuzz_exception_t *e = (fizzbuzz_exception_t *)value;
     return rb_exc_new2(e->klass, e->message);
 }
 

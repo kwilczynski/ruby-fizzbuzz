@@ -103,7 +103,7 @@ static const char *errors[] = {
 };
 
 static VALUE words[] = {
-    Qnil, Qnil, Qnil, Qnil,
+    Qnil, Qnil, Qnil,
     Qundef
 };
 
