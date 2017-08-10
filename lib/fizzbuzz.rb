@@ -76,6 +76,97 @@ class FizzBuzz
 
   #
   # call-seq:
+  #    FizzBuzz.step( start, stop, step ) {|value| block } -> an integer
+  #    FizzBuzz.step( start, stop, step )                  -> an Enumerator
+  #
+  # Calls the block _once_ for each subsequent value for a given range
+  # from +start+ to +stop+, passing the value as a parameter to the block
+  # in the increments of +step+.
+  #
+  # If no block is given, an +Enumerator+ is returned instead.
+  #
+  # Example:
+  #
+  #    s = FizzBuzz.step    #=> #<Enumerator: #<Enumerator::Generator:0x559db8e7>:each>
+  #    s.take(15).each {|value| puts "Got #{value}" }
+  #
+  # Produces:
+  #
+  #    Got 1
+  #    Got 2
+  #    Got Fizz
+  #    Got 4
+  #    Got Buzz
+  #    Got Fizz
+  #    Got 7
+  #    Got 8
+  #    Got Fizz
+  #    Got Buzz
+  #    Got 11
+  #    Got Fizz
+  #    Got 13
+  #    Got 14
+  #    Got FizzBuzz
+  #
+  # See also: FizzBuzz::fizzbuzz, FizzBuzz::[] and FizzBuzz#step
+  #
+  def self.step(start = 1, stop = nil, step = 1, &block)
+    if block_given?
+      start.step(stop, step) do |n|
+        yield FB[n]
+      end
+    else
+      Enumerator.new do |y|
+        start.step(stop, step).each do |n|
+          y << FB[n]
+        end
+      end
+    end
+  end
+
+  #
+  # call-seq:
+  #    fizzbuzz.step( start, stop, step ) {|value| block } -> an integer
+  #    fizzbuzz.step( start, stop, step )                  -> an Enumerator
+  #
+  # Calls the block _once_ for each subsequent value for a given range
+  # from +start+ to +stop+, passing the value as a parameter to the block
+  # in the increments of +step+.
+  #
+  # If no block is given, an +Enumerator+ is returned instead.
+  #
+  # Example:
+  #
+  #    fb = FizzBuzz.new(1, 15)    #=> #<FizzBuzz:0x5653a2d1 @start=1, @stop=15>
+  #    s = fb.step                 #=> #<Enumerator: #<Enumerator::Generator:0x559db8e7>:each>
+  #    s.take(15).each {|value| puts "Got #{value}" }
+  #
+  # Produces:
+  #
+  #    Got 1
+  #    Got 2
+  #    Got Fizz
+  #    Got 4
+  #    Got Buzz
+  #    Got Fizz
+  #    Got 7
+  #    Got 8
+  #    Got Fizz
+  #    Got Buzz
+  #    Got 11
+  #    Got Fizz
+  #    Got 13
+  #    Got 14
+  #    Got FizzBuzz
+  #
+  # See also: FizzBuzz::step, FizzBuzz::fizzbuzz and FizzBuzz::[]
+  #
+  def step(start = @start, stop = @stop, step = 1, &block)
+    self.class.step(start, stop, step, &block)
+  end
+
+  #
+  # call-seq:
   #    fizzbuzz.to_hash -> hash
   #
   # Returns a +hash+ representing the _FizzBuzz_ object.

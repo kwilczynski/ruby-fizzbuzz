@@ -73,6 +73,7 @@ class FizzBuzzTest < Test::Unit::TestCase
   def test_fizzbuzz_singleton_methods
     [
       :fizzbuzz,
+      :step,
       :is_fizz?,
       :is_buzz?,
       :is_fizzbuzz?
@@ -87,6 +88,7 @@ class FizzBuzzTest < Test::Unit::TestCase
     [
       :to_a,
       :each,
+      :step,
       :reverse_each,
       :to_hash,
       :as_json,
@@ -294,6 +296,112 @@ class FizzBuzzTest < Test::Unit::TestCase
     obtained = []
     FizzBuzz.fizzbuzz(1, 15, true) {|i| obtained << i }
     assert_equal(obtained, @expected_integer.reverse)
+  end
+
+  def test_singleton_step
+    obtained = FizzBuzz.step
+    obtained.next
+    obtained.next
+
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.next, 'Fizz')
+  end
+
+  def test_singleton_step_with_block
+    obtained = []
+    FizzBuzz.step(1, 15) {|i| obtained << i }
+    assert_equal(obtained, @expected_integer)
+  end
+
+  def test_singleton_step_start
+    obtained = FizzBuzz.step(3)
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.next, 'Fizz')
+  end
+
+  def test_singleton_step_start_with_stop
+    obtained = FizzBuzz.step(1, 15)
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.to_a, @expected_integer)
+  end
+
+  def test_singleton_step_start_with_step
+    obtained = FizzBuzz.step(1, 15, 2)
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.to_a[-1], 'FizzBuzz')
+  end
+
+  def test_singleton_step_with_take
+    obtained = FizzBuzz.step
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.take(15), @expected_integer)
+  end
+
+  def test_singleton_step_with_stop_iteration_error
+    obtained = []
+
+    @fizzbuzz = FizzBuzz.step(1, 15)
+
+    assert_raise StopIteration do
+      (1..20).each do
+        obtained << @fizzbuzz.next
+      end
+    end
+
+    assert_equal(obtained, @expected_integer)
+  end
+
+  def test_step
+    obtained = @fizzbuzz.step
+    obtained.next
+    obtained.next
+
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.next, 'Fizz')
+  end
+
+  def test_step_with_block
+    obtained = []
+    @fizzbuzz.step(1, 15) {|i| obtained << i }
+    assert_equal(obtained, @expected_integer)
+  end
+
+  def test_step_start
+    obtained = @fizzbuzz.step(3)
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.next, 'Fizz')
+  end
+
+  def test_step_start_with_stop
+    obtained = @fizzbuzz.step(1, 15)
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.to_a, @expected_integer)
+  end
+
+  def test_step_start_with_step
+    obtained = @fizzbuzz.step(1, 15, 2)
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.to_a[-1], 'FizzBuzz')
+  end
+
+  def test_step_with_take
+    obtained = @fizzbuzz.step
+    assert_kind_of(Enumerator, obtained)
+    assert_equal(obtained.take(15), @expected_integer)
+  end
+
+  def test_step_with_stop_iteration_error
+    obtained = []
+
+    @fizzbuzz = @fizzbuzz.step(1, 15)
+
+    assert_raise StopIteration do
+      (1..20).each do
+        obtained << @fizzbuzz.next
+      end
+    end
+
+    assert_equal(obtained, @expected_integer)
   end
 
   def test_singleton_squre_fixnum
