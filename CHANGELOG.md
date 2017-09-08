@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed benchmarks concerning _Array_ and _Range_ integration.
 - Fixed _Travis CI_ build against _Rubinius_.
 - Fixed build to make it work with _C++_ compilers.
-- Fixed version number to comply with _Semantic Versioning 2_ (http://semver.org/).
+- Fixed version number to comply with [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Deprecated
 
@@ -82,7 +82,7 @@ better performance.
 
 - Added custom exceptions and improved error handling.
 - Added more variety of Rubies on which tests are being run with _Travis CI_.
-- Added project to _RubyGems_ (http://rubygems.org) so it can be installed with
+- Added project to [RubyGems](http://rubygems.org) so it can be installed with
 just `gem install ruby-fizzbuzz` command.
 
 ### Changed
@@ -95,18 +95,17 @@ dependencies better).
 into its own file (namely `ruby-fizzbuzz.gemspec`).
 - Improved documentation and removed bunch of small code smells.
 
-
 ## [0.2.0] - 2012-09-29
 ### Added
 
 - Added `is_fizz?`, `is_buzz?` and `is_fizzbuzz?` singleton methods to _FizzBuzz_ class.
 - Added `fizz?`, `buzz?` and `fizzbuzz?` methods to the _Integer_ class via a monkey-patch
-for convenience.
+for convenience. ([#2](https://github.com/kwilczynski/ruby-fizzbuzz/issues/2))
 
 ### Changed
 
 - Changed behaviour of the `FizzBuzz#[]` singleton method, so it will yield a _FizzBuzz_
-result for a given arbitrary Integer value.
+result for a given arbitrary Integer value. ([#1](https://github.com/kwilczynski/ruby-fizzbuzz/issues/1))
 - Re-factored code to make it cleaner, and added more tests and improved coverage.
 - Re-factored `FizzBuzz` so it now does not assume that we always want to calculate
 results from `1` to `n` -- it is now possible to calculate _FizzBuzz_ results for
