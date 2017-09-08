@@ -5,16 +5,16 @@ require 'rake/testtask'
 require 'rake/extensiontask'
 require 'rdoc/task'
 
-CLEAN.include   '*{.h,.o,.log,.so}', 'ext/**/*{.o,.log,.so}', 'Makefile', 'ext/**/Makefile'
+CLEAN.include '*{.h,.o,.log,.so}', 'ext/**/*{.o,.log,.so}', 'Makefile', 'ext/**/Makefile'
 CLOBBER.include 'lib/**/*.so', 'doc/**/*'
 
 gem = eval File.read('ruby-fizzbuzz.gemspec')
 
 RDoc::Task.new do |d|
-  files = %w(AUTHORS CHANGES.rdoc COPYRIGHT LICENSE README.rdoc TODO)
+  files = %w(AUTHORS CHANGELOG.md COPYRIGHT LICENSE README.md TODO)
 
   d.title = 'Yet another FizzBuzz in Ruby'
-  d.main  = 'README.rdoc'
+  d.main = 'README.md'
 
   d.rdoc_dir = 'doc/rdoc'
 
@@ -25,8 +25,8 @@ RDoc::Task.new do |d|
 end
 
 Rake::TestTask.new do |t|
-  t.verbose    = true
-  t.warning    = true
+  t.verbose = true
+  t.warning = true
   t.test_files = Dir['test/**/test_*']
 end
 
@@ -43,6 +43,7 @@ end
 desc 'Run benchmarks'
 task :benchmark, [:first] do |t,argument|
   glob = File.expand_path("../benchmark/*.rb", __FILE__)
+
   Dir[glob].each do |f|
     process = ['ruby', f]
     process << argument[:first] if argument[:first]
@@ -61,4 +62,4 @@ end
 Rake::Task[:test].prerequisites << :clobber
 Rake::Task[:test].prerequisites << :compile
 
-task :default => :test
+task default: :test
