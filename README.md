@@ -28,7 +28,7 @@ setting up your development environment.
 
 ## Versioning
 
-This project adheres to [Semantic Versioning](http://semver.org/).
+This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 For the versions available, see the tags on this repository.
 
 ## Author
