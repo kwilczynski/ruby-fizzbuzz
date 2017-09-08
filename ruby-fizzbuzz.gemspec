@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.platform = Gem::Platform::RUBY
   s.version = File.read('VERSION').strip
-  s.license = 'Apache License, Version 2.0'
+  s.license = 'Apache-2.0'
   s.author = 'Krzysztof Wilczynski'
   s.email = 'kw@linux.com'
   s.homepage = 'http://about.me/kwilczynski'
