@@ -12,45 +12,36 @@ start   = Time.now
 array   = Array(1..n)
 reports = []
 
+def fizzbuzz_1(array)
+  array.each do |n|
+    divisible_by_3 = (n % 3 == 0)
+    divisible_by_5 = (n % 5 == 0)
+
+    if divisible_by_3 && divisible_by_5
+      'FizzBuzz'
+    elsif divisible_by_3
+      'Fizz'
+    elsif divisible_by_5
+      'Buzz'
+    else
+      n
+    end
+  end
+end
+
+def fizzbuzz_2(array)
+  array.each do |n|
+    FB[n]
+  end
+end
+
 Benchmark.benchmark(CAPTION, 24) do |bm|
-  reports << bm.report('FizzBuzz::fizzbuzz') do
-    FizzBuzz.fizzbuzz(1, n)
+  reports << bm.report('Pure Ruby') do
+    fizzbuzz_1(array)
   end
 
-  reports << bm.report('FizzBuzz#each') do
-    FizzBuzz.new(1, n).each {|i| i }
-  end
-
-  reports << bm.report('FizzBuzz#reverse_each') do
-    FizzBuzz.new(1, n).reverse_each {|i| i }
-  end
-
-  reports << bm.report('FizzBuzz#to_a') do
-    FizzBuzz.new(1, n).to_a
-  end
-
-  reports << bm.report('FizzBuzz::[]') do
-    n.times {|i| FizzBuzz[i] }
-  end
-
-  reports << bm.report('FizzBuzz::is_fizz?') do
-    n.times {|i| FizzBuzz.is_fizz?(i) }
-  end
-
-  reports << bm.report('FizzBuzz::is_buzz?') do
-    n.times {|i| FizzBuzz.is_buzz?(i) }
-  end
-
-  reports << bm.report('FizzBuzz::is_fizzbuzz?') do
-    n.times {|i| FizzBuzz.is_fizzbuzz?(i) }
-  end
-
-  reports << bm.report('Array#fizzbuzz') do
-    array.fizzbuzz
-  end
-
-  reports << bm.report('Range#fizzbuzz') do
-    (1..n).fizzbuzz {|i| i }
+  reports << bm.report('Using FizzBuzz') do
+    fizzbuzz_2(array)
   end
 
   []

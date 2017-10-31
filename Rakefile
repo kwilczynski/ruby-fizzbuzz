@@ -42,8 +42,9 @@ end
 
 desc 'Run benchmarks'
 task :benchmark, [:first] do |t,argument|
-  glob = File.expand_path("../benchmark/*.rb", __FILE__)
+  glob = File.expand_path("../benchmark/benchmark_*.rb", __FILE__)
 
+  file = 0
   Dir[glob].each do |f|
     process = ['ruby', f]
     process << argument[:first] if argument[:first]
@@ -56,6 +57,9 @@ task :benchmark, [:first] do |t,argument|
     end
 
     Process.waitpid rescue Errno::ECHILD
+
+    file += 1
+    puts if glob.size > 1 && file < 2
   end
 end
 
