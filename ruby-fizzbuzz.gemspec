@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.author = 'Krzysztof Wilczynski'
   s.email = 'kw@linux.com'
   s.homepage = 'http://about.me/kwilczynski'
-  s.has_rdoc = true
 
   s.required_ruby_version = '>= 2.1.10'
   s.rubygems_version = '~> 2.2.0'
