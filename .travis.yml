@@ -24,7 +24,7 @@ matrix:
   fast_finish: true
   allow_failures:
     - rvm: ruby-head
-    - rvm: rbx-2
+    - rvm: rbx
 
 branches:
   only:
