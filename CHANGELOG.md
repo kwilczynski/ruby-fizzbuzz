@@ -123,4 +123,4 @@ given `n`, `m` values, where `n` denotes start and `m` denotes stop value.
 [0.4.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/0a6b1ba32...v0.1.0
+[0.1.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/0a6b1ba...v0.1.0
