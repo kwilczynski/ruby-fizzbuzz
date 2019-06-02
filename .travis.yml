@@ -33,9 +33,7 @@ notifications:
     on_failure: change
 
 before_install:
-  - |
-      export GEM_ARGUMENTS=$(ruby -e 'puts Gem::Version.new(RUBY_VERSION) > Gem::Version.new("2.6.0") ? "--no-document" : "--no-rdoc --no-ri"')
-  - gem install "$GEM_ARGUMENTS" bundler
+  - gem install bundler
   - export CC=$(which $COMPILER)
 
 before_script:
