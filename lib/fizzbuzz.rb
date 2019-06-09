@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 gem 'json', '>= 1.8.1'
 
 require 'json'

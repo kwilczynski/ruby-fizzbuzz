@@ -508,9 +508,9 @@ Init_fizzbuzz(void)
     rb_define_const(rb_cFizzBuzz, "WORD_FIZZBUZZ", CSTR2RVAL("FizzBuzz"));
 
     if (NIL_P(words[0])) {
-	words[0] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZ"));
-	words[1] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_BUZZ"));
-	words[2] = rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZBUZZ"));
+	words[0] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZ")));
+	words[1] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_BUZZ")));
+	words[2] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZBUZZ")));
     }
 
     /*
