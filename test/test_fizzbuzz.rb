@@ -17,7 +17,7 @@ class FizzBuzzTest < Test::Unit::TestCase
 
     unless 0.class == Integer
       overflow_size_with_sign = ->() do
-        bits = [''].pack('p').size * 8
+        bits = [+''].pack('p').size * 8
         2 ** (bits - 1) - 1
       end
 
