@@ -50,7 +50,6 @@ Gem::Specification.new do |s|
               LICENSE
               README.md
               Rakefile
-              TODO
               VERSION
               Vagrantfile
               kwilczynski-public.pem
