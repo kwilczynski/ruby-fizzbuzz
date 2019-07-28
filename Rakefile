@@ -9,7 +9,15 @@ CLOBBER.include 'lib/**/*.so', 'doc/**/*'
 gem = eval File.read('ruby-fizzbuzz.gemspec')
 
 RDoc::Task.new do |d|
-  files = %w(AUTHORS CHANGELOG.md COPYRIGHT LICENSE README.md TODO)
+  files = %w(
+    AUTHORS
+    COPYRIGHT
+    LICENSE
+    README.md
+    CHANGELOG.md
+    CODE_OF_CONDUCT.md
+    CONTRIBUTING.md
+  )
 
   d.title = 'Yet another FizzBuzz in Ruby'
   d.main = 'README.md'
