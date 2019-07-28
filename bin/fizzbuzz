@@ -1,7 +1,19 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require 'fizzbuzz'
+
+begin
+  require 'fizzbuzz'
+rescue LoadError
+  abort "\n" + (<<-EOS).gsub(/^[ ]+/, '') + "\n"
+    You appear to be missing the ruby-fizzbuzz Ruby gem. Try
+    installing this missing dependency before you can run
+    this executable. To install the ruby-fizzbuzz Ruby gem,
+    try the following:
+
+      gem install ruby-fizzbuzz
+  EOS
+end
 
 script_name = File.basename($PROGRAM_NAME)
 
