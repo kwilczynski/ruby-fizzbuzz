@@ -1,4 +1,4 @@
-# Yet another FizzBuzz in Ruby.
+# Yet another FizzBuzz in Ruby!
 
 [![Build Status](https://travis-ci.org/kwilczynski/ruby-fizzbuzz.svg)](https://travis-ci.org/kwilczynski/ruby-fizzbuzz)
 [![Documentation Status](https://inch-ci.org/github/kwilczynski/ruby-fizzbuzz.svg)](https://inch-ci.org/github/kwilczynski/ruby-fizzbuzz)
@@ -42,5 +42,5 @@ Copyright 2012-2019 Krzysztof Wilczynski
 
 ## License
 
-This project is licensed under the terms of the Apache License, Version 2.0 license.   
+This project is licensed under the terms of the Apache License, Version 2.0 license.
 To view the full license see the included [LICENSE](LICENSE) file.

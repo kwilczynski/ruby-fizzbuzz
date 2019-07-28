@@ -2,10 +2,10 @@ signing_key = File.expand_path('~/.gem/kwilczynski-private.pem')
 
 Gem::Specification.new do |s|
   s.name = 'ruby-fizzbuzz'
-  s.summary = 'Yet another FizzBuzz in Ruby'
+  s.summary = 'Yet another FizzBuzz in Ruby!'
 
   s.description = (<<-EOS).gsub(/^[ ]+/, '')
-    Yet another FizzBuzz in Ruby.
+    Yet another FizzBuzz in Ruby!
 
     Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
 
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
     'bug_tracker_uri'   => 'https://github.com/kwilczynski/ruby-fizzbuzz/issues',
     'source_code_uri'   => 'https://github.com/kwilczynski/ruby-fizzbuzz',
     'changelog_uri'     => 'https://github.com/kwilczynski/ruby-fizzbuzz/blob/master/CHANGELOG.md',
-    'documentation_uri' => 'https://rubydoc.info/github/kwilczynski/ruby-fizzbuzz',
+    'documentation_uri' => 'https://www.rubydoc.info/gems/ruby-fizzbuzz',
     'wiki_uri'          => 'https://github.com/kwilczynski/ruby-fizzbuzz/wiki'
   }
 
