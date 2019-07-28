@@ -47,6 +47,10 @@ Benchmark.benchmark(CAPTION, 24) do |bm|
     n.times {|i| FizzBuzz.is_fizzbuzz?(i) }
   end
 
+  reports << bm.report('FizzBuzz::step') do
+    fizzbuzz = FizzBuzz.step(1, n) {|i| i }
+  end
+
   reports << bm.report('Array#fizzbuzz') do
     array.fizzbuzz
   end
