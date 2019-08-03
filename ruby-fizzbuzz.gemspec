@@ -37,29 +37,20 @@ Gem::Specification.new do |s|
   }
 
   s.files = Dir['ext/**/*.{c,h,rb}'] +
-            Dir['lib/**/*.rb'] +
-            Dir['benchmark/**/*.rb'] +
-            Dir['test/**/*.rb'] + %w(
+            Dir['lib/**/*.rb'] + %w(
               AUTHORS
-              CHANGELOG.md
-              CODE_OF_CONDUCT.md
-              CONTRIBUTING.md
               COPYRIGHT
-              Gemfile
-              Guardfile
               LICENSE
               README.md
-              Rakefile
+              CHANGELOG.md
               VERSION
-              Vagrantfile
               kwilczynski-public.pem
-              kwilczynski.asc
-              ruby-fizzbuzz.gemspec
             )
 
   s.executables << 'fizzbuzz'
   s.require_paths << 'lib'
   s.extensions << 'ext/fizzbuzz/extconf.rb'
 
+  s.cert_chain  = [ 'kwilczynski-public.pem' ]
   s.signing_key = signing_key if File.exist?(signing_key)
 end
