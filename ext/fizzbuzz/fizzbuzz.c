@@ -78,7 +78,7 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xf726b48c @stop=100, @start=1>
- *    fb.start                     #=> 1
+ *    fb.start			   #=> 1
  */
 VALUE
 rb_fb_get_start(VALUE object)
@@ -97,9 +97,9 @@ rb_fb_get_start(VALUE object)
  * Examples:
  *
  *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xf726f03c @stop=100, @start=1>
- *    fb.start                     #=> 1
- *    fb.start = 15                #=> 15
- *    fb.start                     #=> 15
+ *    fb.start			   #=> 1
+ *    fb.start = 15		   #=> 15
+ *    fb.start			   #=> 15
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
  * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
@@ -125,7 +125,7 @@ rb_fb_set_start(VALUE object, VALUE value)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xf7272bec @stop=100, @start=1>
- *    fb.stop                      #=> 100
+ *    fb.stop			   #=> 100
  */
 VALUE
 rb_fb_get_stop(VALUE object)
@@ -144,9 +144,9 @@ rb_fb_get_stop(VALUE object)
  * Example:
  *
  *    fb = FizzBuzz.new(1, 100)    #=> #<FizzBuzz:0xf727679c @stop=100, @start=1>
- *    fb.stop                      #=> 100
- *    fb.stop = 15                 #=> 15
- *    fb.stop                      #=> 15
+ *    fb.stop			   #=> 100
+ *    fb.stop = 15		   #=> 15
+ *    fb.stop			   #=> 15
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
  * a _Fixnum_ or _Bignum_ type, or an _Integer_ type starting from Ruby
@@ -172,8 +172,8 @@ rb_fb_set_stop(VALUE object, VALUE value)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 15)    #=> #<FizzBuzz:0xf727fd60 @stop=15, @start=1>
- *    fb.to_a                     #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
+ *    fb = FizzBuzz.new(1, 15)	  #=> #<FizzBuzz:0xf727fd60 @stop=15, @start=1>
+ *    fb.to_a			  #=> [1, 2, "Fizz", 4, "Buzz", "Fizz", 7, 8, "Fizz", "Buzz", 11, "Fizz", 13, 14, "FizzBuzz"]
  *
  * See also: FizzBuzz::fizzbuzz
  */
@@ -195,8 +195,8 @@ rb_fb_array(VALUE object)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 15)    #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
- *    fb.each                     #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:each>
+ *    fb = FizzBuzz.new(1, 15)	  #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
+ *    fb.each			  #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:each>
  *
  * Example:
  *
@@ -242,8 +242,8 @@ rb_fb_enumerator(VALUE object)
  *
  * Example:
  *
- *    fb = FizzBuzz.new(1, 15)    #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
- *    fb.each                     #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:reverse_each>
+ *    fb = FizzBuzz.new(1, 15)	  #=> #<FizzBuzz:0xf722f8ec @stop=15, @start=1>
+ *    fb.each			  #=> #<Enumerator: #<FizzBuzz:0x007fc513 @start=1, @stop=15>:reverse_each>
  *
  * Example:
  *
@@ -337,8 +337,8 @@ rb_fb_is_buzz(RB_UNUSED_VAR(VALUE object), VALUE value)
  *
  * Example:
  *
- *    FizzBuzz.is_fizzbuzz?(3)    #=> false
- *    FizzBuzz.is_fizzbuzz?(5)    #=> false
+ *    FizzBuzz.is_fizzbuzz?(3)	  #=> false
+ *    FizzBuzz.is_fizzbuzz?(5)	  #=> false
  *    FizzBuzz.is_fizzbuzz?(15)   #=> true
  *
  * Will raise a <i>FizzBuzz::TypeError</i> exception if given value is not
