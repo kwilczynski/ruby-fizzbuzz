@@ -17,7 +17,7 @@ RDoc::Task.new do |d|
     CHANGELOG.md
   )
 
-  d.title = 'Yet another FizzBuzz in Ruby'
+  d.title = 'Yet another FizzBuzz in Ruby!'
   d.main = 'README.md'
 
   d.rdoc_dir = 'doc/rdoc'
