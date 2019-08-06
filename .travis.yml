@@ -1,9 +1,8 @@
-sudo: false
-
 language: ruby
+dist: xenial
 
 cache:
-  - bundler
+  bundler: true
 
 bundler_args: --jobs 1 --retry 5 --without development --path vendor/bundle
 
