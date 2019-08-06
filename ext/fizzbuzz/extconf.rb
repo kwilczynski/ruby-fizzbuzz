@@ -22,7 +22,7 @@ $LDFLAGS << format(' %s', ENV['LDFLAGS']) if ENV['LDFLAGS']
 end
 
 unless have_header('ruby.h')
-  abort "\n" + (<<-EOS).gsub(/^[ ]+/, '') + "\n"
+  abort "\n" + (<<-EOS).gsub(/^[ ]{,3}/, '') + "\n"
     You appear to be missing Ruby development libraries and/or header
     files. You can install missing compile-time dependencies in one of
     the following ways:
