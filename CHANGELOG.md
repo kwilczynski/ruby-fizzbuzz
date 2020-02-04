@@ -164,7 +164,8 @@ given `n`, `m` values, where `n` denotes start and `m` denotes stop value.
 
 - First version of FizzBuzz.
 
-[Unreleased]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.9.0...HEAD
+[0.8.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.8.0...v0.9.0
 [0.7.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.7.0...v0.8.0
 [0.6.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.6.0...v0.7.0
 [0.5.0]: https://github.com/kwilczynski/ruby-fizzbuzz/compare/v0.4.0...v0.5.0
