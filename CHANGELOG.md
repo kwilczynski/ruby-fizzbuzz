@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.8.0] - 2020-02-05
+### Added
+
+- Added new `step` singleton method to the _FizzBuzz_ class.
+- Added **Code of Conduct** to the project.
+- Added new `--line` command line switch to the `fizzbuzz` script, which allows for printing values in a single line.
+- Added support for the _Integer Unification_ in Ruby version **2.4** onwards.
+- Added few optimisations e.g., `LIKELY` and `UNLIKELY` macros, and improved the `INTEGER_P` macro.
+- Added support for installing and building on _Windows_ has been confirmed with an environment set by _Ruby Installer_
+and _DevKit_ (which is _MinGW_ under the hood).
+- Added more `CFLAGS` to `extconf.rb` file.
+- Added definition of `_DEFAULT_SOURCE` since `_BSD_SOURCE` and `_SVID_SOURCE` are deprecated.
+- Added friendly error message when the `ruby-fizzbuzz` Ruby gem is missing.
+- Added `.editorconfig` file for Ruby.
+- Added very basic `.gitattributes` file.
+- Added `.mailmap` file to be used by Git.
+- Added NOTICE file to the project.
+
+### Changed
+
+- Moved to _Ubuntu Xenial_ on _Travis CI_.
+- Re-factored _Array_ class integration.
+- Re-factored custom `typedef` types and some other small changes.
+- Replaced `File.exists?` with `File.exist?`.
+- Replaced usage of the `volatile` keyword with the `RB_GC_GUARD` macro.
+- Moved to using module constants for the _FizzBuzz_ specific strings values e.g., _Fizz_, _Buzz_ and _FizzBuzz_ to
+improve performance since constants are allocated only once.
+- Updated public GPG key.
+- Updated public signing key.
+- Updated Ruby gem dependencies.
+- Removed surplus `for`-loop replacing it with a simpler `while`-loop.
+- Removed surplus license headers from each file.
+- Removed deprecated `Gem::Specification#has_rdoc=`.
+- Removed integration with services like _Coveralls_, _Code Climate_ and _Gemnasium_.
+- Addressed some of the _GCC_ compiler warnings.
+
+### Fixed
+
+- Resolved Bundler issues by updating its version prior to installing Ruby gems when on _Travis CI_.
+- Fixed pattern for test files in `Guardfile`.
+- Addressed `RuntimeError` caused by modification of a frozen string.
+
+### Deprecated
+
+- Retired support and testing with Ruby _1.9.x_, _2.0.x_, _2.1.x_, _2.2.x_ and _2.3.x_ on _Travis CI_.
+- Retired support and testing for _Rubinius_ on _Travis CI_.
+- Retried testing with Ruby _head_ on _Travis CI_.
+
 ## [0.7.0] - 2014-12-15
 ### Added
 
