@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
               AUTHORS
               COPYRIGHT
               LICENSE
+              NOTICE
               README.md
               CHANGELOG.md
               VERSION
