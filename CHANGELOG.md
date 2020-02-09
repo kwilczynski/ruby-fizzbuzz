@@ -23,7 +23,7 @@ and _DevKit_ (which is _MinGW_ under the hood).
 - Added `.editorconfig` file for Ruby.
 - Added very basic `.gitattributes` file.
 - Added `.mailmap` file to be used by Git.
-- Added NOTICE file to the project.
+- Added `NOTICE` file to the project.
 
 ### Changed
 
