@@ -1,9 +1,9 @@
-# A little helper to determine underlying platform ...
+# A little helper to determine underlying platform.
 def platform_bits
   ['x'].pack('P').size * 8
 end
 
-# Simple provisioning elements ...
+# Simple provisioning elements.
 script = %{
 #!/bin/bash
 
