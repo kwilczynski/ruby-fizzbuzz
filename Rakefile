@@ -67,7 +67,6 @@ task :benchmark, [:first] do |t,argument|
   end
 end
 
-Rake::Task[:test].prerequisites << :clobber
 Rake::Task[:test].prerequisites << :compile
 
 task default: :test
