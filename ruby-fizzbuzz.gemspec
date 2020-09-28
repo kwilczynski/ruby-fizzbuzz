@@ -10,8 +10,7 @@ Gem::Specification.new do |s|
     Provides simple and fast solution to a popular FizzBuzz problem for Ruby.
 
     Written in C as an example of using Ruby's C API - with the support for
-    arbitrary large numeric values via the Bignum class, or the Integer class
-    starting from Ruby version 2.4 onwards.
+    arbitrary large numeric values.
   EOS
 
   s.post_install_message = (<<-EOS).gsub(/^[ ]+/, '')
