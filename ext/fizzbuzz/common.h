@@ -51,10 +51,6 @@ extern "C" {
 # define RUBY_METHOD_FUNC(f) ((VALUE (*)(ANYARGS))(f))
 #endif
 
-#if defined(RUBY_INTEGER_UNIFICATION) || RUBY_API_VERSION_CODE >= 20400
-# define HAVE_INTEGER_UNIFICATION 1
-#endif
-
 #if !defined(CSTR2RVAL)
 # define CSTR2RVAL(x) ((x) == NULL ? Qnil : rb_str_new2(x))
 #endif

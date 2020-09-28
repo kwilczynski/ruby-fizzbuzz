@@ -4,7 +4,8 @@ extern "C" {
 
 #include <fizzbuzz.h>
 
-ID id_at_start, id_at_stop;
+ID id_at_start;
+ID id_at_stop;
 
 VALUE rb_cFizzBuzz = Qnil;
 

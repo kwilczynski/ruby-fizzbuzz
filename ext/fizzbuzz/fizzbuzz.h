@@ -21,10 +21,10 @@ extern "C" {
 #define LESS_EQUAL(a, b)    fizzbuzz_less_equal((a), (b))
 
 #define INTEGER_P(x) \
-	(RB_TYPE_P((x), T_FIXNUM) || RB_TYPE_P((x), T_BIGNUM))
+	(RB_LIKELY(RB_TYPE_P((x), T_FIXNUM)) || RB_TYPE_P((x), T_BIGNUM))
 
 #define ZERO_P(x) \
-	(FIXNUM_P(x) ? (NUM2TYPE(x) == 0) : fizzbuzz_equal((x), ZERO))
+	(FIXNUM_P(x) ? (RB_LIKELY(NUM2TYPE(x) == 0)) : fizzbuzz_equal((x), ZERO))
 
 #define INCREASE(x) PLUS((x),  ONE)
 #define DECREASE(x) MINUS((x), ONE)
@@ -88,15 +88,9 @@ typedef struct fizzbuzz_exception {
 } fizzbuzz_exception_t;
 
 static const char *errors[] = {
-#if defined(HAVE_INTEGER_UNIFICATION)
     "must be an Integer type",
     "must be an Integer type for start",
     "must be an Integer type for stop",
-#else
-    "must be a Fixnum or Bignum type",
-    "must be a Fixnum or Bignum type for start",
-    "must be a Fixnum or Bignum type for stop",
-#endif
     "start value is higher than stop value",
     "stop value is lower than start value",
     NULL
@@ -110,7 +104,7 @@ static VALUE words[] = {
 static VALUE
 fizzbuzz_plus(VALUE a, VALUE b)
 {
-    return (FIXNUM_P(a) && FIXNUM_P(b)) ?	 \
+    return RB_LIKELY((FIXNUM_P(a) && FIXNUM_P(b))) ?	 \
 	   TYPE2NUM(NUM2TYPE(a) + NUM2TYPE(b)) : \
 	   rb_funcall(a, rb_intern("+"), 1, b);
 }
@@ -118,7 +112,7 @@ fizzbuzz_plus(VALUE a, VALUE b)
 static VALUE
 fizzbuzz_minus(VALUE a, VALUE b)
 {
-    return (FIXNUM_P(a) && FIXNUM_P(b)) ?	 \
+    return RB_LIKELY((FIXNUM_P(a) && FIXNUM_P(b))) ?	 \
 	   TYPE2NUM(NUM2TYPE(a) - NUM2TYPE(b)) : \
 	   rb_funcall(a, rb_intern("-"), 1, b);
 }
@@ -126,7 +120,7 @@ fizzbuzz_minus(VALUE a, VALUE b)
 static VALUE
 fizzbuzz_modulo(VALUE a, VALUE b)
 {
-    return (FIXNUM_P(a) && FIXNUM_P(b)) ?	 \
+    return RB_LIKELY((FIXNUM_P(a) && FIXNUM_P(b))) ?	 \
 	   TYPE2NUM(NUM2TYPE(a) % NUM2TYPE(b)) : \
 	   rb_funcall(a, rb_intern("%"), 1, b);
 }

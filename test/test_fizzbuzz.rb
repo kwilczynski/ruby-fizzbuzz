@@ -7,25 +7,20 @@ class FizzBuzzTest < Test::Unit::TestCase
   def setup
     @integer = 1
 
-    @integer_klass       = 0.class == Integer ? Integer : Fixnum
-    @large_integer_klass = 0.class == Integer ? Integer : Bignum
-
     @large_integer      = 1_000_000_000_000
     @very_large_integer = 1_000_000_000_000_000
 
-    unless 0.class == Integer
-      overflow_size_with_sign = ->() do
-        bits = [+''].pack('p').size * 8
-        2 ** (bits - 1) - 1
-      end
-
-      if overflow_size_with_sign.() + 1 > 2147483647
-        @large_integer      = @large_integer      ** 2
-        @very_large_integer = @very_large_integer ** 2
-      end
+    overflow_size_with_sign = lambda do
+      bits = [+''].pack('p').size * 8
+      2**(bits - 1) - 1
     end
 
-    @words = %w(Fizz Buzz FizzBuzz).freeze
+    if overflow_size_with_sign.call + 1 > 2_147_483_647
+      @large_integer      **= 2
+      @very_large_integer **= 2
+    end
+
+    @words = %w[Fizz Buzz FizzBuzz].freeze
 
     @expected_integer = [
       1,      2,      'Fizz',
@@ -41,17 +36,11 @@ class FizzBuzzTest < Test::Unit::TestCase
       @large_integer + 7,  'Fizz',     @large_integer + 9,
       'Buzz',              'Fizz',     @large_integer + 12,
       @large_integer + 13, 'Fizz',     'Buzz'
-    ]
+    ].freeze
 
     @expected_type_error  = 'must be an Integer type'
     @expected_start_error = 'must be an Integer type for start'
     @expected_stop_error  = 'must be an Integer type for stop'
-
-    unless 0.class == Integer
-      @expected_type_error  = 'must be a Fixnum or Bignum type'
-      @expected_start_error = 'must be a Fixnum or Bignum type for start'
-      @expected_stop_error  = 'must be a Fixnum or Bignum type for stop'
-    end
 
     @fizzbuzz = FizzBuzz.new(1, 15)
   end
@@ -409,7 +398,7 @@ class FizzBuzzTest < Test::Unit::TestCase
     obtained << FizzBuzz[5]
     obtained << FizzBuzz[15]
 
-    assert_kind_of(@integer_klass, FizzBuzz[0])
+    assert_kind_of(Integer, FizzBuzz[0])
 
     obtained.each_with_index do |v,i|
       assert_kind_of(String, v)
@@ -424,7 +413,7 @@ class FizzBuzzTest < Test::Unit::TestCase
     obtained << FizzBuzz[@large_integer + 15]
     obtained << FizzBuzz[@large_integer + 5]
 
-    assert_kind_of(@large_integer_klass, FizzBuzz[@large_integer + 3])
+    assert_kind_of(Integer, FizzBuzz[@large_integer + 3])
 
     obtained.each_with_index do |v,i|
       assert_kind_of(String, v)
@@ -439,7 +428,7 @@ class FizzBuzzTest < Test::Unit::TestCase
     obtained << FizzBuzz[@very_large_integer + 15]
     obtained << FizzBuzz[@very_large_integer + 5]
 
-    assert_kind_of(@large_integer_klass, FizzBuzz[@very_large_integer + 3])
+    assert_kind_of(Integer, FizzBuzz[@very_large_integer + 3])
 
     obtained.each_with_index do |v,i|
       assert_kind_of(String, v)
@@ -467,7 +456,7 @@ class FizzBuzzTest < Test::Unit::TestCase
     obtained_square      = FizzBuzz[0]
     obtained_is_fizzbuzz = FizzBuzz.is_fizzbuzz?(0)
 
-    assert_kind_of(@integer_klass, obtained_square)
+    assert_kind_of(Integer, obtained_square)
     assert_equal(obtained_square, 0)
     assert_false(obtained_is_fizzbuzz)
   end
@@ -476,7 +465,7 @@ class FizzBuzzTest < Test::Unit::TestCase
     obtained_square      = FizzBuzz[-1]
     obtained_is_fizzbuzz = FizzBuzz.is_fizzbuzz?(-1)
 
-    assert_kind_of(@integer_klass, obtained_square)
+    assert_kind_of(Integer, obtained_square)
     assert_equal(obtained_square, -1)
     assert_false(obtained_is_fizzbuzz)
   end
@@ -552,70 +541,70 @@ class FizzBuzzTest < Test::Unit::TestCase
   end
 
   def test_correct_start_integer
-    assert_kind_of(@integer_klass, @fizzbuzz.start)
+    assert_kind_of(Integer, @fizzbuzz.start)
     assert_equal(@fizzbuzz.start, 1)
 
     @fizzbuzz.start = 2
 
-    assert_kind_of(@integer_klass, @fizzbuzz.start)
+    assert_kind_of(Integer, @fizzbuzz.start)
     assert_equal(@fizzbuzz.start, 2)
   end
 
   def test_correct_start_large_integer
     @fizzbuzz = FizzBuzz.new(@large_integer, @large_integer)
 
-    assert_kind_of(@large_integer_klass, @fizzbuzz.start)
+    assert_kind_of(Integer, @fizzbuzz.start)
     assert_equal(@fizzbuzz.start, @large_integer)
 
     @fizzbuzz.start = @large_integer - 5
 
-    assert_kind_of(@large_integer_klass, @fizzbuzz.start)
+    assert_kind_of(Integer, @fizzbuzz.start)
     assert_equal(@fizzbuzz.start, @large_integer - 5)
   end
 
   def test_correct_start_very_large_integer
     @fizzbuzz = FizzBuzz.new(@very_large_integer, @very_large_integer)
 
-    assert_kind_of(@large_integer_klass, @fizzbuzz.start)
+    assert_kind_of(Integer, @fizzbuzz.start)
     assert_equal(@fizzbuzz.start, @very_large_integer)
 
     @fizzbuzz.start = @very_large_integer - 5
 
-    assert_kind_of(@large_integer_klass, @fizzbuzz.start)
+    assert_kind_of(Integer, @fizzbuzz.start)
     assert_equal(@fizzbuzz.start, @very_large_integer - 5)
   end
 
   def test_correct_stop_integer
-    assert_kind_of(@integer_klass, @fizzbuzz.stop)
+    assert_kind_of(Integer, @fizzbuzz.stop)
     assert_equal(@fizzbuzz.stop, 15)
 
     @fizzbuzz.stop = 5
 
-    assert_kind_of(@integer_klass, @fizzbuzz.stop)
+    assert_kind_of(Integer, @fizzbuzz.stop)
     assert_equal(@fizzbuzz.stop, 5)
   end
 
   def test_correct_stop_large_integer
     @fizzbuzz = FizzBuzz.new(@large_integer, @large_integer)
 
-    assert_kind_of(@large_integer_klass, @fizzbuzz.stop)
+    assert_kind_of(Integer, @fizzbuzz.stop)
     assert_equal(@fizzbuzz.stop, @large_integer)
 
     @fizzbuzz.stop = @large_integer + 5
 
-    assert_kind_of(@large_integer_klass, @fizzbuzz.stop)
+    assert_kind_of(Integer, @fizzbuzz.stop)
     assert_equal(@fizzbuzz.stop, @large_integer + 5)
   end
 
   def test_correct_stop_very_large_integer
     @fizzbuzz = FizzBuzz.new(@very_large_integer, @very_large_integer)
 
-    assert_kind_of(@large_integer_klass, @fizzbuzz.stop)
+    assert_kind_of(Integer, @fizzbuzz.stop)
     assert_equal(@fizzbuzz.stop, @very_large_integer)
 
     @fizzbuzz.stop = @very_large_integer + 5
 
-    assert_kind_of(@large_integer_klass, @fizzbuzz.stop)
+    assert_kind_of(Integer, @fizzbuzz.stop)
     assert_equal(@fizzbuzz.stop, @very_large_integer + 5)
   end
 
@@ -665,8 +654,8 @@ class FizzBuzzTest < Test::Unit::TestCase
     @fizzbuzz.start = 2
     @fizzbuzz.stop  = 3
 
-    assert_kind_of(@integer_klass, @fizzbuzz.start)
-    assert_kind_of(@integer_klass, @fizzbuzz.stop)
+    assert_kind_of(Integer, @fizzbuzz.start)
+    assert_kind_of(Integer, @fizzbuzz.stop)
     assert_equal(@fizzbuzz.start, 2)
     assert_equal(@fizzbuzz.stop, 3)
   end
