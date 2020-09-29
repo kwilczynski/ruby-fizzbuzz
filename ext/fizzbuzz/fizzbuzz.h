@@ -88,11 +88,11 @@ typedef struct fizzbuzz_exception {
 } fizzbuzz_exception_t;
 
 static const char *errors[] = {
-    "must be an Integer type",
-    "must be an Integer type for start",
-    "must be an Integer type for stop",
-    "start value is higher than stop value",
-    "stop value is lower than start value",
+    [E_INVALID_TYPE]	   = "must be an Integer type",
+    [E_INVALID_START_TYPE] = "must be an Integer type for start",
+    [E_INVALID_STOP_TYPE]  = "must be an Integer type for stop",
+    [E_BAD_VALUE_START]	   = "start value is higher than stop value",
+    [E_BAD_VALUE_STOP]	   = "stop value is lower than start value",
     NULL
 };
 
