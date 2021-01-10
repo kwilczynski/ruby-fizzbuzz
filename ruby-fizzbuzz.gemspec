@@ -38,11 +38,11 @@ Gem::Specification.new do |s|
   s.files = Dir['ext/**/*.{c,h,rb}'] +
             Dir['lib/**/*.rb'] + %w(
               AUTHORS
+              CHANGELOG.md
               COPYRIGHT
               LICENSE
               NOTICE
               README.md
-              CHANGELOG.md
               VERSION
               kwilczynski-public.pem
             )
