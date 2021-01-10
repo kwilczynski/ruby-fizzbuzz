@@ -37,7 +37,7 @@ Krzysztof Wilczyński (<kw@linux.com>)
 
 ## Copyright
 
-Copyright 2012-2020 Krzysztof Wilczyński
+Copyright 2012-2021 Krzysztof Wilczyński
 
 ## License
 
