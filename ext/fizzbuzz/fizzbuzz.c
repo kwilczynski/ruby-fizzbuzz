@@ -55,19 +55,19 @@ static VALUE fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
 VALUE
 rb_fb_initialize(int argc, VALUE *argv, VALUE object)
 {
-    VALUE start, stop;
+	VALUE start, stop;
 
-    rb_scan_args(argc, argv, "20", &start, &stop);
+	rb_scan_args(argc, argv, "20", &start, &stop);
 
-    CHECK_TYPE(start, error(E_INVALID_START_TYPE));
-    CHECK_TYPE(stop, error(E_INVALID_STOP_TYPE));
+	CHECK_TYPE(start, error(E_INVALID_START_TYPE));
+	CHECK_TYPE(stop, error(E_INVALID_STOP_TYPE));
 
-    CHECK_RANGE(start, stop, error(E_BAD_VALUE_START));
+	CHECK_RANGE(start, stop, error(E_BAD_VALUE_START));
 
-    rb_ivar_set(object, id_at_start, start);
-    rb_ivar_set(object, id_at_stop, stop);
+	rb_ivar_set(object, id_at_start, start);
+	rb_ivar_set(object, id_at_stop, stop);
 
-    return object;
+	return object;
 }
 
 /*
@@ -84,7 +84,7 @@ rb_fb_initialize(int argc, VALUE *argv, VALUE object)
 VALUE
 rb_fb_get_start(VALUE object)
 {
-    return rb_ivar_get(object, id_at_start);
+	return rb_ivar_get(object, id_at_start);
 }
 
 /*
@@ -109,12 +109,12 @@ rb_fb_get_start(VALUE object)
 VALUE
 rb_fb_set_start(VALUE object, VALUE value)
 {
-    VALUE stop = rb_ivar_get(object, id_at_stop);
+	VALUE stop = rb_ivar_get(object, id_at_stop);
 
-    CHECK_TYPE(value, error(E_INVALID_START_TYPE));
-    CHECK_RANGE(value, stop, error(E_BAD_VALUE_START));
+	CHECK_TYPE(value, error(E_INVALID_START_TYPE));
+	CHECK_RANGE(value, stop, error(E_BAD_VALUE_START));
 
-    return rb_ivar_set(object, id_at_start, value);
+	return rb_ivar_set(object, id_at_start, value);
 }
 
 /*
@@ -131,7 +131,7 @@ rb_fb_set_start(VALUE object, VALUE value)
 VALUE
 rb_fb_get_stop(VALUE object)
 {
-    return rb_ivar_get(object, id_at_stop);
+	return rb_ivar_get(object, id_at_stop);
 }
 
 /*
@@ -156,12 +156,12 @@ rb_fb_get_stop(VALUE object)
 VALUE
 rb_fb_set_stop(VALUE object, VALUE value)
 {
-    VALUE start = rb_ivar_get(object, id_at_start);
+	VALUE start = rb_ivar_get(object, id_at_start);
 
-    CHECK_TYPE(value, error(E_INVALID_STOP_TYPE));
-    CHECK_RANGE(start, value, error(E_BAD_VALUE_STOP));
+	CHECK_TYPE(value, error(E_INVALID_STOP_TYPE));
+	CHECK_RANGE(start, value, error(E_BAD_VALUE_STOP));
 
-    return rb_ivar_set(object, id_at_stop, value);
+	return rb_ivar_set(object, id_at_stop, value);
 }
 
 /*
@@ -181,7 +181,7 @@ rb_fb_set_stop(VALUE object, VALUE value)
 VALUE
 rb_fb_array(VALUE object)
 {
-    return fizzbuzz_values(object, R_TYPE_ARRAY, D_LOOP_FORWARD);
+	return fizzbuzz_values(object, R_TYPE_ARRAY, D_LOOP_FORWARD);
 }
 
 /*
@@ -227,7 +227,7 @@ rb_fb_array(VALUE object)
 VALUE
 rb_fb_enumerator(VALUE object)
 {
-    return fizzbuzz_values(object, R_TYPE_ENUMERATOR, D_LOOP_FORWARD);
+	return fizzbuzz_values(object, R_TYPE_ENUMERATOR, D_LOOP_FORWARD);
 }
 
 /*
@@ -274,7 +274,7 @@ rb_fb_enumerator(VALUE object)
 VALUE
 rb_fb_reverse_enumerator(VALUE object)
 {
-    return fizzbuzz_values(object, R_TYPE_ENUMERATOR, D_LOOP_REVERSE);
+	return fizzbuzz_values(object, R_TYPE_ENUMERATOR, D_LOOP_REVERSE);
 }
 
 /*
@@ -299,8 +299,8 @@ rb_fb_reverse_enumerator(VALUE object)
 VALUE
 rb_fb_is_fizz(RB_UNUSED_VAR(VALUE object), VALUE value)
 {
-    CHECK_TYPE(value, error(E_INVALID_TYPE));
-    return CBOOL2RVAL(IS_FIZZ(value));
+	CHECK_TYPE(value, error(E_INVALID_TYPE));
+	return CBOOL2RVAL(IS_FIZZ(value));
 }
 
 /*
@@ -325,8 +325,8 @@ rb_fb_is_fizz(RB_UNUSED_VAR(VALUE object), VALUE value)
 VALUE
 rb_fb_is_buzz(RB_UNUSED_VAR(VALUE object), VALUE value)
 {
-    CHECK_TYPE(value, error(E_INVALID_TYPE));
-    return CBOOL2RVAL(IS_BUZZ(value));
+	CHECK_TYPE(value, error(E_INVALID_TYPE));
+	return CBOOL2RVAL(IS_BUZZ(value));
 }
 
 /*
@@ -351,8 +351,8 @@ rb_fb_is_buzz(RB_UNUSED_VAR(VALUE object), VALUE value)
 VALUE
 rb_fb_is_fizzbuzz(RB_UNUSED_VAR(VALUE object), VALUE value)
 {
-    CHECK_TYPE(value, error(E_INVALID_TYPE));
-    return CBOOL2RVAL(IS_FIZZBUZZ(value));
+	CHECK_TYPE(value, error(E_INVALID_TYPE));
+	return CBOOL2RVAL(IS_FIZZBUZZ(value));
 }
 
 /*
@@ -380,184 +380,178 @@ rb_fb_is_fizzbuzz(RB_UNUSED_VAR(VALUE object), VALUE value)
 VALUE
 rb_fb_square(RB_UNUSED_VAR(VALUE object), VALUE value)
 {
-    CHECK_TYPE(value, error(E_INVALID_TYPE));
-    return fizzbuzz_evaluate(value);
+	CHECK_TYPE(value, error(E_INVALID_TYPE));
+	return fizzbuzz_evaluate(value);
 }
 
 static VALUE
 fizzbuzz_evaluate(VALUE value)
 {
-    int score;
+	int score;
 
-    if (ZERO_P(value))
-	return value;
+	if (ZERO_P(value))
+		return value;
 
-    score = SCORE_VALUE(value);
+	score = SCORE_VALUE(value);
 
-    assert((score >= 0 && score <= 3) && \
-	   "Score value out of bounds, must be between 0 and 3 inclusive");
+	assert((score >= 0 && score <= 3) && \
+	       "Score value out of bounds, must be between 0 and 3 inclusive");
 
-    return score < 1 ? value : word(score);
+	return score < 1 ? value : word(score);
 }
 
 static VALUE
 fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
 		fizzbuzz_direction_t direction)
 {
-    int forward = LOOP_FORWARD(direction);
+	int forward = LOOP_FORWARD(direction);
 
-    VALUE i = Qnil;
+	VALUE i = Qnil;
 
-    VALUE array = Qnil;
-    VALUE value = Qnil;
+	VALUE array = Qnil;
+	VALUE value = Qnil;
 
-    VALUE start = rb_ivar_get(object, id_at_start);
-    VALUE stop = rb_ivar_get(object, id_at_stop);
+	VALUE start = rb_ivar_get(object, id_at_start);
+	VALUE stop = rb_ivar_get(object, id_at_stop);
 
-    if (WANT_ARRAY(type))
-	array = rb_ary_new();
-    else
-	RETURN_ENUMERATOR(object, 0, 0);
+	if (WANT_ARRAY(type))
+		array = rb_ary_new();
+	else
+		RETURN_ENUMERATOR(object, 0, 0);
 
-    i = forward ? start : stop;
+	i = forward ? start : stop;
 
-    while (RB_LIKELY(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start))) {
-	value = fizzbuzz_evaluate(i);
-	WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
-	i = forward ? INCREASE(i) : DECREASE(i);
-    }
+	while (RB_LIKELY(forward ? LESS_EQUAL(i, stop) : GREATER_EQUAL(i, start))) {
+		value = fizzbuzz_evaluate(i);
+		WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
+		i = forward ? INCREASE(i) : DECREASE(i);
+    	}
 
-    RB_GC_GUARD(array);
-    RB_GC_GUARD(value);
+	RB_GC_GUARD(array);
+	RB_GC_GUARD(value);
 
-    return WANT_ARRAY(type) ? array : object;
+	return WANT_ARRAY(type) ? array : object;
 }
 
 static VALUE
 fizzbuzz_exception_wrapper(VALUE value)
 {
-    fizzbuzz_exception_t *e = (fizzbuzz_exception_t *)value;
-    return rb_exc_new2(e->klass, e->message);
+	fizzbuzz_exception_t *e = (fizzbuzz_exception_t *)value;
+	return rb_exc_new2(e->klass, e->message);
 }
 
 static VALUE
 fizzbuzz_exception(void *data)
 {
-    int exception = 0;
-    VALUE object = Qnil;
+	int exception = 0;
+	VALUE object = Qnil;
 
-    fizzbuzz_exception_t *e = data;
+	fizzbuzz_exception_t *e = data;
 
-    assert(e != NULL && \
-	   "Must be a valid pointer to `fizzbuzz_exception_t' type");
+	assert(e != NULL && \
+	       "Must be a valid pointer to `fizzbuzz_exception_t' type");
 
-    object = rb_protect(fizzbuzz_exception_wrapper, (VALUE)e, &exception);
+	object = rb_protect(fizzbuzz_exception_wrapper, (VALUE)e, &exception);
 
-    if (exception)
-	rb_jump_tag(exception);
+	if (exception)
+		rb_jump_tag(exception);
 
-    rb_iv_set(object, "@start", e->start);
-    rb_iv_set(object, "@stop", e->stop);
+	rb_iv_set(object, "@start", e->start);
+	rb_iv_set(object, "@stop", e->stop);
 
-    return object;
+	return object;
 }
 
 static VALUE
 fizzbuzz_type_error(VALUE klass, const char *message)
 {
-    fizzbuzz_exception_t e;
+	fizzbuzz_exception_t e;
 
-    e.start = Qnil;
-    e.stop = Qnil;
-    e.message = message;
-    e.klass = klass;
+	e.start = Qnil;
+	e.stop = Qnil;
+	e.message = message;
+	e.klass = klass;
 
-    return fizzbuzz_exception(&e);
+	return fizzbuzz_exception(&e);
 }
 
 static VALUE
 fizzbuzz_range_error(VALUE klass, VALUE start, VALUE stop,
 		     const char *message)
 {
-    fizzbuzz_exception_t e;
+	fizzbuzz_exception_t e;
 
-    e.start = start;
-    e.stop = stop;
-    e.message = message;
-    e.klass = klass;
+	e.start = start;
+	e.stop = stop;
+	e.message = message;
+	e.klass = klass;
 
-    return fizzbuzz_exception(&e);
+	return fizzbuzz_exception(&e);
 }
 
 void
 Init_fizzbuzz(void)
 {
-    id_at_start = rb_intern("@start");
-    id_at_stop	= rb_intern("@stop");
+	id_at_start = rb_intern("@start");
+	id_at_stop = rb_intern("@stop");
 
-    rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
-    rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
+	rb_cFizzBuzz = rb_define_class("FizzBuzz", rb_cObject);
+	rb_include_module(rb_cFizzBuzz, rb_mEnumerable);
+	/*
+	 * The CSTR2RVAL macro uses rb_str_new2(const char *) which is
+	 * rather slow due to all the heavy lifting done internally by
+	 * str_new0(VALUE, const char *, long, int) to allocate space
+	 * for the new String object, etc.
+	 */
+	rb_define_const(rb_cFizzBuzz, "WORD_FIZZ", CSTR2RVAL("Fizz"));
+	rb_define_const(rb_cFizzBuzz, "WORD_BUZZ", CSTR2RVAL("Buzz"));
+	rb_define_const(rb_cFizzBuzz, "WORD_FIZZBUZZ", CSTR2RVAL("FizzBuzz"));
 
-    /*
-     * The CSTR2RVAL macro uses rb_str_new2(const char *) which is
-     * rather slow due to all the heavy lifting done internally by
-     * str_new0(VALUE, const char *, long, int) to allocate space
-     * for the new String object, etc.
-     */
-    rb_define_const(rb_cFizzBuzz, "WORD_FIZZ", CSTR2RVAL("Fizz"));
-    rb_define_const(rb_cFizzBuzz, "WORD_BUZZ", CSTR2RVAL("Buzz"));
-    rb_define_const(rb_cFizzBuzz, "WORD_FIZZBUZZ", CSTR2RVAL("FizzBuzz"));
+	if (NIL_P(words[0])) {
+		words[0] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZ")));
+		words[1] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_BUZZ")));
+		words[2] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZBUZZ")));
+	}
+	/*
+	 * Raised when _FizzBuzz_ encounters an error.
+	 */
+	rb_fb_eError = rb_define_class_under(rb_cFizzBuzz, "Error", rb_eStandardError);
+	/*
+	 * Stores current value of +start+ for which the exception might have been
+	 * raised, or +nil+ otherwise.
+	 */
+	rb_define_attr(rb_fb_eError, "start", 1, 0);
+	/*
+	 * Stores current value of +stop+ for which the exception might have been
+	 * raised, or +nil+ otherwise.
+	*/
+	rb_define_attr(rb_fb_eError, "stop", 1, 0);
+	/*
+	 * Raised when the arguments are wrong or of an incompatible type.
+	 */
+	rb_fb_eTypeError = rb_define_class_under(rb_cFizzBuzz, "TypeError", rb_fb_eError);
+	/*
+	 * Raised when the arguments are wrong or given range from +start+ to +stop+
+	 * is incorrect.
+	 */
+	rb_fb_eRangeError = rb_define_class_under(rb_cFizzBuzz, "RangeError", rb_fb_eError);
 
-    if (NIL_P(words[0])) {
-	words[0] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZ")));
-	words[1] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_BUZZ")));
-	words[2] = rb_str_freeze(rb_const_get(rb_cFizzBuzz, rb_intern("WORD_FIZZBUZZ")));
-    }
+	rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", RUBY_METHOD_FUNC(rb_fb_is_fizz), 1);
+	rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", RUBY_METHOD_FUNC(rb_fb_is_buzz), 1);
+	rb_define_singleton_method(rb_cFizzBuzz, "is_fizzbuzz?", RUBY_METHOD_FUNC(rb_fb_is_fizzbuzz), 1);
 
-    /*
-     * Raised when _FizzBuzz_ encounters an error.
-     */
-    rb_fb_eError = rb_define_class_under(rb_cFizzBuzz, "Error", rb_eStandardError);
+	rb_define_singleton_method(rb_cFizzBuzz, "[]", RUBY_METHOD_FUNC(rb_fb_square), 1);
 
-    /*
-     * Stores current value of +start+ for which the exception might have been
-     * raised, or +nil+ otherwise.
-     */
-    rb_define_attr(rb_fb_eError, "start", 1, 0);
+	rb_define_method(rb_cFizzBuzz, "initialize", RUBY_METHOD_FUNC(rb_fb_initialize), -1);
 
-    /*
-     * Stores current value of +stop+ for which the exception might have been
-     * raised, or +nil+ otherwise.
-     */
-    rb_define_attr(rb_fb_eError, "stop", 1, 0);
+	rb_define_method(rb_cFizzBuzz, "start", RUBY_METHOD_FUNC(rb_fb_get_start), 0);
+	rb_define_method(rb_cFizzBuzz, "start=", RUBY_METHOD_FUNC(rb_fb_set_start), 1);
+	rb_define_method(rb_cFizzBuzz, "stop", RUBY_METHOD_FUNC(rb_fb_get_stop), 0);
+	rb_define_method(rb_cFizzBuzz, "stop=", RUBY_METHOD_FUNC(rb_fb_set_stop), 1);
 
-    /*
-     * Raised when the arguments are wrong or of an incompatible type.
-     */
-    rb_fb_eTypeError = rb_define_class_under(rb_cFizzBuzz, "TypeError", rb_fb_eError);
-
-    /*
-     * Raised when the arguments are wrong or given range from +start+ to +stop+
-     * is incorrect.
-     */
-    rb_fb_eRangeError = rb_define_class_under(rb_cFizzBuzz, "RangeError", rb_fb_eError);
-
-    rb_define_method(rb_cFizzBuzz, "initialize", RUBY_METHOD_FUNC(rb_fb_initialize), -1);
-
-    rb_define_method(rb_cFizzBuzz, "start", RUBY_METHOD_FUNC(rb_fb_get_start), 0);
-    rb_define_method(rb_cFizzBuzz, "start=", RUBY_METHOD_FUNC(rb_fb_set_start), 1);
-    rb_define_method(rb_cFizzBuzz, "stop", RUBY_METHOD_FUNC(rb_fb_get_stop), 0);
-    rb_define_method(rb_cFizzBuzz, "stop=", RUBY_METHOD_FUNC(rb_fb_set_stop), 1);
-
-    rb_define_method(rb_cFizzBuzz, "to_a", RUBY_METHOD_FUNC(rb_fb_array), 0);
-    rb_define_method(rb_cFizzBuzz, "each", RUBY_METHOD_FUNC(rb_fb_enumerator), 0);
-    rb_define_method(rb_cFizzBuzz, "reverse_each", RUBY_METHOD_FUNC(rb_fb_reverse_enumerator), 0);
-
-    rb_define_singleton_method(rb_cFizzBuzz, "is_fizz?", RUBY_METHOD_FUNC(rb_fb_is_fizz), 1);
-    rb_define_singleton_method(rb_cFizzBuzz, "is_buzz?", RUBY_METHOD_FUNC(rb_fb_is_buzz), 1);
-    rb_define_singleton_method(rb_cFizzBuzz, "is_fizzbuzz?", RUBY_METHOD_FUNC(rb_fb_is_fizzbuzz), 1);
-
-    rb_define_singleton_method(rb_cFizzBuzz, "[]", RUBY_METHOD_FUNC(rb_fb_square), 1);
+	rb_define_method(rb_cFizzBuzz, "to_a", RUBY_METHOD_FUNC(rb_fb_array), 0);
+	rb_define_method(rb_cFizzBuzz, "each", RUBY_METHOD_FUNC(rb_fb_enumerator), 0);
+	rb_define_method(rb_cFizzBuzz, "reverse_each", RUBY_METHOD_FUNC(rb_fb_reverse_enumerator), 0);
 }
 
 #if defined(__cplusplus)
