@@ -3,8 +3,10 @@ dist: xenial
 
 cache:
   bundler: true
+  directories:
+    - "${HOME}/cache"
 
-bundler_args: --jobs 1 --retry 5 --without development --path vendor/bundle
+bundler_args: --jobs 3 --retry 5
 
 rvm:
   - '2.5'
@@ -32,12 +34,15 @@ notifications:
 
 before_install:
   - gem install bundler
-  - export CC=$(which $COMPILER)
+  - bundle config set --local path 'vendor/bundle'
+  - bundle config set --local without 'development'
+  - export CC="$(which $COMPILER)"
 
 before_script:
   - bundle exec rake clean
 
 script:
+  - bundle exec rake compile
   - bundle exec rake test
 
 after_success:
