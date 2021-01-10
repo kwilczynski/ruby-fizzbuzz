@@ -53,7 +53,7 @@ end
 
 desc 'Run benchmarks'
 task :benchmark, [:first] do |_, argument|
-  glob = File.expand_path('../benchmark/benchmark_*.rb', __dir__)
+  glob = File.expand_path('./benchmark/benchmark_*.rb', __dir__)
 
   file = 0
   Dir[glob].each do |f|
