@@ -7,6 +7,7 @@ gem 'rake-compiler'
 gem 'rdoc'
 
 group :test do
+  gem 'rubocop', require: false
   gem 'test-unit'
 end
 
