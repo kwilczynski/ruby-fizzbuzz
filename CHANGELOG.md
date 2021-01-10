@@ -66,7 +66,7 @@ improve performance since constants are allocated only once.
 ### Changed
 
 - Re-factored `fizzbuzz` (_singleton_) from the _FizzBuzz_ class to speed it up.
-- Re-factored tests to utilise modern version of the `test-unit` Ruby gem.
+- Re-factored tests to utilize modern version of the `test-unit` Ruby gem.
 - Re-factored and cleaned up small portions of code and documentation.
 - Updated `Rakefile` to no longer run `test` before `benchmark`.
 
@@ -152,7 +152,7 @@ for convenience. ([#2](https://github.com/kwilczynski/ruby-fizzbuzz/issues/2))
 
 ### Changed
 
-- Changed behaviour of the `FizzBuzz#[]` singleton method, so it will yield a _FizzBuzz_
+- Changed behavior of the `FizzBuzz#[]` singleton method, so it will yield a _FizzBuzz_
 result for a given arbitrary Integer value. ([#1](https://github.com/kwilczynski/ruby-fizzbuzz/issues/1))
 - Re-factored code to make it cleaner, and added more tests and improved coverage.
 - Re-factored `FizzBuzz` so it now does not assume that we always want to calculate
