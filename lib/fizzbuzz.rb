@@ -282,7 +282,7 @@ class FizzBuzz
     new(*object['fizzbuzz'].values_at('start', 'stop'))
   end
 
-  alias_method :to_h, :to_hash
+  alias to_h to_hash
 end
 
 FB = FizzBuzz

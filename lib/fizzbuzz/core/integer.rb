@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Provides a convenient integration of _FizzBuzz_ with _Integer_ class.
 #
