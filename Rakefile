@@ -13,7 +13,7 @@ CLEAN.include FileList['**/*{.o,.so,.bundle,.log}'],
 CLOBBER.include FileList['lib/**/*.so'],
                 FileList['doc/**/*']
 
-gem = eval File.read('ruby-fizzbuzz.gemspec')
+gem = Gem::Specification.load('ruby-fizzbuzz.gemspec')
 
 RDoc::Task.new do |d|
   d.title = 'Yet another FizzBuzz in Ruby!'
