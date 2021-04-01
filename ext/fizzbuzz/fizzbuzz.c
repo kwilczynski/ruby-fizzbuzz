@@ -4,14 +4,14 @@ extern "C" {
 
 #include <fizzbuzz.h>
 
-ID id_at_start;
-ID id_at_stop;
+static ID id_at_start;
+static ID id_at_stop;
 
-VALUE rb_cFizzBuzz = Qnil;
-
-VALUE rb_fb_eError = Qnil;
-VALUE rb_fb_eTypeError = Qnil;
-VALUE rb_fb_eRangeError = Qnil;
+static VALUE rb_cFizzBuzz = Qnil;
+ 
+static VALUE rb_fb_eError = Qnil;
+static VALUE rb_fb_eTypeError = Qnil;
+static VALUE rb_fb_eRangeError = Qnil;
 
 void Init_fizzbuzz(void);
 
@@ -425,7 +425,7 @@ fizzbuzz_values(VALUE object, fizzbuzz_return_t type,
 		value = fizzbuzz_evaluate(i);
 		WANT_ARRAY(type) ? rb_ary_push(array, value) : rb_yield(value);
 		i = forward ? INCREASE(i) : DECREASE(i);
-    	}
+	}
 
 	RB_GC_GUARD(array);
 	RB_GC_GUARD(value);

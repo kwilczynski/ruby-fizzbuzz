@@ -159,32 +159,6 @@ fizzbuzz_less_equal(VALUE a, VALUE b)
 	       RVAL2CBOOL(rb_funcall(a, rb_intern("<="), 1, b));
 }
 
-RUBY_EXTERN ID id_at_start;
-RUBY_EXTERN ID id_at_stop;
-
-RUBY_EXTERN VALUE rb_cFizzBuzz;
-
-RUBY_EXTERN VALUE rb_fb_eError;
-RUBY_EXTERN VALUE rb_fb_eTypeError;
-RUBY_EXTERN VALUE rb_fb_eRangeError;
-
-RUBY_EXTERN VALUE rb_fb_is_fizz(VALUE object, VALUE value);
-RUBY_EXTERN VALUE rb_fb_is_buzz(VALUE object, VALUE value);
-RUBY_EXTERN VALUE rb_fb_is_fizzbuzz(VALUE object, VALUE value);
-
-RUBY_EXTERN VALUE rb_fb_square(VALUE object, VALUE value);
-
-RUBY_EXTERN VALUE rb_fb_initialize(int argc, VALUE *argv, VALUE object);
-
-RUBY_EXTERN VALUE rb_fb_get_start(VALUE object);
-RUBY_EXTERN VALUE rb_fb_set_start(VALUE object, VALUE value);
-RUBY_EXTERN VALUE rb_fb_get_stop(VALUE object);
-RUBY_EXTERN VALUE rb_fb_set_stop(VALUE object, VALUE value);
-
-RUBY_EXTERN VALUE rb_fb_array(VALUE object);
-RUBY_EXTERN VALUE rb_fb_enumerator(VALUE object);
-RUBY_EXTERN VALUE rb_fb_reverse_enumerator(VALUE object);
-
 #if defined(__cplusplus)
 }
 #endif
