@@ -1,6 +1,6 @@
 # Yet another FizzBuzz in Ruby!
 
-[![Build Status](https://travis-ci.org/kwilczynski/ruby-fizzbuzz.svg)](https://travis-ci.org/kwilczynski/ruby-fizzbuzz)
+[![Build Status](https://travis-ci.com/kwilczynski/ruby-fizzbuzz.svg)](https://travis-ci.com/kwilczynski/ruby-fizzbuzz)
 [![Documentation Status](https://inch-ci.org/github/kwilczynski/ruby-fizzbuzz.svg)](https://inch-ci.org/github/kwilczynski/ruby-fizzbuzz)
 [![Gem Version](https://badge.fury.io/rb/ruby-fizzbuzz.svg)](http://badge.fury.io/rb/ruby-fizzbuzz)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
