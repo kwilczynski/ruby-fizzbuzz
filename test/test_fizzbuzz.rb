@@ -722,4 +722,9 @@ class FizzBuzzTest < Test::Unit::TestCase
   rescue FizzBuzz::RangeError => error
     assert_equal(error.message, 'start value is higher than stop value')
   end
+
+  def test_gc_compaction
+    omit_unless(defined?(GC.verify_compaction_references) == 'method')
+    GC.verify_compaction_references(double_heap: true, toward: :empty)
+  end
 end
