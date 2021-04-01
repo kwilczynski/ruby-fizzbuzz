@@ -46,6 +46,7 @@ Gem::PackageTask.new(gem) do |p|
 end
 
 Rake::ExtensionTask.new('fizzbuzz', gem) do |e|
+  e.source_pattern = '*.{c,h}'
   e.ext_dir = 'ext/fizzbuzz'
   e.lib_dir = 'lib/fizzbuzz'
 end
