@@ -16,31 +16,35 @@ end
 
 ENV['CC'] = RbConfig::CONFIG['CC']
 
-$CFLAGS += ' -std=c99 -fPIC'
-$CFLAGS += ' -Wall -Wextra -pedantic'
+append_cflags(ENV["CFLAGS"].split) if ENV["CFLAGS"]
+append_cppflags(ENV["CPPFLAGS"].split) if ENV["CPPFLAGS"]
+append_ldflags(ENV["LDFLAGS"].split) if ENV["LDFLAGS"]
+
+$CFLAGS += ' -std=c99'
 
 if RbConfig::CONFIG['CC'] =~ /gcc/
   $CFLAGS += ' -O3' unless $CFLAGS =~ /-O\d/
-  $CFLAGS += ' -Wcast-qual -Wwrite-strings -Wconversion -Wmissing-noreturn -Winline'
+end
+
+%w[
+  -Wcast-qual
+  -Wwrite-strings
+  -Wconversion
+  -Wmissing-noreturn
+  -Winline
+].select do |flag|
+  try_link('int main(void) { return 0; }', flag)
+end.each do |flag|
+  $CFLAGS += ' ' + flag
 end
 
 unless darwin?
-  $LDFLAGS += ' -Wl,--as-needed -Wl,--no-undefined'
+  $LDFLAGS += ' -Wl,--as-needed -Wl,--no-undefined -Wl,--exclude-libs,ALL'
 end
 
 if windows?
   $LDFLAGS += ' -static-libgcc'
 end
-
-%w[
-  CFLAGS
-  CXXFLAGS
-  CPPFLAGS
-].each do |variable|
-  $CFLAGS += format(' %s', ENV[variable]) if ENV[variable]
-end
-
-$LDFLAGS += format(' %s', ENV['LDFLAGS']) if ENV['LDFLAGS']
 
 unless have_header('ruby.h')
   abort "\n" + (<<-EOS).gsub(/^[ ]{,3}/, '') + "\n"
@@ -83,8 +87,6 @@ unless have_header('ruby.h')
       https://www.ruby-lang.org/en/documentation/installation
   EOS
 end
-
-have_library('ruby')
 
 dir_config('fizzbuzz')
 
