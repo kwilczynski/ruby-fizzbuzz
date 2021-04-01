@@ -7,11 +7,14 @@ require 'rake/testtask'
 require 'rdoc/task'
 require 'rubocop/rake_task'
 
-CLEAN.include FileList['**/*{.o,.so,.bundle,.log}'],
+CLEAN.include FileList['**/*{.o,.so,.dylib,.bundle}'],
+              FileList['**/extconf.h'],
               FileList['**/Makefile']
 
-CLOBBER.include FileList['lib/**/*.so'],
-                FileList['doc/**/*']
+CLOBBER.include FileList['**/tmp'],
+                FileList['**/*.log'],
+                FileList['doc/**'],
+                FileList['tmp/']
 
 gem = Gem::Specification.load('ruby-fizzbuzz.gemspec')
 
