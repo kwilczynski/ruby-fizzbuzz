@@ -28,6 +28,7 @@ RDoc::Task.new do |d|
     AUTHORS
     COPYRIGHT
     LICENSE
+    NOTICE
     CHANGELOG.md
     README.md
   ])
